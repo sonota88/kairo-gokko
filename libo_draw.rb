@@ -61,6 +61,11 @@ module LiboDraw
 
       "(" + values.join(" ") + ")"
     end
+
+    def x; @el["svg:x"].sub(/cm$/, "").to_f; end
+    def y; @el["svg:y"].sub(/cm$/, "").to_f; end
+    def w; @el["svg:width"].sub(/cm$/, "").to_f; end
+    def h; @el["svg:height"].sub(/cm$/, "").to_f; end
   end
 
   class Line
@@ -79,6 +84,11 @@ module LiboDraw
 
       "(" + values.join(" ") + ")"
     end
+
+    def x1; @el["svg:x1"].sub(/cm$/, "").to_f; end
+    def y1; @el["svg:y1"].sub(/cm$/, "").to_f; end
+    def x2; @el["svg:x2"].sub(/cm$/, "").to_f; end
+    def y2; @el["svg:y2"].sub(/cm$/, "").to_f; end
   end
 
 end
