@@ -24,6 +24,37 @@ module Unit
     end
   end
 
+  class WireFragment
+    attr_reader :pos1, :pos2
+
+    def initialize(pt1, pt2)
+      @pos1 = pt1
+      @pos2 = pt2
+    end
+
+    def x1; @pos1.x; end
+    def y1; @pos1.y; end
+    def x2; @pos2.x; end
+    def y2; @pos2.y; end
+
+    def inspect
+      "(%s)" % [
+        "WF",
+        @pos1.inspect,
+        @pos2.inspect
+      ].join(" ")
+    end
+
+    def hash
+      [@pos1, @pos2].hash
+    end
+
+    def eql?(other)
+      return false if other.nil?
+      @pos1.eql?(other.pos1) && @pos2.eql?(other.pos2)
+    end
+  end
+
 end
 
 def Point(x, y)
