@@ -8,11 +8,31 @@ PPC = 20
 # colors
 C_WHITE   = [255, 255, 255, 255]
 
+# --------------------------------
+
+def draw_grid(drawer, w, h)
+  color = [60, 60, 60]
+
+  # tate
+  (1..w).each { |x|
+    drawer.draw_line(x, 0, x, h, color)
+  }
+
+  # yoko
+  (1..h).each { |y|
+    drawer.draw_line(0, y, w, y, color)
+  }
+end
+
+# --------------------------------
+
 path = ARGV[0]
 
 doc = LiboDraw::Document.new(path)
 
 drawer = Drawer.new(PPC)
+
+draw_grid(drawer, 8, 10)
 
 doc.pages[0].rectangles.each { |rect|
   x2 = rect.x + rect.w
