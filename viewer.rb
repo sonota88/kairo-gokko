@@ -1,4 +1,5 @@
 # coding: utf-8
+require "./unit"
 require "./drawer"
 require "./libo_draw"
 
@@ -9,6 +10,42 @@ PPC = 20
 C_WHITE   = [255, 255, 255, 255]
 
 # --------------------------------
+
+def to_wire_fragments(lines)
+  wfs = Set.new
+
+  lines.each { |line|
+    x1 = line.x1.floor
+    y1 = line.y1.floor
+    x2 = line.x2.floor
+    y2 = line.y2.floor
+
+    if line.tate?
+      # tate
+      x = x1
+      y_min, y_max = [y1, y2].minmax
+
+      (y_min...y_max).each { |y|
+        wfs << Unit::WireFragment.new(
+          Point(x, y    ),
+          Point(x, y + 1)
+        )
+      }
+    else # yoko
+      x_min, x_max = [x1, x2].minmax
+      y = y1
+
+      (x_min...x_max).each { |x|
+        wfs << Unit::WireFragment.new(
+          Point(x    , y),
+          Point(x + 1, y)
+        )
+      }
+    end
+  }
+
+  wfs
+end
 
 def draw_grid(drawer, w, h)
   color = [60, 60, 60]
@@ -34,6 +71,8 @@ drawer = Drawer.new(PPC)
 
 draw_grid(drawer, 8, 10)
 
+wfs = to_wire_fragments(doc.pages[0].lines)
+
 doc.pages[0].rectangles.each { |rect|
   x2 = rect.x + rect.w
   y2 = rect.y + rect.h
@@ -44,10 +83,10 @@ doc.pages[0].rectangles.each { |rect|
   )
 }
 
-doc.pages[0].lines.each { |line|
+wfs.each { |wf|
   drawer.draw_line(
-    line.x1, line.y1,
-    line.x2, line.y2,
+    wf.x1 + 0.5, wf.y1 + 0.5,
+    wf.x2 + 0.5, wf.y2 + 0.5,
     C_WHITE
   )
 }
