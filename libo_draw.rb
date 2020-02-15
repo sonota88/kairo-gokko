@@ -89,6 +89,10 @@ module LiboDraw
     def y1; @el["svg:y1"].sub(/cm$/, "").to_f; end
     def x2; @el["svg:x2"].sub(/cm$/, "").to_f; end
     def y2; @el["svg:y2"].sub(/cm$/, "").to_f; end
+
+    def tate?
+      x1.floor == x2.floor
+    end
   end
 
 end
