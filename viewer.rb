@@ -47,6 +47,14 @@ def to_wire_fragments(lines)
   wf_set
 end
 
+def to_edges(wf_set)
+  # TODO degree_map
+
+  # TODO edges = f(wf_set, degree_map)
+
+  nil # TODO return edges
+end
+
 def draw_grid(drawer, w, h)
   color = [60, 60, 60]
 
@@ -68,6 +76,7 @@ path = ARGV[0]
 doc = LiboDraw::Document.new(path)
 
 wf_set = to_wire_fragments(doc.pages[0].lines)
+edges = to_edges(wf_set)
 
 drawer = Drawer.new(PPC)
 
