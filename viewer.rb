@@ -12,7 +12,7 @@ C_WHITE   = [255, 255, 255, 255]
 # --------------------------------
 
 def to_wire_fragments(lines)
-  wfs = Set.new
+  wf_set = Set.new
 
   lines.each { |line|
     x1 = line.x1.floor
@@ -26,7 +26,7 @@ def to_wire_fragments(lines)
       y_min, y_max = [y1, y2].minmax
 
       (y_min...y_max).each { |y|
-        wfs << Unit::WireFragment.new(
+        wf_set << Unit::WireFragment.new(
           Point(x, y    ),
           Point(x, y + 1)
         )
@@ -36,7 +36,7 @@ def to_wire_fragments(lines)
       y = y1
 
       (x_min...x_max).each { |x|
-        wfs << Unit::WireFragment.new(
+        wf_set << Unit::WireFragment.new(
           Point(x    , y),
           Point(x + 1, y)
         )
@@ -44,7 +44,7 @@ def to_wire_fragments(lines)
     end
   }
 
-  wfs
+  wf_set
 end
 
 def draw_grid(drawer, w, h)
@@ -71,7 +71,7 @@ drawer = Drawer.new(PPC)
 
 draw_grid(drawer, 8, 10)
 
-wfs = to_wire_fragments(doc.pages[0].lines)
+wf_set = to_wire_fragments(doc.pages[0].lines)
 
 doc.pages[0].rectangles.each { |rect|
   x2 = rect.x + rect.w
@@ -83,7 +83,7 @@ doc.pages[0].rectangles.each { |rect|
   )
 }
 
-wfs.each { |wf|
+wf_set.each { |wf|
   drawer.draw_line(
     wf.x1 + 0.5, wf.y1 + 0.5,
     wf.x2 + 0.5, wf.y2 + 0.5,
