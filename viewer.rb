@@ -67,11 +67,11 @@ path = ARGV[0]
 
 doc = LiboDraw::Document.new(path)
 
+wf_set = to_wire_fragments(doc.pages[0].lines)
+
 drawer = Drawer.new(PPC)
 
 draw_grid(drawer, 8, 10)
-
-wf_set = to_wire_fragments(doc.pages[0].lines)
 
 doc.pages[0].rectangles.each { |rect|
   x2 = rect.x + rect.w
