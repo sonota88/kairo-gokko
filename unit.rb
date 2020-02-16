@@ -59,6 +59,9 @@ module Unit
     end
   end
 
+  class Edge
+    # TODO
+  end
 end
 
 def Point(x, y)
