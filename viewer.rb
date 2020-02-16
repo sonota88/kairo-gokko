@@ -58,8 +58,22 @@ def make_degree_map(wf_set)
   map
 end
 
+def select_start_points(degree_map)
+  pts = []
+
+  degree_map.each { |pt, degree|
+    if degree != 2
+      pts << pt
+    end
+  }
+
+  pts
+end
+
 def to_edges(wf_set)
   degree_map = make_degree_map(wf_set)
+
+  start_pts = select_start_points(degree_map)
 
   # TODO edges = f(wf_set, degree_map)
 
