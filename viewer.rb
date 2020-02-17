@@ -84,10 +84,35 @@ class WireFragmentWithFrag
   end
 end
 
+def make_pt_pairs_map(wf_set)
+  pt_set = Set.new
+
+  wf_set.each { |wf|
+    pt_set << wf.pos1
+    pt_set << wf.pos2
+  }
+
+  map = {}
+
+  # 空配列で初期化
+  pt_set.each { |pt| map[pt] = [] }
+
+  wf_set.each { |wf|
+    wfwf = WireFragmentWithFrag.new(wf)
+
+    map[wf.pos1] << [wfwf, wf.pos2]
+    map[wf.pos2] << [wfwf, wf.pos1]
+  }
+
+  map
+end
+
 def to_edges(wf_set)
   degree_map = make_degree_map(wf_set)
 
   start_pts = select_start_points(degree_map)
+
+  pt_pairs_map = make_pt_pairs_map(wf_set)
 
   # TODO edges = f(wf_set, degree_map)
 
