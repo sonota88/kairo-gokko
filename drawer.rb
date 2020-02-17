@@ -38,4 +38,12 @@ class Drawer
       w * @ppc, h * @ppc
     )
   end
+
+  def draw_circle_fill(x, y, r, color)
+    @plumo.color to_web_rgba(color)
+    @plumo.fill_circle(
+      x * @ppc, y * @ppc,
+      r * @ppc
+    )
+  end
 end
