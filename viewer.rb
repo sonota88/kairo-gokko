@@ -179,6 +179,22 @@ def draw_grid(drawer, w, h)
   }
 end
 
+def rand_color(n)
+  colors = [
+    [255,   0,   0],
+    [  0, 255,   0],
+    [  0,   0, 255],
+    [255, 255,   0],
+    [  0, 255, 255],
+    [255,   0, 255],
+    [255, 255, 255],
+    [127, 127, 127],
+  ]
+
+  ci = n % colors.size
+  colors[ci]
+end
+
 # --------------------------------
 
 path = ARGV[0]
@@ -209,11 +225,51 @@ doc.pages[page - 1].rectangles.each { |rect|
   )
 }
 
-wf_set.each { |wf|
+edges.each { |edge|
+edge.wfs.each { |wf|
   drawer.draw_line(
     wf.x1 + 0.5, wf.y1 + 0.5,
     wf.x2 + 0.5, wf.y2 + 0.5,
     C_WHITE
+  )
+}
+}
+
+edges.shuffle.each_with_index { |edge, i|
+  edge.wfs.each { |wf|
+    drawer.draw_line(
+      wf.x1 + 0.5, wf.y1 + 0.5,
+      wf.x2 + 0.5, wf.y2 + 0.5,
+      rand_color(i)
+    )
+  }
+}
+
+edges.shuffle.each_with_index { |edge, i|
+  x1 = edge.pos1.x
+  y1 = edge.pos1.y
+  x2 = edge.pos2.x
+  y2 = edge.pos2.y
+
+  drawer.draw_circle_fill(
+    x1 + 0.5, y1 + 0.5,
+    0.2,
+    [0, 0, 0]
+  )
+  drawer.draw_circle_fill(
+    x2 + 0.5, y2 + 0.5,
+    0.2,
+    [0, 0, 0]
+  )
+  drawer.draw_circle_fill(
+    x1 + 0.5, y1 + 0.5,
+    0.1,
+    [255, 0, 0]
+  )
+  drawer.draw_circle_fill(
+    x2 + 0.5, y2 + 0.5,
+    0.1,
+    [255, 0, 0]
   )
 }
 
