@@ -135,9 +135,16 @@ def to_edges(wf_set)
 
   pt_wfs_map = make_pt_wfs_map(wf_set)
 
-  # TODO edges = f(wf_set, degree_map)
+  edges = []
 
-  nil # TODO return edges
+  start_pts.each { |start_pt|
+    pt_wfs_map[start_pt].each { |wf|
+      next if wf.visited
+      edges << take_edge(degree_map, pt_wfs_map, start_pt, wf)
+    }
+  }
+
+  edges
 end
 
 def draw_grid(drawer, w, h)
