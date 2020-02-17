@@ -107,6 +107,45 @@ def make_pt_pairs_map(wf_set)
   map
 end
 
+def take_edge(degree_map, pt_pairs_map, pt0, wfwf, pt1)
+  wfwfs = []
+
+  wfwf.visit()
+  wfwfs << wfwf
+
+  work_pt = pt1
+
+  loop do
+    next_pairs =
+      if degree_map[work_pt] == 2
+        pt_pairs_map[work_pt].select { |wfwf, _| ! wfwf.visited }
+      else
+        # 次数が 2 以外の場合は次の経路なし
+        []
+      end
+
+    break if next_pairs.empty?
+
+    # assert
+    if next_pairs.size != 1
+      raise "next_pairs.size must be 1"
+    end
+
+    wfwf, next_pt = next_pairs[0]
+
+    wfwf.visit()
+    wfwfs << wfwf
+
+    work_pt = next_pt
+  end
+
+  Unit::Edge.new(
+    pt0,
+    work_pt,
+    wfwfs.map { |wfwf| wfwf.wf },
+  )
+end
+
 def to_edges(wf_set)
   degree_map = make_degree_map(wf_set)
 
