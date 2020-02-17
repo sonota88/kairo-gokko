@@ -70,6 +70,20 @@ def select_start_points(degree_map)
   pts
 end
 
+class WireFragmentWithFrag
+  attr_reader :visited
+  attr_reader :wf
+
+  def initialize(wf)
+    @wf = wf
+    @visited = false
+  end
+
+  def visit
+    @visited = true
+  end
+end
+
 def to_edges(wf_set)
   degree_map = make_degree_map(wf_set)
 
