@@ -56,7 +56,11 @@ module Unit
   end
 
   class Edge
-    # TODO
+    def initialize(pos1, pos2, wfs)
+      @pos1 = pos1
+      @pos2 = pos2
+      @wfs = wfs
+    end
   end
 end
 
