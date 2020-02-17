@@ -68,10 +68,33 @@ def select_start_points(degree_map)
   pts
 end
 
+def make_pt_wfs_map(wf_set)
+  pt_set = Set.new
+
+  wf_set.each { |wf|
+    pt_set << wf.pos1
+    pt_set << wf.pos2
+  }
+
+  map = {}
+
+  # 空配列で初期化
+  pt_set.each { |pt| map[pt] = [] }
+
+  wf_set.each { |wf|
+    map[wf.pos1] << wf
+    map[wf.pos2] << wf
+  }
+
+  map
+end
+
 def to_edges(wf_set)
   degree_map = make_degree_map(wf_set)
 
   start_pts = select_start_points(degree_map)
+
+  pt_wfs_map = make_pt_wfs_map(wf_set)
 
   # TODO edges = f(wf_set, degree_map)
 
