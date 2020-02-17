@@ -153,9 +153,16 @@ def to_edges(wf_set)
 
   pt_pairs_map = make_pt_pairs_map(wf_set)
 
-  # TODO edges = f(wf_set, degree_map)
+  edges = []
 
-  nil # TODO return edges
+  start_pts.each { |start_pt|
+    pt_pairs_map[start_pt].each { |wfwf, next_pt|
+      next if wfwf.visited
+      edges << take_edge(degree_map, pt_pairs_map, start_pt, wfwf, next_pt)
+    }
+  }
+
+  edges
 end
 
 def draw_grid(drawer, w, h)
