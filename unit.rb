@@ -68,7 +68,15 @@ module Unit
   end
 
   class Edge
-    # TODO
+    attr_reader :wfs
+    attr_reader :pos1
+    attr_reader :pos2
+
+    def initialize(pos1, pos2, wfs)
+      @pos1 = pos1
+      @pos2 = pos2
+      @wfs = wfs
+    end
   end
 end
 
