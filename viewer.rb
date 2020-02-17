@@ -89,6 +89,45 @@ def make_pt_wfs_map(wf_set)
   map
 end
 
+def take_edge(degree_map, pt_wfs_map, pt0, wf1)
+  wfs = []
+
+  wf1.visit()
+  wfs << wf1
+
+  work_pt = wf1.opposite_pos(pt0)
+
+  loop do
+    next_wfs =
+      if degree_map[work_pt] == 2
+        pt_wfs_map[work_pt].select { |wf| ! wf.visited }
+      else
+        # 次数が 2 以外の場合は次の経路なし
+        []
+      end
+
+    break if next_wfs.empty?
+
+    # assert
+    if next_wfs.size != 1
+      raise "next_wfs.size must be 1"
+    end
+
+    next_wf = next_wfs[0]
+
+    next_wf.visit()
+    wfs << next_wf
+
+    work_pt = next_wf.opposite_pos(work_pt)
+  end
+
+  Unit::Edge.new(
+    pt0,
+    work_pt,
+    wfs
+  )
+end
+
 def to_edges(wf_set)
   degree_map = make_degree_map(wf_set)
 
