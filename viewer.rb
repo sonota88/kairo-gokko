@@ -183,16 +183,23 @@ end
 
 path = ARGV[0]
 
+page =
+  if ARGV[1]
+    ARGV[1].to_i
+  else
+    1
+  end
+
 doc = LiboDraw::Document.new(path)
 
-wf_set = to_wire_fragments(doc.pages[0].lines)
+wf_set = to_wire_fragments(doc.pages[page - 1].lines)
 edges = to_edges(wf_set)
 
 drawer = Drawer.new(PPC)
 
 draw_grid(drawer, 8, 10)
 
-doc.pages[0].rectangles.each { |rect|
+doc.pages[page - 1].rectangles.each { |rect|
   x2 = rect.x + rect.w
   y2 = rect.y + rect.h
   drawer.draw_box(
