@@ -62,9 +62,7 @@ def select_start_points(degree_map)
   pts = []
 
   degree_map.each { |pt, degree|
-    if degree != 2
-      pts << pt
-    end
+    pts << pt if degree != 2
   }
 
   pts
