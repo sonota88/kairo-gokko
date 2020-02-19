@@ -88,7 +88,7 @@ class WireFragmentWithFrag
   end
 end
 
-def make_pt_pairs_map(wf_set)
+def make_pt_wfwfs_map(wf_set)
   pt_set = Set.new
 
   wf_set.each { |wf|
@@ -104,43 +104,43 @@ def make_pt_pairs_map(wf_set)
   wf_set.each { |wf|
     wfwf = WireFragmentWithFrag.new(wf)
 
-    map[wf.pos1] << [wfwf, wf.pos2]
-    map[wf.pos2] << [wfwf, wf.pos1]
+    map[wf.pos1] << wfwf
+    map[wf.pos2] << wfwf
   }
 
   map
 end
 
-def take_edge(degree_map, pt_pairs_map, pt0, wfwf, pt1)
+def take_edge(degree_map, pt_wfwfs_map, pt0, wfwf)
   wfwfs = []
 
   wfwf.visit()
   wfwfs << wfwf
 
-  work_pt = pt1
+  work_pt = wfwf.opposite_pos(pt0)
 
   loop do
-    next_pairs =
+    next_wfwfs =
       if degree_map[work_pt] == 2
-        pt_pairs_map[work_pt].select { |wfwf, _| ! wfwf.visited }
+        pt_wfwfs_map[work_pt].select { |wfwf| ! wfwf.visited }
       else
         # 次数が 2 以外の場合は次の経路なし
         []
       end
 
-    break if next_pairs.empty?
+    break if next_wfwfs.empty?
 
     # assert
-    if next_pairs.size != 1
-      raise "next_pairs.size must be 1"
+    if next_wfwfs.size != 1
+      raise "next_wfwfs.size must be 1"
     end
 
-    wfwf, next_pt = next_pairs[0]
+    wfwf = next_wfwfs[0]
 
     wfwf.visit()
     wfwfs << wfwf
 
-    work_pt = next_pt
+    work_pt = wfwf.opposite_pos(work_pt)
   end
 
   Unit::Edge.new(
@@ -155,14 +155,14 @@ def to_edges(wf_set)
 
   start_pts = select_start_points(degree_map)
 
-  pt_pairs_map = make_pt_pairs_map(wf_set)
+  pt_wfwfs_map = make_pt_wfwfs_map(wf_set)
 
   edges = []
 
   start_pts.each { |start_pt|
-    pt_pairs_map[start_pt].each { |wfwf, next_pt|
+    pt_wfwfs_map[start_pt].each { |wfwf|
       next if wfwf.visited
-      edges << take_edge(degree_map, pt_pairs_map, start_pt, wfwf, next_pt)
+      edges << take_edge(degree_map, pt_wfwfs_map, start_pt, wfwf)
     }
   }
 
