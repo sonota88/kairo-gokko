@@ -128,11 +128,14 @@ def take_edge(degree_map, pt_wfwfs_map, pt0, wfwf)
         []
       end
 
-    break if next_wfwfs.empty?
-
-    # assert
-    if next_wfwfs.size != 1
-      raise "next_wfwfs.size must be 1"
+    case next_wfwfs.size
+    when 0
+      break
+    when 1
+      # OK
+    else
+      # assert
+      raise "next_wfwfs.size must be 1" # must not happen
     end
 
     wfwf = next_wfwfs[0]
