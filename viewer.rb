@@ -82,6 +82,10 @@ class WireFragmentWithFrag
   def visit
     @visited = true
   end
+
+  def opposite_pos(pos)
+    @wf.opposite_pos(pos)
+  end
 end
 
 def make_pt_pairs_map(wf_set)
