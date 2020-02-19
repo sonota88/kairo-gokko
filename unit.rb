@@ -17,6 +17,10 @@ module Unit
       @x == other.x && @y == other.y
     end
 
+    def ==(other)
+      eql?(other)
+    end
+
     def inspect
       "(%s)" % [
         "Pt", @x, @y
