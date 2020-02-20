@@ -194,12 +194,14 @@ doc.pages[page - 1].rectangles.each { |rect|
   )
 }
 
-wf_set.each { |wf|
+edges.each { |edge|
+edge.wfs.each { |wf|
   drawer.draw_line(
     wf.x1 + 0.5, wf.y1 + 0.5,
     wf.x2 + 0.5, wf.y2 + 0.5,
     C_WHITE
   )
+}
 }
 
 # 描画する前に終了しないように待つ
