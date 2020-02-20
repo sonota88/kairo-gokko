@@ -133,9 +133,7 @@ end
 
 def to_edges(wf_set)
   degree_map = make_degree_map(wf_set)
-
   start_pts = select_start_points(degree_map)
-
   pt_wfs_map = make_pt_wfs_map(wf_set)
 
   edges = []
