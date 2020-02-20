@@ -21,7 +21,6 @@ def to_wire_fragments(lines)
     y2 = line.y2.floor
 
     if line.tate?
-      # tate
       x = x1
       y_min, y_max = [y1, y2].minmax
 
@@ -31,7 +30,7 @@ def to_wire_fragments(lines)
           Point(x, y + 1)
         )
       }
-    else # yoko
+    else
       x_min, x_max = [x1, x2].minmax
       y = y1
 
