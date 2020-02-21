@@ -30,10 +30,12 @@ module Unit
 
   class WireFragment
     attr_reader :pos1, :pos2
+    attr_reader :visited
 
     def initialize(pt1, pt2)
       @pos1 = pt1
       @pos2 = pt2
+      @visited = false
     end
 
     def x1; @pos1.x; end
