@@ -43,6 +43,10 @@ module Unit
     def x2; @pos2.x; end
     def y2; @pos2.y; end
 
+    def visit
+      @visited = true
+    end
+
     def opposite_pos(pos)
       if @pos1 == pos
         @pos2
