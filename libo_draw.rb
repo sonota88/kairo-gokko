@@ -41,12 +41,34 @@ module LiboDraw
       @el = el
     end
 
-    def text
-      texts = []
-      @el.each_element_with_text { |el|
-        texts << el.texts.join(" ")
+    def paragraphs
+      para_els = REXML::XPath.match(@el, "text:p")
+
+      para_els.map { |para_el|
+        para_el.children
+          .map { |child_el|
+            case child_el
+            when REXML::Text
+              child_el.value
+            when REXML::Element
+              if child_el.name == "line-break"
+                "\n"
+              elsif child_el.name == "span"
+                child_el.text
+              else
+                pp child_el.name, child_el
+                raise "unknown element"
+              end
+            else
+              raise "unknown element"
+            end
+          }
+          .join("")
       }
-      texts.join(" ")
+    end
+
+    def text
+      paragraphs.join("\n")
     end
 
     def inspect
