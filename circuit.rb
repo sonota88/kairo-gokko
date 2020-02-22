@@ -109,4 +109,28 @@ class Circuit
     map
   end
 
+  def self.select_next_wfs(degree_map, pt_wfs_map, prev_wf, work_pt)
+    case degree_map[work_pt]
+    when 2
+      pt_wfs_map[work_pt].select { |wf| ! wf.visited }
+
+    when 4
+      pt_wfs_map[work_pt].select { |wf|
+        same_dir =
+          if prev_wf.tate?
+            wf.tate?
+          else
+            ! wf.tate?
+          end
+
+        ! wf.visited && same_dir
+      }
+
+    else
+      # 次数が 2, 4 以外の場合は次の経路なし
+      []
+
+    end
+  end
+
 end
