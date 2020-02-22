@@ -94,14 +94,26 @@ def take_edge(degree_map, pt_wfs_map, pt0, wf1)
   wf1.visit()
   wfs << wf1
 
+  prev_wf = wf1
   work_pt = wf1.opposite_pos(pt0)
 
   loop do
     next_wfs =
       if degree_map[work_pt] == 2
         pt_wfs_map[work_pt].select { |wf| ! wf.visited }
+      elsif degree_map[work_pt] == 4
+        pt_wfs_map[work_pt].select { |wf|
+          same_dir =
+            if prev_wf.tate?
+              wf.tate?
+            else
+              ! wf.tate?
+            end
+
+          ! wf.visited && same_dir
+        }
       else
-        # 次数が 2 以外の場合は次の経路なし
+        # 次数が 2, 4 以外の場合は次の経路なし
         []
       end
 
@@ -120,6 +132,7 @@ def take_edge(degree_map, pt_wfs_map, pt0, wf1)
     next_wf.visit()
     wfs << next_wf
 
+    prev_wf = next_wf
     work_pt = next_wf.opposite_pos(work_pt)
   end
 
