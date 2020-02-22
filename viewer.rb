@@ -88,6 +88,30 @@ def make_pt_wfs_map(wf_set)
   map
 end
 
+def select_next_wfs(degree_map, pt_wfs_map, prev_wf, work_pt)
+  case degree_map[work_pt]
+  when 2
+    pt_wfs_map[work_pt].select { |wf| ! wf.visited }
+
+  when 4
+    pt_wfs_map[work_pt].select { |wf|
+      same_dir =
+        if prev_wf.tate?
+          wf.tate?
+        else
+          ! wf.tate?
+        end
+
+      ! wf.visited && same_dir
+    }
+
+  else
+    # 次数が 2, 4 以外の場合は次の経路なし
+    []
+
+  end
+end
+
 def take_edge(degree_map, pt_wfs_map, pt0, wf1)
   wfs = []
 
@@ -99,23 +123,12 @@ def take_edge(degree_map, pt_wfs_map, pt0, wf1)
 
   loop do
     next_wfs =
-      if degree_map[work_pt] == 2
-        pt_wfs_map[work_pt].select { |wf| ! wf.visited }
-      elsif degree_map[work_pt] == 4
-        pt_wfs_map[work_pt].select { |wf|
-          same_dir =
-            if prev_wf.tate?
-              wf.tate?
-            else
-              ! wf.tate?
-            end
-
-          ! wf.visited && same_dir
-        }
-      else
-        # 次数が 2, 4 以外の場合は次の経路なし
-        []
-      end
+      select_next_wfs(
+        degree_map,
+        pt_wfs_map,
+        prev_wf,
+        work_pt
+      )
 
     case next_wfs.size
     when 0
