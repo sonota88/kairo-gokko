@@ -13,22 +13,6 @@ C_WHITE   = [255, 255, 255, 255]
 
 # --------------------------------
 
-def draw_grid(drawer, w, h)
-  color = [60, 60, 60]
-
-  # tate
-  (1..w).each { |x|
-    drawer.draw_line(x, 0, x, h, color)
-  }
-
-  # yoko
-  (1..h).each { |y|
-    drawer.draw_line(0, y, w, y, color)
-  }
-end
-
-# --------------------------------
-
 path = ARGV[0]
 
 page_no =
@@ -49,7 +33,7 @@ circuit = Circuit.create(
 drawer = Drawer.new(PPC)
 view = View.new(drawer)
 
-draw_grid(drawer, 8, 10)
+view.draw_grid(8, 10)
 
 circuit.plus_poles.each { |pole|
   drawer.draw_box(
