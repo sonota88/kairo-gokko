@@ -1,3 +1,4 @@
+# coding: utf-8
 class Circuit
   attr_reader :edges
   attr_reader :plus_poles
@@ -71,6 +72,20 @@ class Circuit
     }
 
     map
+  end
+
+  def self.select_start_points(degree_map)
+    pts = []
+
+    degree_map.each { |pt, degree|
+      if degree == 2 || degree == 4
+        # 開始点ではない
+      else
+        pts << pt
+      end
+    }
+
+    pts
   end
 
 end

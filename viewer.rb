@@ -12,20 +12,6 @@ C_WHITE   = [255, 255, 255, 255]
 
 # --------------------------------
 
-def select_start_points(degree_map)
-  pts = []
-
-  degree_map.each { |pt, degree|
-    if degree == 2 || degree == 4
-      # 開始点ではない
-    else
-      pts << pt
-    end
-  }
-
-  pts
-end
-
 def make_pt_wfs_map(wf_set)
   pt_set = Set.new
 
@@ -117,7 +103,7 @@ end
 
 def to_edges(wf_set)
   degree_map = Circuit.make_degree_map(wf_set)
-  start_pts = select_start_points(degree_map)
+  start_pts = Circuit.select_start_points(degree_map)
   pt_wfs_map = make_pt_wfs_map(wf_set)
 
   edges = []
