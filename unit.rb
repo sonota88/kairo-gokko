@@ -55,6 +55,10 @@ module Unit
       end
     end
 
+    def tate?
+      @pos1.x == @pos2.x
+    end
+
     def inspect
       "(%s)" % [
         "WF",
