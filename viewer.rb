@@ -41,23 +41,9 @@ doc = LiboDraw::Document.new(path)
 
 rects = doc.pages[page - 1].rectangles
 
-plus_poles =
+circuit = Circuit.create(
+  doc.pages[page - 1].lines,
   rects
-    .select { |rect| rect.text == "+" }
-    .map { |rect| Circuit.to_plus_pole(rect) }
-
-minus_poles =
-  rects
-    .select { |rect| rect.text == "-" }
-    .map { |rect| Circuit.to_minus_pole(rect) }
-
-wf_set = Circuit.to_wire_fragments(doc.pages[page - 1].lines)
-edges = Circuit.to_edges(wf_set)
-
-circuit = Circuit.new(
-  edges,
-  plus_poles,
-  minus_poles
 )
 
 drawer = Drawer.new(PPC)

@@ -194,4 +194,25 @@ class Circuit
     edges
   end
 
+  def self.create(lines, rects)
+    plus_poles =
+      rects
+        .select { |rect| rect.text == "+" }
+        .map { |rect| to_plus_pole(rect) }
+
+    minus_poles =
+      rects
+        .select { |rect| rect.text == "-" }
+        .map { |rect| to_minus_pole(rect) }
+
+    wf_set = to_wire_fragments(lines)
+    edges = to_edges(wf_set)
+
+    Circuit.new(
+      edges,
+      plus_poles,
+      minus_poles
+    )
+  end
+
 end
