@@ -12,15 +12,6 @@ C_WHITE   = [255, 255, 255, 255]
 
 # --------------------------------
 
-def to_plus_pole(rect)
-  pos = Point(
-    rect.x.floor,
-    rect.y.floor
-  )
-
-  Unit::PlusPole.new(pos)
-end
-
 def to_minus_pole(rect)
   pos = Point(
     rect.x.floor,
@@ -228,7 +219,7 @@ rects = doc.pages[page - 1].rectangles
 plus_poles =
   rects
     .select { |rect| rect.text == "+" }
-    .map { |rect| to_plus_pole(rect) }
+    .map { |rect| Circuit.to_plus_pole(rect) }
 
 minus_poles =
   rects

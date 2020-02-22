@@ -8,4 +8,14 @@ class Circuit
     @plus_poles = plus_poles
     @minus_poles = minus_poles
   end
+
+  def self.to_plus_pole(rect)
+    pos = Point(
+      rect.x.floor,
+      rect.y.floor
+    )
+
+    Unit::PlusPole.new(pos)
+  end
+
 end
