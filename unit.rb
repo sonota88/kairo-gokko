@@ -95,6 +95,9 @@ module Unit
     def initialize(pos)
       @pos = pos
     end
+
+    def x; @pos.x; end
+    def y; @pos.y; end
   end
 
   class PlusPole < SingleCell
