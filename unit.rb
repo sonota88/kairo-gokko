@@ -88,6 +88,15 @@ module Unit
       @wfs = wfs
     end
   end
+
+  class SingleCell
+    attr_reader :pos
+
+    def initialize(pos)
+      @pos = pos
+    end
+  end
+
 end
 
 def Point(x, y)
