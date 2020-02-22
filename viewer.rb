@@ -20,6 +20,15 @@ def to_plus_pole(rect)
   Unit::PlusPole.new(pos)
 end
 
+def to_minus_pole(rect)
+  pos = Point(
+    rect.x.floor,
+    rect.y.floor
+  )
+
+  Unit::MinusPole.new(pos)
+end
+
 def to_wire_fragments(lines)
   wf_set = Set.new
 
