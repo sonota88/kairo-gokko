@@ -213,6 +213,13 @@ page =
 
 doc = LiboDraw::Document.new(path)
 
+rects = doc.pages[page - 1].rectangles
+
+plus_poles =
+  rects
+    .select { |rect| rect.text == "+" }
+    .map { |rect| to_plus_pole(rect) }
+
 wf_set = to_wire_fragments(doc.pages[page - 1].lines)
 edges = to_edges(wf_set)
 
