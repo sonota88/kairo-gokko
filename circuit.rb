@@ -133,4 +133,48 @@ class Circuit
     end
   end
 
+  def self.take_edge(degree_map, pt_wfs_map, pt0, wf1)
+    wfs = []
+
+    wf1.visit()
+    wfs << wf1
+
+    prev_wf = wf1
+    work_pt = wf1.opposite_pos(pt0)
+
+    loop do
+      next_wfs =
+        select_next_wfs(
+          degree_map,
+          pt_wfs_map,
+          prev_wf,
+          work_pt
+        )
+
+      case next_wfs.size
+      when 0
+        break
+      when 1
+        # OK
+      else
+        # assert
+        raise "next_wfs.size must be 0 or 1"
+      end
+
+      next_wf = next_wfs[0]
+
+      next_wf.visit()
+      wfs << next_wf
+
+      prev_wf = next_wf
+      work_pt = next_wf.opposite_pos(work_pt)
+    end
+
+    Unit::Edge.new(
+      pt0,
+      work_pt,
+      wfs
+    )
+  end
+
 end
