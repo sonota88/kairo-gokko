@@ -36,21 +36,7 @@ view = View.new(drawer)
 view.draw_grid(8, 10)
 
 circuit.plus_poles.each { |pole|
-  drawer.draw_box(
-    pole.x + 0.1, pole.y + 0.1,
-    pole.x + 0.9, pole.y + 0.9,
-    C_WHITE
-  )
-  drawer.draw_line(
-    pole.x + 0.3, pole.y + 0.5,
-    pole.x + 0.7, pole.y + 0.5,
-    C_WHITE
-  )
-  drawer.draw_line(
-    pole.x + 0.5, pole.y + 0.3,
-    pole.x + 0.5, pole.y + 0.7,
-    C_WHITE
-  )
+  view.draw_plus_pole(pole)
 }
 
 circuit.minus_poles.each { |pole|
