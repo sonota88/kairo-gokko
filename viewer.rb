@@ -3,6 +3,7 @@ require "./circuit"
 require "./unit"
 require "./drawer"
 require "./libo_draw"
+require "./view"
 
 # pixels per cell
 PPC = 30
@@ -46,6 +47,7 @@ circuit = Circuit.create(
 )
 
 drawer = Drawer.new(PPC)
+view = View.new(drawer)
 
 draw_grid(drawer, 8, 10)
 
