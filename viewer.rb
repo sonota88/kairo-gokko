@@ -39,11 +39,9 @@ page =
 
 doc = LiboDraw::Document.new(path)
 
-rects = doc.pages[page - 1].rectangles
-
 circuit = Circuit.create(
   doc.pages[page - 1].lines,
-  rects
+  doc.pages[page - 1].rectangles
 )
 
 drawer = Drawer.new(PPC)
