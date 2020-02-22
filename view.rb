@@ -35,4 +35,17 @@ class View
     )
   end
 
+  def draw_minus_pole(pole)
+    @drawer.draw_box(
+      pole.x + 0.1, pole.y + 0.1,
+      pole.x + 0.9, pole.y + 0.9,
+      C_WHITE
+    )
+    @drawer.draw_line(
+      pole.x + 0.3, pole.y + 0.5,
+      pole.x + 0.7, pole.y + 0.5,
+      C_WHITE
+    )
+  end
+
 end
