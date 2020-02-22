@@ -12,15 +12,6 @@ C_WHITE   = [255, 255, 255, 255]
 
 # --------------------------------
 
-def to_minus_pole(rect)
-  pos = Point(
-    rect.x.floor,
-    rect.y.floor
-  )
-
-  Unit::MinusPole.new(pos)
-end
-
 def to_wire_fragments(lines)
   wf_set = Set.new
 
@@ -224,7 +215,7 @@ plus_poles =
 minus_poles =
   rects
     .select { |rect| rect.text == "-" }
-    .map { |rect| to_minus_pole(rect) }
+    .map { |rect| Circuit.to_minus_pole(rect) }
 
 wf_set = to_wire_fragments(doc.pages[page - 1].lines)
 edges = to_edges(wf_set)
