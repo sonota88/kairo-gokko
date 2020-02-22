@@ -12,17 +12,6 @@ C_WHITE   = [255, 255, 255, 255]
 
 # --------------------------------
 
-def make_degree_map(wf_set)
-  map = Hash.new(0)
-
-  wf_set.each { |wf|
-    map[wf.pos1] += 1
-    map[wf.pos2] += 1
-  }
-
-  map
-end
-
 def select_start_points(degree_map)
   pts = []
 
@@ -127,7 +116,7 @@ def take_edge(degree_map, pt_wfs_map, pt0, wf1)
 end
 
 def to_edges(wf_set)
-  degree_map = make_degree_map(wf_set)
+  degree_map = Circuit.make_degree_map(wf_set)
   start_pts = select_start_points(degree_map)
   pt_wfs_map = make_pt_wfs_map(wf_set)
 

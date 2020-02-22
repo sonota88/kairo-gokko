@@ -62,4 +62,15 @@ class Circuit
     wf_set
   end
 
+  def self.make_degree_map(wf_set)
+    map = Hash.new(0)
+
+    wf_set.each { |wf|
+      map[wf.pos1] += 1
+      map[wf.pos2] += 1
+    }
+
+    map
+  end
+
 end
