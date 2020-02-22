@@ -68,11 +68,7 @@ module LiboDraw
     end
 
     def text
-      texts = []
-      @el.each_element_with_text { |el|
-        texts << el.texts.join(" ")
-      }
-      texts.join(" ")
+      paragraphs.join("\n")
     end
 
     def inspect
