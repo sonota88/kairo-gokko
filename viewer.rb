@@ -38,10 +38,11 @@ page_no =
   end
 
 doc = LiboDraw::Document.new(path)
+page = doc.pages[page_no - 1]
 
 circuit = Circuit.create(
-  doc.pages[page_no - 1].lines,
-  doc.pages[page_no - 1].rectangles
+  page.lines,
+  page.rectangles
 )
 
 drawer = Drawer.new(PPC)
