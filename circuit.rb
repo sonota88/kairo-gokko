@@ -88,4 +88,25 @@ class Circuit
     pts
   end
 
+  def self.make_pt_wfs_map(wf_set)
+    pt_set = Set.new
+
+    wf_set.each { |wf|
+      pt_set << wf.pos1
+      pt_set << wf.pos2
+    }
+
+    map = {}
+
+    # 空配列で初期化
+    pt_set.each { |pt| map[pt] = [] }
+
+    wf_set.each { |wf|
+      map[wf.pos1] << wf
+      map[wf.pos2] << wf
+    }
+
+    map
+  end
+
 end
