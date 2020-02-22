@@ -1,7 +1,6 @@
 # coding: utf-8
 require "./circuit"
 require "./unit"
-require "./drawer"
 require "./libo_draw"
 require "./view"
 
@@ -30,8 +29,7 @@ circuit = Circuit.create(
   page.rectangles
 )
 
-drawer = Drawer.new(PPC)
-view = View.new(drawer)
+view = View.new(PPC)
 
 view.draw_grid(8, 10)
 

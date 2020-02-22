@@ -1,6 +1,8 @@
+require "./drawer"
+
 class View
-  def initialize(drawer)
-    @drawer = drawer
+  def initialize(ppc)
+    @drawer = Drawer.new(ppc)
   end
 
   def draw_grid(w, h)
