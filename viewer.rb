@@ -4,7 +4,7 @@ require "./drawer"
 require "./libo_draw"
 
 # pixels per cell
-PPC = 20
+PPC = 30
 
 # colors
 C_WHITE   = [255, 255, 255, 255]
