@@ -177,4 +177,21 @@ class Circuit
     )
   end
 
+  def self.to_edges(wf_set)
+    degree_map = make_degree_map(wf_set)
+    start_pts = select_start_points(degree_map)
+    pt_wfs_map = make_pt_wfs_map(wf_set)
+
+    edges = []
+
+    start_pts.each { |start_pt|
+      pt_wfs_map[start_pt].each { |wf|
+        next if wf.visited
+        edges << take_edge(degree_map, pt_wfs_map, start_pt, wf)
+      }
+    }
+
+    edges
+  end
+
 end

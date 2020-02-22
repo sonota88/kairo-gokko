@@ -12,23 +12,6 @@ C_WHITE   = [255, 255, 255, 255]
 
 # --------------------------------
 
-def to_edges(wf_set)
-  degree_map = Circuit.make_degree_map(wf_set)
-  start_pts = Circuit.select_start_points(degree_map)
-  pt_wfs_map = Circuit.make_pt_wfs_map(wf_set)
-
-  edges = []
-
-  start_pts.each { |start_pt|
-    pt_wfs_map[start_pt].each { |wf|
-      next if wf.visited
-      edges << Circuit.take_edge(degree_map, pt_wfs_map, start_pt, wf)
-    }
-  }
-
-  edges
-end
-
 def draw_grid(drawer, w, h)
   color = [60, 60, 60]
 
@@ -69,7 +52,7 @@ minus_poles =
     .map { |rect| Circuit.to_minus_pole(rect) }
 
 wf_set = Circuit.to_wire_fragments(doc.pages[page - 1].lines)
-edges = to_edges(wf_set)
+edges = Circuit.to_edges(wf_set)
 
 circuit = Circuit.new(
   edges,
