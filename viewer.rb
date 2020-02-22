@@ -30,7 +30,7 @@ end
 
 path = ARGV[0]
 
-page =
+page_no =
   if ARGV[1]
     ARGV[1].to_i
   else
@@ -40,8 +40,8 @@ page =
 doc = LiboDraw::Document.new(path)
 
 circuit = Circuit.create(
-  doc.pages[page - 1].lines,
-  doc.pages[page - 1].rectangles
+  doc.pages[page_no - 1].lines,
+  doc.pages[page_no - 1].rectangles
 )
 
 drawer = Drawer.new(PPC)
