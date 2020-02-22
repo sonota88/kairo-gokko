@@ -97,6 +97,9 @@ module Unit
     end
   end
 
+  class PlusPole < SingleCell
+  end
+
 end
 
 def Point(x, y)
