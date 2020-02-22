@@ -1,4 +1,5 @@
 # coding: utf-8
+require "./circuit"
 require "./unit"
 require "./drawer"
 require "./libo_draw"
@@ -237,11 +238,17 @@ minus_poles =
 wf_set = to_wire_fragments(doc.pages[page - 1].lines)
 edges = to_edges(wf_set)
 
+circuit = Circuit.new(
+  edges,
+  plus_poles,
+  minus_poles
+)
+
 drawer = Drawer.new(PPC)
 
 draw_grid(drawer, 8, 10)
 
-plus_poles.each { |pole|
+circuit.plus_poles.each { |pole|
   drawer.draw_box(
     pole.x + 0.1, pole.y + 0.1,
     pole.x + 0.9, pole.y + 0.9,
@@ -259,7 +266,7 @@ plus_poles.each { |pole|
   )
 }
 
-minus_poles.each { |pole|
+circuit.minus_poles.each { |pole|
   drawer.draw_box(
     pole.x + 0.1, pole.y + 0.1,
     pole.x + 0.9, pole.y + 0.9,
@@ -272,7 +279,7 @@ minus_poles.each { |pole|
   )
 }
 
-edges.each { |edge|
+circuit.edges.each { |edge|
   edge.wfs.each { |wf|
     drawer.draw_line(
       wf.x1 + 0.5, wf.y1 + 0.5,
