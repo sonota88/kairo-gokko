@@ -12,8 +12,8 @@ class Circuit
 
   def to_plain
     {
-      edges: @edges.map { |it| it.to_plain },
-      plus_poles: @plus_poles.map { |it| it.to_plain },
+      edges:       @edges      .map { |it| it.to_plain },
+      plus_poles:  @plus_poles .map { |it| it.to_plain },
       minus_poles: @minus_poles.map { |it| it.to_plain }
     }
   end
