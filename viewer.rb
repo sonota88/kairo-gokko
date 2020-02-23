@@ -11,9 +11,9 @@ C_WHITE   = [255, 255, 255, 255]
 
 # --------------------------------
 
-json = File.read("data.json")
+require "./data"
 circuit = Circuit.from_plain(
-  JSON.parse(json)
+  JSON.parse($data_json)
 )
 
 view = View.new(PPC)

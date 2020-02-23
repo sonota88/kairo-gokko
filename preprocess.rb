@@ -22,5 +22,7 @@ circuit = Circuit.create(
   page.rectangles
 )
 
+puts "$data_json = <<EOB"
 print JSON.pretty_generate(circuit.to_plain)
 print "\n"
+puts "EOB"
