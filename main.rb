@@ -23,5 +23,17 @@ Window.load_resources do
 
   Window.loop do
     view.draw_grid(8, 10)
+
+    circuit.plus_poles.each { |pole|
+      view.draw_plus_pole(pole)
+    }
+
+    circuit.minus_poles.each { |pole|
+      view.draw_minus_pole(pole)
+    }
+
+    circuit.edges.each { |edge|
+      view.draw_edge(edge)
+    }
   end
 end
