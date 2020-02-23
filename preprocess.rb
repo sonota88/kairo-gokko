@@ -3,7 +3,6 @@
 require "json"
 
 require "./circuit"
-require "./unit"
 require "./libo_draw"
 
 path = ARGV[0]

@@ -1,7 +1,6 @@
 # coding: utf-8
 
 require "./circuit"
-require "./unit"
 require "./view"
 
 # pixels per cell

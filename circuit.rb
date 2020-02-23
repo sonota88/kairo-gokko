@@ -1,4 +1,7 @@
 # coding: utf-8
+
+require "./unit"
+
 class Circuit
   attr_reader :edges
   attr_reader :plus_poles
