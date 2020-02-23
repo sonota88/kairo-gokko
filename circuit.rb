@@ -1,6 +1,10 @@
 # coding: utf-8
 
-require "./unit"
+if RUBY_ENGINE == "opal"
+  require_remote "./unit.rb"
+else
+  require "./unit"
+end
 
 class Circuit
   attr_reader :edges

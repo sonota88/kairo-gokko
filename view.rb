@@ -1,4 +1,5 @@
-require "./drawer"
+# require "./drawer"
+require_remote "./drawer_dxopal.rb"
 
 class View
   def initialize(ppc)
