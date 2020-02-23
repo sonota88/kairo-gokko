@@ -1,7 +1,7 @@
 Gemfile.lock
 /.bundle/
 
-data.rb
-dxopal.min.js
+/data.rb
+/dxopal.min.js
 
 z_*
