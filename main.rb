@@ -1,5 +1,10 @@
 require 'dxopal'
 include DXOpal
+
+require_remote "./data.rb"
+
+puts $data_json
+
 Window.load_resources do
   Window.bgcolor = C_BLACK
 
