@@ -223,4 +223,8 @@ class Circuit
     )
   end
 
+  def pretty_inspect
+    to_plain.pretty_inspect
+  end
+
 end
