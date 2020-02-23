@@ -22,6 +22,9 @@ Window.load_resources do
   Window.bgcolor = C_BLACK
 
   Window.loop do
+    mx = (Input.mouse_x / PPC).floor
+    my = (Input.mouse_y / PPC).floor
+
     view.draw_grid(8, 10)
 
     circuit.plus_poles.each { |pole|
@@ -35,5 +38,7 @@ Window.load_resources do
     circuit.edges.each { |edge|
       view.draw_edge(edge)
     }
+
+    view.draw_cursor_highlight(mx, my)
   end
 end
