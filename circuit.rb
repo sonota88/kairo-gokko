@@ -1,4 +1,7 @@
 # coding: utf-8
+
+require "./unit"
+
 class Circuit
   attr_reader :edges
   attr_reader :plus_poles
@@ -8,6 +11,26 @@ class Circuit
     @edges = edges
     @plus_poles = plus_poles
     @minus_poles = minus_poles
+  end
+
+  def to_plain
+    {
+      edges:       @edges      .map { |it| it.to_plain },
+      plus_poles:  @plus_poles .map { |it| it.to_plain },
+      minus_poles: @minus_poles.map { |it| it.to_plain }
+    }
+  end
+
+  def self.from_plain(plain)
+    edges       = plain["edges"      ].map { |it| Unit::Edge     .from_plain(it) }
+    plus_poles  = plain["plus_poles" ].map { |it| Unit::PlusPole .from_plain(it) }
+    minus_poles = plain["minus_poles"].map { |it| Unit::MinusPole.from_plain(it) }
+
+    Circuit.new(
+      edges,
+      plus_poles,
+      minus_poles
+    )
   end
 
   def self.to_plus_pole(rect)
@@ -213,6 +236,10 @@ class Circuit
       plus_poles,
       minus_poles
     )
+  end
+
+  def pretty_inspect
+    to_plain.pretty_inspect
   end
 
 end
