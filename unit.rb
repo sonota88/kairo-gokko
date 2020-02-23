@@ -8,6 +8,13 @@ module Unit
       @y = y
     end
 
+    def to_plain
+      {
+        x: @x,
+        y: @y
+      }
+    end
+
     def hash
       [@x, @y].hash
     end
@@ -36,6 +43,13 @@ module Unit
       @pos1 = pt1
       @pos2 = pt2
       @visited = false
+    end
+
+    def to_plain
+      {
+        pos1: @pos1.to_plain,
+        pos2: @pos2.to_plain
+      }
     end
 
     def x1; @pos1.x; end
@@ -87,6 +101,14 @@ module Unit
       @pos2 = pos2
       @wfs = wfs
     end
+
+    def to_plain
+      {
+        pos1: @pos1.to_plain,
+        pos2: @pos2.to_plain,
+        wfs: @wfs.map { |it| it.to_plain }
+      }
+    end
   end
 
   class SingleCell
@@ -101,9 +123,19 @@ module Unit
   end
 
   class PlusPole < SingleCell
+    def to_plain
+      {
+        pos: @pos.to_plain
+      }
+    end
   end
 
   class MinusPole < SingleCell
+    def to_plain
+      {
+        pos: @pos.to_plain
+      }
+    end
   end
 
 end

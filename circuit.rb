@@ -10,6 +10,14 @@ class Circuit
     @minus_poles = minus_poles
   end
 
+  def to_plain
+    {
+      edges: @edges.map { |it| it.to_plain },
+      plus_poles: @plus_poles.map { |it| it.to_plain },
+      minus_poles: @minus_poles.map { |it| it.to_plain }
+    }
+  end
+
   def self.to_plus_pole(rect)
     pos = Point(
       rect.x.floor,
