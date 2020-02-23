@@ -2,8 +2,17 @@ require 'dxopal'
 include DXOpal
 
 require_remote "./data.rb"
+require_remote "./circuit.rb"
 
-puts $data_json
+def parse_json(json)
+  Native(`JSON.parse(json)`)
+end
+
+circuit = Circuit.from_plain(
+  parse_json($data_json)
+)
+
+puts circuit
 
 Window.load_resources do
   Window.bgcolor = C_BLACK
