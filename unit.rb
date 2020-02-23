@@ -15,6 +15,13 @@ module Unit
       }
     end
 
+    def self.from_plain(plain)
+      Point.new(
+        plain["x"],
+        plain["y"]
+      )
+    end
+
     def hash
       [@x, @y].hash
     end
@@ -50,6 +57,13 @@ module Unit
         pos1: @pos1.to_plain,
         pos2: @pos2.to_plain
       }
+    end
+
+    def self.from_plain(plain)
+      WireFragment.new(
+        Point.from_plain(plain["pos1"]),
+        Point.from_plain(plain["pos2"])
+      )
     end
 
     def x1; @pos1.x; end
@@ -109,6 +123,16 @@ module Unit
         wfs: @wfs.map { |it| it.to_plain }
       }
     end
+
+    def self.from_plain(plain)
+      Edge.new(
+        Point.from_plain(plain["pos1"]),
+        Point.from_plain(plain["pos2"]),
+        plain["wfs"].map { |it|
+          WireFragment.from_plain(it)
+        }
+      )
+    end
   end
 
   class SingleCell
@@ -128,6 +152,12 @@ module Unit
         pos: @pos.to_plain
       }
     end
+
+    def self.from_plain(plain)
+      PlusPole.new(
+        Point.from_plain(plain["pos"])
+      )
+    end
   end
 
   class MinusPole < SingleCell
@@ -135,6 +165,12 @@ module Unit
       {
         pos: @pos.to_plain
       }
+    end
+
+    def self.from_plain(plain)
+      MinusPole.new(
+        Point.from_plain(plain["pos"])
+      )
     end
   end
 
