@@ -61,4 +61,11 @@ class View
     }
   end
 
+  def draw_cursor_highlight(x, y)
+    @drawer.draw_box(
+      x + 0, y + 0,
+      x + 1, y + 1,
+      [255, 230, 0]
+    )
+  end
 end
