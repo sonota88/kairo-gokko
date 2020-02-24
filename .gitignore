@@ -1,5 +1,6 @@
 Gemfile.lock
 /.bundle/
+/vendor/bundle/
 
 /data.rb
 /dxopal.min.js
