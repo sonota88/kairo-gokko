@@ -2,6 +2,9 @@
 require_remote "./drawer_dxopal.rb"
 
 class View
+  C_INACTIVE = [255,  40, 100,   0]
+  C_ACTIVE   = [255, 130, 255,   0]
+
   def initialize(ppc)
     @drawer = Drawer.new(ppc)
   end
