@@ -59,6 +59,10 @@ Window.load_resources do
       view.draw_edge(edge)
     }
 
+    circuit.switches.each { |switch|
+      view.draw_switch(switch)
+    }
+
     view.draw_cursor_highlight(mx, my)
   end
 end
