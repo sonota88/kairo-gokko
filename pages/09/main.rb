@@ -18,7 +18,7 @@ circuit = Circuit.from_plain(
 
 view = View.new(PPC)
 
-Sound.register(:click, "click.wav")
+Sound.register(:click, "../click.wav")
 
 Window.load_resources do
   Window.bgcolor = C_BLACK
