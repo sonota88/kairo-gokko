@@ -3,6 +3,7 @@ Gemfile.lock
 
 /data.rb
 /dxopal.min.js
+/*.wav
 
 z_*
 *#
