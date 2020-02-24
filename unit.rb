@@ -174,6 +174,27 @@ module Unit
     end
   end
 
+  class Switch < SingleCell
+    def initialize(pos)
+      super
+
+      # ON: true / OFF: false
+      @state = false
+    end
+
+    def to_plain
+      {
+        pos: @pos.to_plain
+      }
+    end
+
+    def self.from_plain(plain)
+      Switch.new(
+        Point.from_plain(plain["pos"])
+      )
+    end
+  end
+
 end
 
 def Point(x, y)
