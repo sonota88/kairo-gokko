@@ -2,6 +2,7 @@
 require_remote "./drawer_dxopal.rb"
 
 class View
+  C_GRID     = [255,  40,  40,  40]
   C_INACTIVE = [255,  40, 100,   0]
   C_ACTIVE   = [255, 130, 255,   0]
 
@@ -10,16 +11,14 @@ class View
   end
 
   def draw_grid(w, h)
-    color = [60, 60, 60]
-
     # tate
     (1..w).each { |x|
-      @drawer.draw_line(x, 0, x, h, color)
+      @drawer.draw_line(x, 0, x, h, C_GRID)
     }
 
     # yoko
     (1..h).each { |y|
-      @drawer.draw_line(0, y, w, y, color)
+      @drawer.draw_line(0, y, w, y, C_GRID)
     }
   end
 
