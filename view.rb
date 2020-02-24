@@ -24,6 +24,11 @@ class View
   end
 
   def draw_plus_pole(pole)
+    @drawer.draw_box_fill(
+      pole.x + 0.1, pole.y + 0.1,
+      pole.x + 0.9, pole.y + 0.9,
+      C_BLACK
+    )
     @drawer.draw_box(
       pole.x + 0.1, pole.y + 0.1,
       pole.x + 0.9, pole.y + 0.9,
@@ -42,6 +47,11 @@ class View
   end
 
   def draw_minus_pole(pole)
+    @drawer.draw_box_fill(
+      pole.x + 0.1, pole.y + 0.1,
+      pole.x + 0.9, pole.y + 0.9,
+      C_BLACK
+    )
     @drawer.draw_box(
       pole.x + 0.1, pole.y + 0.1,
       pole.x + 0.9, pole.y + 0.9,
