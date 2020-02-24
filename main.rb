@@ -2,7 +2,12 @@ def browser?
   Kernel.const_defined?(:Native)
 end
 
-require 'dxopal'
+if browser?
+  require "dxopal"
+else
+  require "./dxopal_sdl"
+end
+
 include DXOpal
 
 require_remote "./data.rb"
