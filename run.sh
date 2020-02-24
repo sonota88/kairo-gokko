@@ -7,4 +7,8 @@ bundle exec ruby gen_sound.rb \
 
 ruby preprocess.rb "$@" > data.rb
 
-bundle exec dxopal server
+if [ "$BROWSER" = "1" ]; then
+  bundle exec dxopal server
+else
+  bundle exec ruby main.rb
+fi

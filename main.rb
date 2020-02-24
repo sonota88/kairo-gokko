@@ -1,4 +1,13 @@
-require 'dxopal'
+def browser?
+  Kernel.const_defined?(:Native)
+end
+
+if browser?
+  require "dxopal"
+else
+  require "./dxopal_sdl"
+end
+
 include DXOpal
 
 require_remote "./data.rb"
@@ -9,7 +18,12 @@ require_remote "./view.rb"
 PPC = 30
 
 def parse_json(json)
-  Native(`JSON.parse(json)`)
+  if browser?
+    Native(`JSON.parse(json)`)
+  else
+    require "json"
+    JSON.parse(json)
+  end
 end
 
 circuit = Circuit.from_plain(
