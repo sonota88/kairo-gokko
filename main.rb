@@ -1,3 +1,7 @@
+def browser?
+  Kernel.const_defined?(:Native)
+end
+
 require 'dxopal'
 include DXOpal
 
