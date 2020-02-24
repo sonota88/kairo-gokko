@@ -18,12 +18,18 @@ circuit = Circuit.from_plain(
 
 view = View.new(PPC)
 
+Sound.register(:click, "click.wav")
+
 Window.load_resources do
   Window.bgcolor = C_BLACK
 
   Window.loop do
     mx = (Input.mouse_x / PPC).floor
     my = (Input.mouse_y / PPC).floor
+
+    if Input.mouse_push?(M_LBUTTON)
+      Sound[:click].play
+    end
 
     view.draw_grid(8, 10)
 
