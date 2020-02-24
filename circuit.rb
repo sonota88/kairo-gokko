@@ -55,6 +55,15 @@ class Circuit
     Unit::MinusPole.new(pos)
   end
 
+  def self.to_switch(rect)
+    pos = Point(
+      rect.x.floor,
+      rect.y.floor
+    )
+
+    Unit::Switch.new(pos)
+  end
+
   def self.to_wire_fragments(lines)
     wf_set = Set.new
 
