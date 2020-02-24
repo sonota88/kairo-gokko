@@ -3,6 +3,7 @@ require_remote "./drawer_dxopal.rb"
 
 class View
   C_GRID     = [255,  40,  40,  40]
+  C_POLE     = [255, 160, 160, 160]
   C_INACTIVE = [255,  40, 100,   0]
   C_ACTIVE   = [255, 130, 255,   0]
 
@@ -31,17 +32,17 @@ class View
     @drawer.draw_box(
       pole.x + 0.1, pole.y + 0.1,
       pole.x + 0.9, pole.y + 0.9,
-      C_WHITE
+      C_POLE
     )
     @drawer.draw_line(
       pole.x + 0.3, pole.y + 0.5,
       pole.x + 0.7, pole.y + 0.5,
-      C_WHITE
+      C_POLE
     )
     @drawer.draw_line(
       pole.x + 0.5, pole.y + 0.3,
       pole.x + 0.5, pole.y + 0.7,
-      C_WHITE
+      C_POLE
     )
   end
 
@@ -54,12 +55,12 @@ class View
     @drawer.draw_box(
       pole.x + 0.1, pole.y + 0.1,
       pole.x + 0.9, pole.y + 0.9,
-      C_WHITE
+      C_POLE
     )
     @drawer.draw_line(
       pole.x + 0.3, pole.y + 0.5,
       pole.x + 0.7, pole.y + 0.5,
-      C_WHITE
+      C_POLE
     )
   end
 
