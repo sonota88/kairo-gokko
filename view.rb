@@ -51,6 +51,26 @@ class View
     )
   end
 
+  def draw_switch(switch)
+    @drawer.draw_box_fill(
+      switch.x + 0.1, switch.y + 0.1,
+      switch.x + 0.9, switch.y + 0.9,
+      C_BLACK
+    )
+
+    @drawer.draw_box(
+      switch.x + 0.1, switch.y + 0.1,
+      switch.x + 0.9, switch.y + 0.9,
+      C_WHITE
+    )
+
+    @drawer.draw_box_fill(
+      switch.x + 0.3, switch.y + 0.6,
+      switch.x + 0.7, switch.y + 0.7,
+      C_WHITE
+    )
+  end
+
   def draw_edge(edge)
     edge.wfs.each { |wf|
       @drawer.draw_line(
