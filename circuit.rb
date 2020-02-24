@@ -10,11 +10,13 @@ class Circuit
   attr_reader :edges
   attr_reader :plus_poles
   attr_reader :minus_poles
+  attr_reader :switches
 
-  def initialize(edges, plus_poles, minus_poles)
+  def initialize(edges, plus_poles, minus_poles, switches)
     @edges = edges
     @plus_poles = plus_poles
     @minus_poles = minus_poles
+    @switches = switches
   end
 
   def to_plain
@@ -241,13 +243,19 @@ class Circuit
         .select { |rect| rect.text == "-" }
         .map { |rect| to_minus_pole(rect) }
 
+    switches =
+      rects
+        .select { |rect| rect.text == "sw" }
+        .map { |rect| to_switch(rect) }
+
     wf_set = to_wire_fragments(lines)
     edges = to_edges(wf_set)
 
     Circuit.new(
       edges,
       plus_poles,
-      minus_poles
+      minus_poles,
+      switches
     )
   end
 
