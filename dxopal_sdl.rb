@@ -46,6 +46,14 @@ module DXOpal
         @@bgcolor = color
       end
 
+      def to_rgb_a(color)
+        if color.size == 4
+          [color[1..3], color[0]]
+        else
+          [color, 255]
+        end
+      end
+
       def load_resources
         SDL.init(SDL::INIT_EVERYTHING)
 
