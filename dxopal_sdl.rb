@@ -106,55 +106,58 @@ module DXOpal
       end
 
       def draw_line(x1, y1, x2, y2, color, z=0)
+        rgb, alpha = to_rgb_a(color)
+
         @@screen.draw_line(
-          x1, y1, x2, y2, color,
+          x1, y1, x2, y2, rgb,
           false, # antialias
-          nil    # alpha
+          alpha
         )
       end
 
       def draw_box(x1, y1, x2, y2, color, z=0)
+        rgb, alpha = to_rgb_a(color)
         w = x2 - x1
         h = y2 - y1
 
         @@screen.draw_rect(
-          x1, y1, w, h, color,
+          x1, y1, w, h, rgb,
           false, # fill
-          nil    # alpha
+          alpha
         )
       end
 
       def draw_box_fill(x1, y1, x2, y2, color, z=0)
+        rgb, alpha = to_rgb_a(color)
         w = x2 - x1
         h = y2 - y1
+
         @@screen.draw_rect(
-          x1, y1, w, h, color,
+          x1, y1, w, h, rgb,
           true, # fill
-          nil   # alpha
+          alpha
         )
       end
 
       def draw_circle(x, y, r, color, z=0)
+        rgb, alpha = to_rgb_a(color)
+
         @@screen.draw_circle(
-          x, y, r, color,
+          x, y, r, rgb,
           false, # fill
           false, # antialias
-          nil    # alpha
+          alpha
         )
       end
 
       def draw_circle_fill(x, y, r, color, z=0)
-        alpha = 255
-        if color.is_a?(Array) && color.size == 4
-          alpha = color[3]
-          color = color[0..2]
-        end
+        rgb, alpha = to_rgb_a(color)
 
         @@screen.draw_circle(
-          x, y, r, color,
+          x, y, r, rgb,
           true,  # fill
           false, # antialias
-          alpha  # alpha
+          alpha
         )
       end
     end
