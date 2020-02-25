@@ -43,12 +43,12 @@ module DXOpal
       end
 
       def bgcolor=(color)
-        @@dxopal_window_bgcolor = color
+        @@bgcolor = color
 
         @@screen.fill_rect(
           0, 0,
           @@width, @@height,
-          color
+          @@bgcolor
         )
       end
 
