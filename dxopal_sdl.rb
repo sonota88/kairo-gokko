@@ -217,9 +217,9 @@ module DXOpal
       end
 
       def mouse_push?(mouse_code)
-        ret = @@mouse_pushed_map[mouse_code]
+        pushed = @@mouse_pushed_map[mouse_code]
         @@mouse_pushed_map[mouse_code] = nil
-        ret
+        pushed
       end
     end
   end
