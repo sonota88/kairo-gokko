@@ -123,27 +123,11 @@ module DXOpal
       end
 
       def draw_box(x1, y1, x2, y2, color, z=0)
-        rgb, alpha = to_rgb_a(color)
-        w = x2 - x1
-        h = y2 - y1
-
-        @@screen.draw_rect(
-          x1, y1, w, h, rgb,
-          false, # fill
-          alpha
-        )
+        sdl_draw_box(x1, y1, x2, y2, color, false)
       end
 
       def draw_box_fill(x1, y1, x2, y2, color, z=0)
-        rgb, alpha = to_rgb_a(color)
-        w = x2 - x1
-        h = y2 - y1
-
-        @@screen.draw_rect(
-          x1, y1, w, h, rgb,
-          true, # fill
-          alpha
-        )
+        sdl_draw_box(x1, y1, x2, y2, color, true)
       end
 
       def draw_circle(x, y, r, color, z=0)
