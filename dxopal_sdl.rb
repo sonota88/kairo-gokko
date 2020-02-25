@@ -114,6 +114,14 @@ module DXOpal
         )
       end
 
+      def sdl_draw_box(x1, y1, x2, y2, color, fill)
+        rgb, alpha = to_rgb_a(color)
+        w = x2 - x1
+        h = y2 - y1
+
+        @@screen.draw_rect(x1, y1, w, h, rgb, fill, alpha)
+      end
+
       def draw_box(x1, y1, x2, y2, color, z=0)
         rgb, alpha = to_rgb_a(color)
         w = x2 - x1
