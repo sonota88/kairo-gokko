@@ -110,12 +110,9 @@ module DXOpal
 
       def draw_line(x1, y1, x2, y2, color, z=0)
         rgb, alpha = to_rgb_a(color)
+        antialias = false
 
-        @@screen.draw_line(
-          x1, y1, x2, y2, rgb,
-          false, # antialias
-          alpha
-        )
+        @@screen.draw_line(x1, y1, x2, y2, rgb, antialias, alpha)
       end
 
       def sdl_draw_box(x1, y1, x2, y2, color, fill)
