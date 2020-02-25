@@ -21,9 +21,8 @@ module DXOpal
   @@p_count = 0
 
   def self.p_(*args)
-    args.each { |arg| p arg }
+    args.each { |arg| p arg } if @@p_count < 10
     @@p_count += 1
-    raise if @@p_count >= 10
   end
 
   module Window
