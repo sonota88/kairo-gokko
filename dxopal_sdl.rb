@@ -164,15 +164,14 @@ module DXOpal
       def [](name)
         sound = @@map[name][:sound]
 
-        if sound
-          sound
-        else
+        unless sound
           path = @@map[name][:path]
           wave = SDL::Mixer::Wave.load(path)
           sound = Sound.new(wave)
           @@map[name][:sound] = sound
-          sound
         end
+
+        sound
       end
     end
 
