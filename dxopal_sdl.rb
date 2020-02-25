@@ -13,8 +13,8 @@ end
 
 module DXOpal
 
-  C_BLACK = [0, 0, 0]
-  C_WHITE = [255, 255, 255]
+  C_BLACK = [255,   0,   0,   0]
+  C_WHITE = [255, 255, 255, 255]
 
   M_LBUTTON = :m_lbutton
 
