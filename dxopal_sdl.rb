@@ -138,25 +138,11 @@ module DXOpal
       end
 
       def draw_circle(x, y, r, color, z=0)
-        rgb, alpha = to_rgb_a(color)
-
-        @@screen.draw_circle(
-          x, y, r, rgb,
-          false, # fill
-          false, # antialias
-          alpha
-        )
+        sdl_draw_circle(x, y, r, color, false)
       end
 
       def draw_circle_fill(x, y, r, color, z=0)
-        rgb, alpha = to_rgb_a(color)
-
-        @@screen.draw_circle(
-          x, y, r, rgb,
-          true,  # fill
-          false, # antialias
-          alpha
-        )
+        sdl_draw_circle(x, y, r, color, true)
       end
     end
   end
