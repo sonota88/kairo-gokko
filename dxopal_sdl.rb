@@ -189,9 +189,9 @@ module DXOpal
   end
 
   module Input
-    @@mouse_pushed_map = {
-      m_lbutton: false
-    }
+    @@mouse_pushed_map = {}
+    @@mouse_pushed_map[M_LBUTTON] = false
+
     @@mouse_x = 0
     @@mouse_y = 0
 
