@@ -44,12 +44,6 @@ module DXOpal
 
       def bgcolor=(color)
         @@bgcolor = color
-
-        @@screen.fill_rect(
-          0, 0,
-          @@width, @@height,
-          @@bgcolor
-        )
       end
 
       def load_resources
@@ -96,6 +90,7 @@ module DXOpal
 
           if @@last_update + interval_sec < Time.now
             @@last_update = Time.now
+            @@screen.fill_rect(0, 0, @@width, @@height, @@bgcolor)
             yield
             @@screen.update_rect(0, 0, 0, 0)
           end
