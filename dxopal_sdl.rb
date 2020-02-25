@@ -130,6 +130,13 @@ module DXOpal
         sdl_draw_box(x1, y1, x2, y2, color, true)
       end
 
+      def sdl_draw_circle(x, y, r, color, fill)
+        rgb, alpha = to_rgb_a(color)
+        antialias = false
+
+        @@screen.draw_circle(x, y, r, rgb, fill, antialias, alpha)
+      end
+
       def draw_circle(x, y, r, color, z=0)
         rgb, alpha = to_rgb_a(color)
 
