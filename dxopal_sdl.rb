@@ -86,6 +86,10 @@ module DXOpal
         end
       end
 
+      def fill_bg
+        draw_box_fill(0, 0, @@width, @@height, @@bgcolor)
+      end
+
       def loop
         fps = 10
         interval_sec = 1 / fps.to_f
@@ -97,7 +101,7 @@ module DXOpal
 
           if @@last_update + interval_sec < Time.now
             @@last_update = Time.now
-            @@screen.fill_rect(0, 0, @@width, @@height, @@bgcolor)
+            fill_bg
             yield
             @@screen.update_rect(0, 0, 0, 0)
           end
