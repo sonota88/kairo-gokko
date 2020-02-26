@@ -153,7 +153,6 @@ module DXOpal
 
     class << self
       def register(name, *args, &block)
-        name = name
         path, _ = args
         @@map[name] = {
           path: path,
