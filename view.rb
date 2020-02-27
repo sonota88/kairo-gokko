@@ -6,6 +6,7 @@ class View
   C_POLE     = [255, 160, 160, 160]
   C_INACTIVE = [255,  40, 100,   0]
   C_ACTIVE   = [255, 130, 255,   0]
+  C_CURSOR   = [127, 255, 120,   0]
 
   def initialize(ppc)
     @drawer = Drawer.new(ppc)
@@ -98,7 +99,7 @@ class View
     @drawer.draw_box(
       x + 0, y + 0,
       x + 1, y + 1,
-      [255, 230, 0]
+      C_CURSOR
     )
   end
 end
