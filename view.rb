@@ -64,13 +64,13 @@ class View
     @drawer.draw_box(
       switch.x + 0.1, switch.y + 0.1,
       switch.x + 0.9, switch.y + 0.9,
-      C_WHITE
+      C_INACTIVE
     )
 
     @drawer.draw_box_fill(
       switch.x + 0.3, switch.y + 0.6,
       switch.x + 0.7, switch.y + 0.7,
-      C_WHITE
+      C_INACTIVE
     )
   end
 
@@ -79,7 +79,7 @@ class View
       @drawer.draw_line(
         wf.x1 + 0.5, wf.y1 + 0.5,
         wf.x2 + 0.5, wf.y2 + 0.5,
-        C_WHITE
+        C_INACTIVE
       )
     }
   end
