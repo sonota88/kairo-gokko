@@ -47,6 +47,10 @@ Window.load_resources do
 
     view.draw_grid(8, 10)
 
+    circuit.edges.each { |edge|
+      view.draw_edge(edge)
+    }
+
     circuit.plus_poles.each { |pole|
       view.draw_plus_pole(pole)
     }
@@ -55,8 +59,8 @@ Window.load_resources do
       view.draw_minus_pole(pole)
     }
 
-    circuit.edges.each { |edge|
-      view.draw_edge(edge)
+    circuit.switches.each { |switch|
+      view.draw_switch(switch)
     }
 
     view.draw_cursor_highlight(mx, my)

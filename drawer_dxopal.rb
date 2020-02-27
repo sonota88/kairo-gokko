@@ -18,4 +18,12 @@ class Drawer
       color
     )
   end
+
+  def draw_box_fill(x1, y1, x2, y2, color)
+    Window.draw_box_fill(
+      x1 * @ppc, y1 * @ppc,
+      x2 * @ppc, y2 * @ppc,
+      color
+    )
+  end
 end
