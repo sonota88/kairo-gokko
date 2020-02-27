@@ -13,17 +13,16 @@ end
 
 module DXOpal
 
-  C_BLACK = [0, 0, 0]
-  C_WHITE = [255, 255, 255]
+  C_BLACK = [255,   0,   0,   0]
+  C_WHITE = [255, 255, 255, 255]
 
   M_LBUTTON = :m_lbutton
 
   @@p_count = 0
 
   def self.p_(*args)
-    args.each { |arg| p arg }
+    args.each { |arg| p arg } if @@p_count < 10
     @@p_count += 1
-    raise if @@p_count >= 10
   end
 
   module Window
@@ -43,13 +42,15 @@ module DXOpal
       end
 
       def bgcolor=(color)
-        @@dxopal_window_bgcolor = color
+        @@bgcolor = color
+      end
 
-        @@screen.fill_rect(
-          0, 0,
-          @@width, @@height,
-          color
-        )
+      def to_rgb_a(color)
+        if color.size == 4
+          [color[1..3], color[0]]
+        else
+          [color, 255]
+        end
       end
 
       def load_resources
@@ -85,6 +86,10 @@ module DXOpal
         end
       end
 
+      def fill_bg
+        draw_box_fill(0, 0, @@width, @@height, @@bgcolor)
+      end
+
       def loop
         fps = 10
         interval_sec = 1 / fps.to_f
@@ -96,6 +101,7 @@ module DXOpal
 
           if @@last_update + interval_sec < Time.now
             @@last_update = Time.now
+            fill_bg
             yield
             @@screen.update_rect(0, 0, 0, 0)
           end
@@ -103,56 +109,41 @@ module DXOpal
       end
 
       def draw_line(x1, y1, x2, y2, color, z=0)
-        @@screen.draw_line(
-          x1, y1, x2, y2, color,
-          false, # antialias
-          nil    # alpha
-        )
+        rgb, alpha = to_rgb_a(color)
+        antialias = false
+
+        @@screen.draw_line(x1, y1, x2, y2, rgb, antialias, alpha)
+      end
+
+      def sdl_draw_box(x1, y1, x2, y2, color, fill)
+        rgb, alpha = to_rgb_a(color)
+        w = x2 - x1
+        h = y2 - y1
+
+        @@screen.draw_rect(x1, y1, w, h, rgb, fill, alpha)
       end
 
       def draw_box(x1, y1, x2, y2, color, z=0)
-        w = x2 - x1
-        h = y2 - y1
-
-        @@screen.draw_rect(
-          x1, y1, w, h, color,
-          false, # fill
-          nil    # alpha
-        )
+        sdl_draw_box(x1, y1, x2, y2, color, false)
       end
 
       def draw_box_fill(x1, y1, x2, y2, color, z=0)
-        w = x2 - x1
-        h = y2 - y1
-        @@screen.draw_rect(
-          x1, y1, w, h, color,
-          true, # fill
-          nil   # alpha
-        )
+        sdl_draw_box(x1, y1, x2, y2, color, true)
+      end
+
+      def sdl_draw_circle(x, y, r, color, fill)
+        rgb, alpha = to_rgb_a(color)
+        antialias = false
+
+        @@screen.draw_circle(x, y, r, rgb, fill, antialias, alpha)
       end
 
       def draw_circle(x, y, r, color, z=0)
-        @@screen.draw_circle(
-          x, y, r, color,
-          false, # fill
-          false, # antialias
-          nil    # alpha
-        )
+        sdl_draw_circle(x, y, r, color, false)
       end
 
       def draw_circle_fill(x, y, r, color, z=0)
-        alpha = 255
-        if color.is_a?(Array) && color.size == 4
-          alpha = color[3]
-          color = color[0..2]
-        end
-
-        @@screen.draw_circle(
-          x, y, r, color,
-          true,  # fill
-          false, # antialias
-          alpha  # alpha
-        )
+        sdl_draw_circle(x, y, r, color, true)
       end
     end
   end
@@ -162,7 +153,6 @@ module DXOpal
 
     class << self
       def register(name, *args, &block)
-        name = name
         path, _ = args
         @@map[name] = {
           path: path,
@@ -173,15 +163,14 @@ module DXOpal
       def [](name)
         sound = @@map[name][:sound]
 
-        if sound
-          sound
-        else
+        unless sound
           path = @@map[name][:path]
           wave = SDL::Mixer::Wave.load(path)
           sound = Sound.new(wave)
           @@map[name][:sound] = sound
-          sound
         end
+
+        sound
       end
     end
 
@@ -195,9 +184,9 @@ module DXOpal
   end
 
   module Input
-    @@mouse_pushed_map = {
-      m_lbutton: false
-    }
+    @@mouse_pushed_map = {}
+    @@mouse_pushed_map[M_LBUTTON] = false
+
     @@mouse_x = 0
     @@mouse_y = 0
 
@@ -223,9 +212,9 @@ module DXOpal
       end
 
       def mouse_push?(mouse_code)
-        ret = @@mouse_pushed_map[mouse_code]
+        pushed = @@mouse_pushed_map[mouse_code]
         @@mouse_pushed_map[mouse_code] = nil
-        ret
+        pushed
       end
     end
   end
