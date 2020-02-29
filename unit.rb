@@ -205,7 +205,6 @@ module Unit
 
     def toggle
       @state = ! @state
-      p "switch #{@state}"
     end
 
     def on?

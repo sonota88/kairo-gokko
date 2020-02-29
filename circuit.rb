@@ -266,7 +266,6 @@ class Circuit
   def update_edges
     is_tuden = Tuden.tuden?(@switches[0])
     @edges[0].update(is_tuden)
-    p "edge #{@edges[0].tuden?}"
   end
 
   def pretty_inspect
