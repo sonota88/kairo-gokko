@@ -114,6 +114,7 @@ module Unit
       @pos1 = pos1
       @pos2 = pos2
       @wfs = wfs
+      @state = false
     end
 
     def to_plain
