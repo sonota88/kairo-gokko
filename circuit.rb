@@ -263,13 +263,54 @@ class Circuit
     )
   end
 
+  def update_4_edges
+    edges_connected_to_plus =
+      @edges.select { |edge|
+        edge.connected_to?(@plus_poles[0].pos)
+      }
+    edges_connected_to_minus =
+      @edges.select { |edge|
+        edge.connected_to?(@minus_poles[0].pos)
+      }
+
+    if edges_connected_to_plus.size == 1 &&
+       edges_connected_to_minus.size == 1
+      # OK
+    else
+      raise "not yet implemented"
+    end
+
+    edge_connected_to_plus = edges_connected_to_plus[0]
+    edge_connected_to_minus = edges_connected_to_minus[0]
+
+    center_edges =
+      @edges.reject { |edge|
+        edge == edge_connected_to_plus ||
+        edge == edge_connected_to_minus
+      }
+
+    center_edges.each { |edge|
+      switches = @switches.select { |switch|
+        edge.include_pos?(switch.pos)
+      }
+      is_tuden = Tuden.tuden?(switches)
+      edge.update(is_tuden)
+    }
+
+    is_tuden_center =
+      center_edges.any? { |edge| edge.on? }
+
+    edge_connected_to_plus.update(is_tuden_center)
+    edge_connected_to_minus.update(is_tuden_center)
+  end
+
   def update_edges
     case @edges.size
     when 1
       is_tuden = Tuden.tuden?(@switches)
       @edges[0].update(is_tuden)
     when 4
-      raise "not yet implemented"
+      update_4_edges()
     else
       raise "not yet implemented"
     end
