@@ -48,10 +48,9 @@ Window.load_resources do
         circuit.switches.find { |switch| switch.pos == mpos }
 
       if pushed_switch
+        Sound[:click].play
         pushed_switch.toggle()
       end
-
-      Sound[:click].play
     end
 
     view.draw_grid(8, 10)
