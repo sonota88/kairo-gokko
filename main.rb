@@ -42,6 +42,15 @@ Window.load_resources do
     my = (Input.mouse_y / PPC).floor
 
     if Input.mouse_push?(M_LBUTTON)
+      mpos = Point(mx, my)
+
+      pushed_switch =
+        circuit.switches.find { |switch| switch.pos == mpos }
+
+      if pushed_switch
+        pushed_switch.toggle()
+      end
+
       Sound[:click].play
     end
 

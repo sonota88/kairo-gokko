@@ -193,6 +193,11 @@ module Unit
         Point.from_plain(plain["pos"])
       )
     end
+
+    def toggle
+      @state = ! @state
+      p @state
+    end
   end
 
 end
