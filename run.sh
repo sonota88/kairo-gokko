@@ -3,7 +3,7 @@
 set -o errexit
 
 bundle exec ruby gen_sound.rb \
-  out=click.wav amp=0.1 msec=30 hz=1000
+  out=click.wav amp=0.05 msec=30 hz=1000
 
 ruby preprocess.rb "$@" > data.rb
 
