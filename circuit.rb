@@ -264,7 +264,7 @@ class Circuit
   end
 
   def update_edges
-    is_tuden = Tuden.tuden?(@switches[0])
+    is_tuden = Tuden.tuden?(@switches)
     @edges[0].update(is_tuden)
   end
 

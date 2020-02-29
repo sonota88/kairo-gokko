@@ -1,5 +1,5 @@
 class Tuden
-  def self.tuden?(switch)
-    switch.on?
+  def self.tuden?(switches)
+    switches.all? { |switch| switch.on? }
   end
 end
