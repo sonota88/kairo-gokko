@@ -134,6 +134,10 @@ module Unit
         }
       )
     end
+
+    def update(state)
+      @state = state
+    end
   end
 
   class SingleCell
