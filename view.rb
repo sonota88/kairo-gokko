@@ -96,11 +96,13 @@ class View
   end
 
   def draw_edge(edge)
+    color = edge.on? ? C_ACTIVE : C_INACTIVE
+
     edge.wfs.each { |wf|
       @drawer.draw_line(
         wf.x1 + 0.5, wf.y1 + 0.5,
         wf.x2 + 0.5, wf.y2 + 0.5,
-        C_INACTIVE
+        color
       )
     }
   end
