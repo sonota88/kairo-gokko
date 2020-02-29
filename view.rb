@@ -80,11 +80,19 @@ class View
       color
     )
 
-    @drawer.draw_box_fill(
-      switch.x + 0.3, switch.y + 0.6,
-      switch.x + 0.7, switch.y + 0.7,
-      color
-    )
+    if switch.on?
+      @drawer.draw_box_fill(
+        switch.x + 0.3, switch.y + 0.3,
+        switch.x + 0.7, switch.y + 0.4,
+        color
+      )
+    else
+      @drawer.draw_box_fill(
+        switch.x + 0.3, switch.y + 0.6,
+        switch.x + 0.7, switch.y + 0.7,
+        color
+      )
+    end
   end
 
   def draw_edge(edge)
