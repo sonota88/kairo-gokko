@@ -7,9 +7,37 @@
     <script type="text/ruby">
       DXOpal.dump_error{ require_remote "main.rb?#{Time.now}" }
     </script>
+
+<style>
+  .loading_container {
+    width: 640px;
+    height: 480px;
+    padding: 1rem;
+    background: #ddd;
+    color: #444;
+    font-weight: bold;
+  }
+
+  .loading {
+    width: 1rem;
+    height: 1rem;
+    background: #444;
+    border-radius: 0.15rem;
+    animation: loading 2s infinite;
+    display: inline-block;
+  }
+  @keyframes loading {
+    0% { transform: rotate(  0deg); }
+    100% { transform: rotate(360deg); }
+  }
+</style>
   </head>
 
   <body>
+    <div class="loading_container">
+      Loading ...
+      <div class="loading"></div>
+    </div>
     <canvas id="dxopal-canvas"></canvas>
     <div id="dxopal-errors"></div>
   </body>
