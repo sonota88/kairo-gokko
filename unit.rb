@@ -114,6 +114,7 @@ module Unit
       @pos1 = pos1
       @pos2 = pos2
       @wfs = wfs
+      @state = false
     end
 
     def to_plain
@@ -132,6 +133,14 @@ module Unit
           WireFragment.from_plain(it)
         }
       )
+    end
+
+    def update(state)
+      @state = state
+    end
+
+    def on?
+      @state
     end
   end
 
@@ -192,6 +201,14 @@ module Unit
       Switch.new(
         Point.from_plain(plain["pos"])
       )
+    end
+
+    def toggle
+      @state = ! @state
+    end
+
+    def on?
+      @state
     end
   end
 

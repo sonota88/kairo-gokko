@@ -42,8 +42,18 @@ Window.load_resources do
     my = (Input.mouse_y / PPC).floor
 
     if Input.mouse_push?(M_LBUTTON)
-      Sound[:click].play
+      mpos = Point(mx, my)
+
+      pushed_switch =
+        circuit.switches.find { |switch| switch.pos == mpos }
+
+      if pushed_switch
+        Sound[:click].play
+        pushed_switch.toggle()
+      end
     end
+
+    circuit.update_edges()
 
     view.draw_grid(8, 10)
 

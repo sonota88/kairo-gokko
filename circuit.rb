@@ -2,6 +2,7 @@
 
 if RUBY_ENGINE == "opal"
   require_remote "./unit.rb"
+  require_remote "./tuden.rb"
 else
   require "./unit"
 end
@@ -260,6 +261,11 @@ class Circuit
       minus_poles,
       switches
     )
+  end
+
+  def update_edges
+    is_tuden = Tuden.tuden?(@switches[0])
+    @edges[0].update(is_tuden)
   end
 
   def pretty_inspect

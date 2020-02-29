@@ -66,6 +66,8 @@ class View
   end
 
   def draw_switch(switch)
+    color = switch.on? ? C_ACTIVE : C_INACTIVE
+
     @drawer.draw_box_fill(
       switch.x + 0.1, switch.y + 0.1,
       switch.x + 0.9, switch.y + 0.9,
@@ -75,22 +77,32 @@ class View
     @drawer.draw_box(
       switch.x + 0.1, switch.y + 0.1,
       switch.x + 0.9, switch.y + 0.9,
-      C_INACTIVE
+      color
     )
 
-    @drawer.draw_box_fill(
-      switch.x + 0.3, switch.y + 0.6,
-      switch.x + 0.7, switch.y + 0.7,
-      C_INACTIVE
-    )
+    if switch.on?
+      @drawer.draw_box_fill(
+        switch.x + 0.3, switch.y + 0.3,
+        switch.x + 0.7, switch.y + 0.4,
+        color
+      )
+    else
+      @drawer.draw_box_fill(
+        switch.x + 0.3, switch.y + 0.6,
+        switch.x + 0.7, switch.y + 0.7,
+        color
+      )
+    end
   end
 
   def draw_edge(edge)
+    color = edge.on? ? C_ACTIVE : C_INACTIVE
+
     edge.wfs.each { |wf|
       @drawer.draw_line(
         wf.x1 + 0.5, wf.y1 + 0.5,
         wf.x2 + 0.5, wf.y2 + 0.5,
-        C_INACTIVE
+        color
       )
     }
   end
