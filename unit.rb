@@ -138,6 +138,10 @@ module Unit
     def update(state)
       @state = state
     end
+
+    def on?
+      @state
+    end
   end
 
   class SingleCell
