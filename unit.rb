@@ -142,6 +142,10 @@ module Unit
     def on?
       @state
     end
+
+    def connected_to?(pos)
+      @pos1 == pos || @pos2 == pos
+    end
   end
 
   class SingleCell
