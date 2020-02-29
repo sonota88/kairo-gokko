@@ -26,6 +26,13 @@ def parse_json(json)
   end
 end
 
+def hide_loading
+  %x{
+    var loadingContainer = document.querySelector(".loading_container");
+    loadingContainer.style.display = "none";
+  }
+end
+
 circuit = Circuit.from_plain(
   parse_json($data_json)
 )
@@ -35,6 +42,8 @@ view = View.new(PPC)
 Sound.register(:click, "click.wav")
 
 Window.load_resources do
+  hide_loading()
+
   Window.bgcolor = C_BLACK
 
   Window.loop do

@@ -103,6 +103,10 @@ module Unit
       return false if other.nil?
       @pos1.eql?(other.pos1) && @pos2.eql?(other.pos2)
     end
+
+    def connected_to?(pos)
+      @pos1 == pos || @pos2 == pos
+    end
   end
 
   class Edge
@@ -141,6 +145,14 @@ module Unit
 
     def on?
       @state
+    end
+
+    def connected_to?(pos)
+      @pos1 == pos || @pos2 == pos
+    end
+
+    def include_pos?(pos)
+      @wfs.any? { |wf| wf.connected_to?(pos) }
     end
   end
 
