@@ -150,6 +150,10 @@ module Unit
     def connected_to?(pos)
       @pos1 == pos || @pos2 == pos
     end
+
+    def include_pos?(pos)
+      @wfs.any? { |wf| wf.connected_to?(pos) }
+    end
   end
 
   class SingleCell
