@@ -264,8 +264,15 @@ class Circuit
   end
 
   def update_edges
-    is_tuden = Tuden.tuden?(@switches)
-    @edges[0].update(is_tuden)
+    case @edges.size
+    when 1
+      is_tuden = Tuden.tuden?(@switches)
+      @edges[0].update(is_tuden)
+    when 4
+      raise "not yet implemented"
+    else
+      raise "not yet implemented"
+    end
   end
 
   def pretty_inspect
