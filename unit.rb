@@ -198,6 +198,10 @@ module Unit
       @state = ! @state
       p @state
     end
+
+    def on?
+      @state
+    end
   end
 
 end
