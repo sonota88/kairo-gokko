@@ -2,6 +2,11 @@
 
 set -o errexit
 
+if [ "$1" = "test" ]; then
+  ruby test/test_tuden.rb
+  exit 0
+fi
+
 bundle exec ruby gen_sound.rb \
   out=click.wav amp=0.05 msec=30 hz=1000
 
