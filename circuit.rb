@@ -304,6 +304,91 @@ class Circuit
     edge_connected_to_minus.update(is_tuden_center)
   end
 
+  def switches_for_edge(edge)
+    @switches.select { |switch|
+      edge.include_pos?(switch.pos)
+    }
+  end
+
+  def pos_set_all
+    pos_set = Set.new
+
+    @edges.each { |edge|
+      pos_set << edge.pos1
+      pos_set << edge.pos2
+    }
+
+    pos_set
+  end
+
+  def prepare_tuden_nodes
+    nid_plus = nil
+    nid_minus = nil
+
+    pos_nid_map = {}
+
+    tnodes = []
+    pos_set_all.each_with_index { |pos, index|
+      nid = index + 1
+
+      tnodes << Tuden::Node.new(nid)
+
+      pos_nid_map[pos] = nid
+
+      if pos == @plus_poles[0].pos
+        nid_plus = nid
+      elsif pos == @minus_poles[0].pos
+        nid_minus = nid
+      end
+    }
+
+    [tnodes, pos_nid_map, nid_plus, nid_minus]
+  end
+
+  def prepare_tuden_edges(pos_nid_map)
+    eid_edge_map = {}
+
+    tedges = []
+    @edges.each_with_index { |edge, index|
+      eid = index + 1
+
+      nid1 = pos_nid_map[edge.pos1]
+      nid2 = pos_nid_map[edge.pos2]
+
+      switches = switches_for_edge(edge)
+
+      tedges <<
+        Tuden::Edge.new(
+          eid, nid1, nid2,
+          switches.all? { |switch| switch.on? }
+        )
+
+      eid_edge_map[eid] = edge
+    }
+
+    [tedges, eid_edge_map]
+  end
+
+  def update_tuden
+    tnodes, pos_nid_map, nid_plus, nid_minus =
+      prepare_tuden_nodes()
+
+    tedges, eid_edge_map =
+      prepare_tuden_edges(pos_nid_map)
+
+    Tuden.update(
+      tedges,
+      tnodes,
+      nid_plus,
+      nid_minus
+    )
+
+    tedges.each { |tedge|
+      edge = eid_edge_map[tedge.id]
+      edge.update(tedge.on?)
+    }
+  end
+
   def update_edges
     case @edges.size
     when 1
@@ -312,7 +397,7 @@ class Circuit
     when 4
       update_4_edges()
     else
-      raise "not yet implemented"
+      update_tuden()
     end
   end
 
