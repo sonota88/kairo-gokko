@@ -64,7 +64,7 @@ Window.load_resources do
 
     circuit.update_edges()
 
-    view.draw_grid(8, 10)
+    view.draw_grid(10, 11)
 
     circuit.edges.each { |edge|
       view.draw_edge(edge)
