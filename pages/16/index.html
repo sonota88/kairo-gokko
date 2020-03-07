@@ -6,18 +6,22 @@
     <link rel="stylesheet" href="../style.css" type="text/css" />
     <script type="text/javascript" src="../dxopal.min.js"></script>
     <script type="text/ruby">
-      DXOpal.dump_error{ require_remote "main.rb?#{Time.now}" }
+      DXOpal.dump_error{ require_remote "main_loader.rb?#{Time.now.to_i}" }
     </script>
   </head>
 
   <body>
-    <div class="loading_container">
+    <button class="run_button">RUN</button>
+
+    <div class="loading_container" style="display: none;">
       Loading ...
       <div class="loading"></div>
     </div>
 
     <canvas id="dxopal-canvas"></canvas>
     <div id="dxopal-errors"></div>
+
+    <hr />
 
     <a href="../index.html">back</a>
   </body>
