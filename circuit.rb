@@ -369,7 +369,7 @@ class Circuit
     [tedges, eid_edge_map]
   end
 
-  def update_tuden
+  def update_many_edges
     tnodes, pos_nid_map, nid_plus, nid_minus =
       prepare_tuden_nodes()
 
@@ -397,7 +397,7 @@ class Circuit
     when 4
       update_4_edges()
     else
-      update_tuden()
+      update_many_edges()
     end
   end
 
