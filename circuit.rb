@@ -376,7 +376,7 @@ class Circuit
     tedges, eid_edge_map =
       prepare_tuden_edges(pos_nid_map)
 
-    Tuden.new.update(
+    Tuden.update(
       tedges,
       tnodes,
       nid_plus,

@@ -3,10 +3,6 @@ require "minitest/autorun"
 require_relative "../tuden"
 
 class TestTuden < Minitest::Test
-  def setup
-    @sut = Tuden.new
-  end
-
   def create_nodes(size)
     (1..size).map { |id| Tuden::Node.new(id) }
   end
@@ -32,7 +28,7 @@ class TestTuden < Minitest::Test
         nid_plus,
         nid_minus
       )
-    @sut.update(
+    Tuden.update(
         edges,
         nodes,
         nid_plus,
