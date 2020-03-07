@@ -293,4 +293,18 @@ class Tuden
       )
     }
   end
+
+  def self.update(
+        edges,
+        nodes,
+        nid_plus,
+        nid_minus
+      )
+    Tuden.new.update(
+      edges,
+      nodes,
+      nid_plus,
+      nid_minus
+    )
+  end
 end
