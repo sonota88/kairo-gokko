@@ -238,7 +238,7 @@ class ChildCircuit
     edges
   end
 
-  class EdgePool
+  class EdgeCluster
     attr_reader :edges
 
     def initialize(edges)
@@ -269,24 +269,24 @@ class ChildCircuit
   end
 
   def self.to_edge_groups(all_edges)
-    eps = all_edges.map { |edge| EdgePool.new([edge]) }
+    ecs = all_edges.map { |edge| EdgeCluster.new([edge]) }
 
     loop do
       merge_occured = false
 
-      eps.combination(2).each { |ep_a, ep_b|
-        if ep_a.connected_to?(ep_b)
-          ep_a.merge(ep_b)
+      ecs.combination(2).each { |ec_a, ec_b|
+        if ec_a.connected_to?(ec_b)
+          ec_a.merge(ec_b)
           merge_occured = true
         end
       }
 
       break unless merge_occured
 
-      eps = eps.reject { |ep| ep.edges.empty? }
+      ecs = ecs.reject { |ec| ec.edges.empty? }
     end
 
-    eps.map { |ep| ep.edges }
+    ecs.map { |ec| ec.edges }
   end
 
   def self.select_child_circuit_units(edges, single_cell_units)
