@@ -12,6 +12,7 @@ include DXOpal
 
 require_remote "./data.rb"
 require_remote "./child_circuit.rb"
+require_remote "./circuit.rb"
 require_remote "./view.rb"
 
 # pixels per cell
@@ -42,10 +43,9 @@ def find_pushed_switch(child_circuits, mpos)
   }
 end
 
-child_circuits =
-  parse_json($data_json).map { |child_circuit_data|
-    ChildCircuit.from_plain(child_circuit_data)
-  }
+circuit = Circuit.from_plain(parse_json($data_json))
+
+child_circuits = circuit.child_circuits
 
 view = View.new(PPC)
 

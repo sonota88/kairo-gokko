@@ -3,6 +3,7 @@
 require "json"
 
 require "./child_circuit"
+require "./circuit"
 require "./libo_draw"
 
 path = ARGV[0]
@@ -22,9 +23,9 @@ child_circuits = ChildCircuit.create(
   page.rectangles
 )
 
+circuit = Circuit.new(child_circuits)
+
 puts "$data_json = <<EOB"
-print JSON.pretty_generate(
-  child_circuits.map { |child_circuit| child_circuit.to_plain }
-)
+print JSON.pretty_generate(circuit.to_plain)
 print "\n"
 puts "EOB"
