@@ -237,7 +237,7 @@ class ChildCircuit
   end
 
   def self.create(lines, rects)
-    plus_poles =
+    all_plus_poles =
       rects
         .select { |rect| rect.text == "+" }
         .map { |rect| to_plus_pole(rect) }
@@ -257,7 +257,7 @@ class ChildCircuit
 
     ChildCircuit.new(
       edges,
-      plus_poles,
+      all_plus_poles,
       minus_poles,
       switches
     )
