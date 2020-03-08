@@ -33,7 +33,7 @@ def hide_loading
   }
 end
 
-circuit = Circuit.from_plain(
+circuit = ChildCircuit.from_plain(
   parse_json($data_json)
 )
 

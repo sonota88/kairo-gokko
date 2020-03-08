@@ -7,7 +7,7 @@ else
   require "./unit"
 end
 
-class Circuit
+class ChildCircuit
   attr_reader :edges
   attr_reader :plus_poles
   attr_reader :minus_poles
@@ -35,7 +35,7 @@ class Circuit
     minus_poles = plain["minus_poles"].map { |it| Unit::MinusPole.from_plain(it) }
     switches    = plain["switches"   ].map { |it| Unit::Switch   .from_plain(it) }
 
-    Circuit.new(
+    ChildCircuit.new(
       edges,
       plus_poles,
       minus_poles,
@@ -255,7 +255,7 @@ class Circuit
     wf_set = to_wire_fragments(lines)
     edges = to_edges(wf_set)
 
-    Circuit.new(
+    ChildCircuit.new(
       edges,
       plus_poles,
       minus_poles,

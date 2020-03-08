@@ -17,7 +17,7 @@ page_no =
 doc = LiboDraw::Document.new(path)
 page = doc.pages[page_no - 1]
 
-circuit = Circuit.create(
+circuit = ChildCircuit.create(
   page.lines,
   page.rectangles
 )
