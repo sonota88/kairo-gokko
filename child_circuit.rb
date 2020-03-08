@@ -287,6 +287,14 @@ class ChildCircuit
     eps.map { |ep| ep.edges }
   end
 
+  def self.select_child_circuit_units(edges, single_cell_units)
+    single_cell_units.select { |unit|
+      edges.any? { |edge|
+        edge.include_pos?(unit.pos)
+      }
+    }
+  end
+
   def self.create(lines, rects)
     all_plus_poles =
       rects
