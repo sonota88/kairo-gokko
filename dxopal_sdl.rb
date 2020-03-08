@@ -163,16 +163,7 @@ module DXOpal
       end
 
       def [](name)
-        sound = @@map[name][:sound]
-
-        unless sound
-          path = @@map[name][:path]
-          wave = SDL::Mixer::Wave.load(path)
-          sound = Sound.new(wave)
-          @@map[name][:sound] = sound
-        end
-
-        sound
+        @@map[name][:sound]
       end
 
       def load_all
