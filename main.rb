@@ -45,8 +45,6 @@ end
 
 circuit = Circuit.from_plain(parse_json($data_json))
 
-child_circuits = circuit.child_circuits
-
 view = View.new(PPC)
 
 Sound.register(:click, "click.wav")
@@ -64,7 +62,7 @@ Window.load_resources do
       mpos = Point(mx, my)
 
       pushed_switch =
-        find_pushed_switch(child_circuits, mpos)
+        find_pushed_switch(circuit.child_circuits, mpos)
 
       if pushed_switch
         Sound[:click].play
@@ -72,13 +70,13 @@ Window.load_resources do
       end
     end
 
-    child_circuits.each { |child_circuit|
+    circuit.child_circuits.each { |child_circuit|
       child_circuit.update_edges()
     }
 
     view.draw_grid(11, 11)
 
-    child_circuits.each { |child_circuit|
+    circuit.child_circuits.each { |child_circuit|
       child_circuit.edges.each { |edge|
         view.draw_edge(edge)
       }
