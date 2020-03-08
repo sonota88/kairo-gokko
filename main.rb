@@ -11,7 +11,7 @@ end
 include DXOpal
 
 require_remote "./data.rb"
-require_remote "./circuit.rb"
+require_remote "./child_circuit.rb"
 require_remote "./view.rb"
 
 # pixels per cell
@@ -33,7 +33,7 @@ def hide_loading
   }
 end
 
-circuit = Circuit.from_plain(
+child_circuit = ChildCircuit.from_plain(
   parse_json($data_json)
 )
 
@@ -54,7 +54,7 @@ Window.load_resources do
       mpos = Point(mx, my)
 
       pushed_switch =
-        circuit.switches.find { |switch| switch.pos == mpos }
+        child_circuit.switches.find { |switch| switch.pos == mpos }
 
       if pushed_switch
         Sound[:click].play
@@ -62,23 +62,23 @@ Window.load_resources do
       end
     end
 
-    circuit.update_edges()
+    child_circuit.update_edges()
 
     view.draw_grid(10, 11)
 
-    circuit.edges.each { |edge|
+    child_circuit.edges.each { |edge|
       view.draw_edge(edge)
     }
 
-    circuit.plus_poles.each { |pole|
+    child_circuit.plus_poles.each { |pole|
       view.draw_plus_pole(pole)
     }
 
-    circuit.minus_poles.each { |pole|
+    child_circuit.minus_poles.each { |pole|
       view.draw_minus_pole(pole)
     }
 
-    circuit.switches.each { |switch|
+    child_circuit.switches.each { |switch|
       view.draw_switch(switch)
     }
 

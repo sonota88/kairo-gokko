@@ -7,7 +7,7 @@ else
   require "./unit"
 end
 
-class Circuit
+class ChildCircuit
   attr_reader :edges
   attr_reader :plus_poles
   attr_reader :minus_poles
@@ -35,7 +35,7 @@ class Circuit
     minus_poles = plain["minus_poles"].map { |it| Unit::MinusPole.from_plain(it) }
     switches    = plain["switches"   ].map { |it| Unit::Switch   .from_plain(it) }
 
-    Circuit.new(
+    ChildCircuit.new(
       edges,
       plus_poles,
       minus_poles,
@@ -237,29 +237,29 @@ class Circuit
   end
 
   def self.create(lines, rects)
-    plus_poles =
+    all_plus_poles =
       rects
         .select { |rect| rect.text == "+" }
         .map { |rect| to_plus_pole(rect) }
 
-    minus_poles =
+    all_minus_poles =
       rects
         .select { |rect| rect.text == "-" }
         .map { |rect| to_minus_pole(rect) }
 
-    switches =
+    all_switches =
       rects
         .select { |rect| rect.text == "sw" }
         .map { |rect| to_switch(rect) }
 
     wf_set = to_wire_fragments(lines)
-    edges = to_edges(wf_set)
+    all_edges = to_edges(wf_set)
 
-    Circuit.new(
-      edges,
-      plus_poles,
-      minus_poles,
-      switches
+    ChildCircuit.new(
+      all_edges,
+      all_plus_poles,
+      all_minus_poles,
+      all_switches
     )
   end
 
