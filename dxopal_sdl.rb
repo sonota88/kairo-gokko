@@ -180,7 +180,7 @@ module DXOpal
     end
 
     def play
-      SDL::Mixer.play_channel(0, @wave, 0)
+      SDL::Mixer.play_channel(-1, @wave, 0)
     end
   end
 
