@@ -320,4 +320,13 @@ class Circuit
 
     Circuit.new(child_circuits)
   end
+
+  def find_switch_by_position(pos)
+    @child_circuits.each { |child_circuit|
+      pushed_switch =
+        child_circuit.switches
+          .find { |switch| switch.pos == pos }
+      return pushed_switch if pushed_switch
+    }
+  end
 end
