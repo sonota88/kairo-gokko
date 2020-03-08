@@ -33,6 +33,10 @@ def hide_loading
   }
 end
 
+def find_pushed_switch(child_circuit, mpos)
+  child_circuit.switches.find { |switch| switch.pos == mpos }
+end
+
 child_circuit =
   parse_json($data_json).map { |child_circuit_data|
     ChildCircuit.from_plain(child_circuit_data)
@@ -55,7 +59,7 @@ Window.load_resources do
       mpos = Point(mx, my)
 
       pushed_switch =
-        child_circuit.switches.find { |switch| switch.pos == mpos }
+        find_pushed_switch(child_circuit, mpos)
 
       if pushed_switch
         Sound[:click].play
