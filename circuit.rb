@@ -1,3 +1,4 @@
+# coding: utf-8
 class Circuit
   attr_reader :child_circuits
 
