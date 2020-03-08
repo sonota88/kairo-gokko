@@ -236,6 +236,36 @@ class ChildCircuit
     edges
   end
 
+  class EdgePool
+    attr_reader :edges
+
+    def initialize(edges)
+      @edges = edges
+    end
+
+    def all_node_set
+      pos_set = Set.new
+      @edges.each { |edge|
+        pos_set << edge.pos1
+        pos_set << edge.pos2
+      }
+      pos_set
+    end
+
+    def connected_to?(other)
+      all_node_set.intersect?(other.all_node_set)
+    end
+
+    def merge(other)
+      @edges += other.edges
+      other.clear()
+    end
+
+    def clear
+      @edges = []
+    end
+  end
+
   def self.create(lines, rects)
     all_plus_poles =
       rects
