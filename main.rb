@@ -76,7 +76,7 @@ Window.load_resources do
       child_circuit.update_edges()
     }
 
-    view.draw_grid(10, 11)
+    view.draw_grid(11, 11)
 
     child_circuits.each { |child_circuit|
       child_circuit.edges.each { |edge|
