@@ -33,9 +33,19 @@ def hide_loading
   }
 end
 
-child_circuit = ChildCircuit.from_plain(
-  parse_json($data_json)
-)
+def find_pushed_switch(child_circuits, mpos)
+  child_circuits.each { |child_circuit|
+    pushed_switch =
+      child_circuit.switches
+        .find { |switch| switch.pos == mpos }
+    return pushed_switch if pushed_switch
+  }
+end
+
+child_circuits =
+  parse_json($data_json).map { |child_circuit_data|
+    ChildCircuit.from_plain(child_circuit_data)
+  }
 
 view = View.new(PPC)
 
@@ -54,7 +64,7 @@ Window.load_resources do
       mpos = Point(mx, my)
 
       pushed_switch =
-        child_circuit.switches.find { |switch| switch.pos == mpos }
+        find_pushed_switch(child_circuits, mpos)
 
       if pushed_switch
         Sound[:click].play
@@ -62,24 +72,28 @@ Window.load_resources do
       end
     end
 
-    child_circuit.update_edges()
+    child_circuits.each { |child_circuit|
+      child_circuit.update_edges()
+    }
 
     view.draw_grid(10, 11)
 
-    child_circuit.edges.each { |edge|
-      view.draw_edge(edge)
-    }
+    child_circuits.each { |child_circuit|
+      child_circuit.edges.each { |edge|
+        view.draw_edge(edge)
+      }
 
-    child_circuit.plus_poles.each { |pole|
-      view.draw_plus_pole(pole)
-    }
+      child_circuit.plus_poles.each { |pole|
+        view.draw_plus_pole(pole)
+      }
 
-    child_circuit.minus_poles.each { |pole|
-      view.draw_minus_pole(pole)
-    }
+      child_circuit.minus_poles.each { |pole|
+        view.draw_minus_pole(pole)
+      }
 
-    child_circuit.switches.each { |switch|
-      view.draw_switch(switch)
+      child_circuit.switches.each { |switch|
+        view.draw_switch(switch)
+      }
     }
 
     view.draw_cursor_highlight(mx, my)

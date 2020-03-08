@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require "set"
+
 if RUBY_ENGINE == "opal"
   require_remote "./unit.rb"
   require_remote "./tuden.rb"
@@ -236,6 +238,65 @@ class ChildCircuit
     edges
   end
 
+  class EdgeCluster
+    attr_reader :edges
+
+    def initialize(edges)
+      @edges = edges
+    end
+
+    def all_node_set
+      pos_set = Set.new
+      @edges.each { |edge|
+        pos_set << edge.pos1
+        pos_set << edge.pos2
+      }
+      pos_set
+    end
+
+    def connected_to?(other)
+      all_node_set.intersect?(other.all_node_set)
+    end
+
+    def merge(other)
+      @edges += other.edges
+      other.clear()
+    end
+
+    def clear
+      @edges = []
+    end
+  end
+
+  def self.to_edge_groups(all_edges)
+    ecs = all_edges.map { |edge| EdgeCluster.new([edge]) }
+
+    loop do
+      merge_occured = false
+
+      ecs.combination(2).each { |ec_a, ec_b|
+        if ec_a.connected_to?(ec_b)
+          ec_a.merge(ec_b)
+          merge_occured = true
+        end
+      }
+
+      break unless merge_occured
+
+      ecs = ecs.reject { |ec| ec.edges.empty? }
+    end
+
+    ecs.map { |ec| ec.edges }
+  end
+
+  def self.select_child_circuit_units(edges, single_cell_units)
+    single_cell_units.select { |unit|
+      edges.any? { |edge|
+        edge.include_pos?(unit.pos)
+      }
+    }
+  end
+
   def self.create(lines, rects)
     all_plus_poles =
       rects
@@ -255,12 +316,20 @@ class ChildCircuit
     wf_set = to_wire_fragments(lines)
     all_edges = to_edges(wf_set)
 
-    ChildCircuit.new(
-      all_edges,
-      all_plus_poles,
-      all_minus_poles,
-      all_switches
-    )
+    edge_groups = to_edge_groups(all_edges)
+
+    edge_groups.map { |edges|
+      plus_poles  = select_child_circuit_units(edges, all_plus_poles)
+      minus_poles = select_child_circuit_units(edges, all_minus_poles)
+      switches    = select_child_circuit_units(edges, all_switches)
+
+      ChildCircuit.new(
+        edges,
+        plus_poles,
+        minus_poles,
+        switches
+      )
+    }
   end
 
   def update_4_edges

@@ -3,6 +3,7 @@
 set -o errexit
 
 if [ "$1" = "test" ]; then
+  ruby test/test_child_circuit.rb
   ruby test/test_tuden.rb
   exit 0
 fi
