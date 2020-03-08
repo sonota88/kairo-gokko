@@ -266,6 +266,27 @@ class ChildCircuit
     end
   end
 
+  def self.to_edge_groups(all_edges)
+    eps = all_edges.map { |edge| EdgePool.new([edge]) }
+
+    loop do
+      merge_occured = false
+
+      eps.combination(2).each { |ep_a, ep_b|
+        if ep_a.connected_to?(ep_b)
+          ep_a.merge(ep_b)
+          merge_occured = true
+        end
+      }
+
+      break unless merge_occured
+
+      eps = eps.reject { |ep| ep.edges.empty? }
+    end
+
+    eps.map { |ep| ep.edges }
+  end
+
   def self.create(lines, rects)
     all_plus_poles =
       rects
