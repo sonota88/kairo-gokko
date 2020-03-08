@@ -247,7 +247,7 @@ class ChildCircuit
         .select { |rect| rect.text == "-" }
         .map { |rect| to_minus_pole(rect) }
 
-    switches =
+    all_switches =
       rects
         .select { |rect| rect.text == "sw" }
         .map { |rect| to_switch(rect) }
@@ -259,7 +259,7 @@ class ChildCircuit
       edges,
       all_plus_poles,
       all_minus_poles,
-      switches
+      all_switches
     )
   end
 
