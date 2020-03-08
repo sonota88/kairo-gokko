@@ -253,10 +253,10 @@ class ChildCircuit
         .map { |rect| to_switch(rect) }
 
     wf_set = to_wire_fragments(lines)
-    edges = to_edges(wf_set)
+    all_edges = to_edges(wf_set)
 
     ChildCircuit.new(
-      edges,
+      all_edges,
       all_plus_poles,
       all_minus_poles,
       all_switches
