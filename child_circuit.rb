@@ -3,10 +3,9 @@
 require "set"
 
 if RUBY_ENGINE == "opal"
-  require_remote "./unit.rb"
   require_remote "./tuden.rb"
 else
-  require "./unit"
+  ;
 end
 
 class ChildCircuit

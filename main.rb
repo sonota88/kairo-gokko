@@ -11,7 +11,6 @@ end
 include DXOpal
 
 require_remote "./data.rb"
-require_remote "./child_circuit.rb"
 require_remote "./circuit.rb"
 require_remote "./view.rb"
 

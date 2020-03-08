@@ -1,4 +1,13 @@
 # coding: utf-8
+
+if RUBY_ENGINE == "opal"
+  require_remote "./unit.rb"
+  require_remote "./child_circuit.rb"
+else
+  require "./unit"
+  require "./child_circuit"
+end
+
 class Circuit
   attr_reader :child_circuits
 
