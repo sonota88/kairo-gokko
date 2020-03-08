@@ -33,9 +33,10 @@ def hide_loading
   }
 end
 
-child_circuit = ChildCircuit.from_plain(
-  parse_json($data_json)
-)
+child_circuit =
+  parse_json($data_json).map { |child_circuit_data|
+    ChildCircuit.from_plain(child_circuit_data)
+  }[0]
 
 view = View.new(PPC)
 
