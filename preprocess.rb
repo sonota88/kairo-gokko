@@ -2,7 +2,6 @@
 
 require "json"
 
-require "./child_circuit"
 require "./circuit"
 require "./libo_draw"
 
@@ -18,12 +17,10 @@ page_no =
 doc = LiboDraw::Document.new(path)
 page = doc.pages[page_no - 1]
 
-child_circuits = ChildCircuit.create(
+circuit = Circuit.create(
   page.lines,
   page.rectangles
 )
-
-circuit = Circuit.new(child_circuits)
 
 puts "$data_json = <<EOB"
 print JSON.pretty_generate(circuit.to_plain)
