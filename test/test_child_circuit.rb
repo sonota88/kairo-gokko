@@ -1,8 +1,7 @@
 # coding: utf-8
 
-require "minitest/autorun"
-
-require_relative "../child_circuit"
+require_relative "./helper"
+require "child_circuit"
 
 class TestChildCircuit < Minitest::Test
   def create_edges(*args)

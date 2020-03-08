@@ -1,6 +1,5 @@
-require "minitest/autorun"
-
-require_relative "../tuden"
+require_relative "./helper"
+require "tuden"
 
 class TestTuden < Minitest::Test
   def create_nodes(size)
