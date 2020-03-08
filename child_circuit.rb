@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require "set"
+
 if RUBY_ENGINE == "opal"
   require_remote "./unit.rb"
   require_remote "./tuden.rb"
