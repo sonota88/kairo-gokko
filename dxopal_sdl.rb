@@ -58,6 +58,8 @@ module DXOpal
 
         SDL::Mixer.open
 
+        Sound.load_all
+
         @@screen = SDL.set_video_mode(
           @@width,
           @@height,
@@ -171,6 +173,14 @@ module DXOpal
         end
 
         sound
+      end
+
+      def load_all
+        @@map.each { |name, inner_map|
+          wave = SDL::Mixer::Wave.load(inner_map[:path])
+          sound = Sound.new(wave)
+          @@map[name][:sound] = sound
+        }
       end
     end
 
