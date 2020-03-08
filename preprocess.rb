@@ -20,7 +20,7 @@ page = doc.pages[page_no - 1]
 child_circuit = ChildCircuit.create(
   page.lines,
   page.rectangles
-)
+)[0]
 
 puts "$data_json = <<EOB"
 print JSON.pretty_generate(child_circuit.to_plain)

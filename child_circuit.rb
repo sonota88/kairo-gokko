@@ -314,12 +314,20 @@ class ChildCircuit
     wf_set = to_wire_fragments(lines)
     all_edges = to_edges(wf_set)
 
-    ChildCircuit.new(
-      all_edges,
-      all_plus_poles,
-      all_minus_poles,
-      all_switches
-    )
+    edge_groups = to_edge_groups(all_edges)
+
+    edge_groups.map { |edges|
+      plus_poles  = select_child_circuit_units(edges, all_plus_poles)
+      minus_poles = select_child_circuit_units(edges, all_minus_poles)
+      switches    = select_child_circuit_units(edges, all_switches)
+
+      ChildCircuit.new(
+        edges,
+        plus_poles,
+        minus_poles,
+        switches
+      )
+    }
   end
 
   def update_4_edges
