@@ -331,4 +331,10 @@ class Circuit
 
     nil
   end
+
+  def update_tuden_state
+    @child_circuits.each { |child_circuit|
+      child_circuit.update_edges()
+    }
+  end
 end

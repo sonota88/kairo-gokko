@@ -39,10 +39,7 @@ def on_push(pushed_switch)
 end
 
 circuit = Circuit.from_plain(parse_json($data_json))
-
-circuit.child_circuits.each { |child_circuit|
-  child_circuit.update_edges()
-}
+circuit.update_tuden_state()
 
 view = View.new(PPC)
 
@@ -87,9 +84,7 @@ Window.load_resources do
     end
 
     if switch_changed
-      circuit.child_circuits.each { |child_circuit|
-        child_circuit.update_edges()
-      }
+      circuit.update_tuden_state()
     end
 
     view.draw_grid(11, 11)
