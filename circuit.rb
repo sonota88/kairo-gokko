@@ -328,5 +328,13 @@ class Circuit
           .find { |switch| switch.pos == pos }
       return pushed_switch if pushed_switch
     }
+
+    nil
+  end
+
+  def update_tuden_state
+    @child_circuits.each { |child_circuit|
+      child_circuit.update_edges()
+    }
   end
 end

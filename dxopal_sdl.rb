@@ -217,6 +217,18 @@ module DXOpal
         @@mouse_pushed_map[mouse_code] = nil
         pushed
       end
+
+      def touch_x
+        0 # not supported
+      end
+
+      def touch_y
+        0 # not supported
+      end
+
+      def touch_push?
+        false # not supported
+      end
     end
   end
 
