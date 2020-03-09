@@ -328,5 +328,7 @@ class Circuit
           .find { |switch| switch.pos == pos }
       return pushed_switch if pushed_switch
     }
+
+    nil
   end
 end
