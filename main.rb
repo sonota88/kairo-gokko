@@ -60,6 +60,21 @@ Window.load_resources do
       end
     end
 
+    tx = (Input.touch_x / PPC).floor
+    ty = (Input.touch_y / PPC).floor
+
+    if Input.touch_push?
+      tpos = Point(tx, ty)
+
+      pushed_switch =
+        circuit.find_switch_by_position(tpos)
+
+      if pushed_switch
+        Sound[:click].play
+        pushed_switch.toggle()
+      end
+    end
+
     circuit.child_circuits.each { |child_circuit|
       child_circuit.update_edges()
     }
