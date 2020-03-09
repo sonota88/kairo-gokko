@@ -33,6 +33,11 @@ def hide_loading
   }
 end
 
+def on_push(pushed_switch)
+  Sound[:click].play
+  pushed_switch.toggle()
+end
+
 circuit = Circuit.from_plain(parse_json($data_json))
 
 view = View.new(PPC)
@@ -55,8 +60,7 @@ Window.load_resources do
         circuit.find_switch_by_position(mpos)
 
       if pushed_switch
-        Sound[:click].play
-        pushed_switch.toggle()
+        on_push(pushed_switch)
       end
     end
 
@@ -70,8 +74,7 @@ Window.load_resources do
         circuit.find_switch_by_position(tpos)
 
       if pushed_switch
-        Sound[:click].play
-        pushed_switch.toggle()
+        on_push(pushed_switch)
       end
     end
 
