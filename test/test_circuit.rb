@@ -1,10 +1,9 @@
 # coding: utf-8
 
-require "minitest/autorun"
+require_relative "./helper"
+require "circuit"
 
-require_relative "../child_circuit"
-
-class TestChildCircuit < Minitest::Test
+class TestCircuit < Minitest::Test
   def create_edges(*args)
     args.map { |xy1, xy2|
       Unit::Edge.new(
@@ -16,7 +15,7 @@ class TestChildCircuit < Minitest::Test
   end
 
   def to_edge_groups(edges)
-    ChildCircuit.to_edge_groups(edges)
+    Circuit.to_edge_groups(edges)
   end
 
   # エッジが1本だけ

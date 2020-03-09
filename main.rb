@@ -11,7 +11,7 @@ end
 include DXOpal
 
 require_remote "./data.rb"
-require_remote "./child_circuit.rb"
+require_remote "./circuit.rb"
 require_remote "./view.rb"
 
 # pixels per cell
@@ -33,19 +33,7 @@ def hide_loading
   }
 end
 
-def find_pushed_switch(child_circuits, mpos)
-  child_circuits.each { |child_circuit|
-    pushed_switch =
-      child_circuit.switches
-        .find { |switch| switch.pos == mpos }
-    return pushed_switch if pushed_switch
-  }
-end
-
-child_circuits =
-  parse_json($data_json).map { |child_circuit_data|
-    ChildCircuit.from_plain(child_circuit_data)
-  }
+circuit = Circuit.from_plain(parse_json($data_json))
 
 view = View.new(PPC)
 
@@ -64,7 +52,7 @@ Window.load_resources do
       mpos = Point(mx, my)
 
       pushed_switch =
-        find_pushed_switch(child_circuits, mpos)
+        circuit.find_switch_by_position(mpos)
 
       if pushed_switch
         Sound[:click].play
@@ -72,13 +60,13 @@ Window.load_resources do
       end
     end
 
-    child_circuits.each { |child_circuit|
+    circuit.child_circuits.each { |child_circuit|
       child_circuit.update_edges()
     }
 
     view.draw_grid(11, 11)
 
-    child_circuits.each { |child_circuit|
+    circuit.child_circuits.each { |child_circuit|
       child_circuit.edges.each { |edge|
         view.draw_edge(edge)
       }
