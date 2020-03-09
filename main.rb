@@ -38,6 +38,8 @@ def on_push(pushed_switch)
   pushed_switch.toggle()
 end
 
+# --------------------------------
+
 circuit = Circuit.from_plain(parse_json($data_json))
 circuit.update_tuden_state()
 
