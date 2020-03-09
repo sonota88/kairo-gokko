@@ -82,9 +82,11 @@ Window.load_resources do
       end
     end
 
-    circuit.child_circuits.each { |child_circuit|
-      child_circuit.update_edges()
-    }
+    if switch_changed
+      circuit.child_circuits.each { |child_circuit|
+        child_circuit.update_edges()
+      }
+    end
 
     view.draw_grid(11, 11)
 
