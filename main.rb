@@ -40,6 +40,10 @@ end
 
 circuit = Circuit.from_plain(parse_json($data_json))
 
+circuit.child_circuits.each { |child_circuit|
+  child_circuit.update_edges()
+}
+
 view = View.new(PPC)
 
 Sound.register(:click, "click.wav")
