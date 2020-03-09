@@ -50,6 +50,8 @@ Window.load_resources do
   Window.bgcolor = C_BLACK
 
   Window.loop do
+    switch_changed = false
+
     mx = (Input.mouse_x / PPC).floor
     my = (Input.mouse_y / PPC).floor
 
@@ -61,6 +63,7 @@ Window.load_resources do
 
       if pushed_switch
         on_push(pushed_switch)
+        switch_changed = true
       end
     end
 
@@ -75,6 +78,7 @@ Window.load_resources do
 
       if pushed_switch
         on_push(pushed_switch)
+        switch_changed = true
       end
     end
 
