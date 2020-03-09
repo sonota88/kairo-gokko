@@ -38,6 +38,66 @@ def on_push(pushed_switch)
   pushed_switch.toggle()
 end
 
+def main_loop(circuit, view)
+  switch_changed = false
+
+  mx = (Input.mouse_x / PPC).floor
+  my = (Input.mouse_y / PPC).floor
+
+  if Input.mouse_push?(M_LBUTTON)
+    mpos = Point(mx, my)
+
+    pushed_switch =
+      circuit.find_switch_by_position(mpos)
+
+    if pushed_switch
+      on_push(pushed_switch)
+      switch_changed = true
+    end
+  end
+
+  tx = (Input.touch_x / PPC).floor
+  ty = (Input.touch_y / PPC).floor
+
+  if Input.touch_push?
+    tpos = Point(tx, ty)
+
+    pushed_switch =
+      circuit.find_switch_by_position(tpos)
+
+    if pushed_switch
+      on_push(pushed_switch)
+      switch_changed = true
+    end
+  end
+
+  if switch_changed
+    circuit.update_tuden_state()
+  end
+
+  view.draw_grid(11, 11)
+
+  circuit.child_circuits.each { |child_circuit|
+    child_circuit.edges.each { |edge|
+      view.draw_edge(edge)
+    }
+
+    child_circuit.plus_poles.each { |pole|
+      view.draw_plus_pole(pole)
+    }
+
+    child_circuit.minus_poles.each { |pole|
+      view.draw_minus_pole(pole)
+    }
+
+    child_circuit.switches.each { |switch|
+      view.draw_switch(switch)
+    }
+  }
+
+  view.draw_cursor_highlight(mx, my)
+end
+
 # --------------------------------
 
 circuit = Circuit.from_plain(parse_json($data_json))
@@ -53,62 +113,6 @@ Window.load_resources do
   Window.bgcolor = C_BLACK
 
   Window.loop do
-    switch_changed = false
-
-    mx = (Input.mouse_x / PPC).floor
-    my = (Input.mouse_y / PPC).floor
-
-    if Input.mouse_push?(M_LBUTTON)
-      mpos = Point(mx, my)
-
-      pushed_switch =
-        circuit.find_switch_by_position(mpos)
-
-      if pushed_switch
-        on_push(pushed_switch)
-        switch_changed = true
-      end
-    end
-
-    tx = (Input.touch_x / PPC).floor
-    ty = (Input.touch_y / PPC).floor
-
-    if Input.touch_push?
-      tpos = Point(tx, ty)
-
-      pushed_switch =
-        circuit.find_switch_by_position(tpos)
-
-      if pushed_switch
-        on_push(pushed_switch)
-        switch_changed = true
-      end
-    end
-
-    if switch_changed
-      circuit.update_tuden_state()
-    end
-
-    view.draw_grid(11, 11)
-
-    circuit.child_circuits.each { |child_circuit|
-      child_circuit.edges.each { |edge|
-        view.draw_edge(edge)
-      }
-
-      child_circuit.plus_poles.each { |pole|
-        view.draw_plus_pole(pole)
-      }
-
-      child_circuit.minus_poles.each { |pole|
-        view.draw_minus_pole(pole)
-      }
-
-      child_circuit.switches.each { |switch|
-        view.draw_switch(switch)
-      }
-    }
-
-    view.draw_cursor_highlight(mx, my)
+    main_loop(circuit, view)
   end
 end
