@@ -33,7 +33,7 @@ def hide_loading
   }
 end
 
-def on_push(pushed_switch)
+def on_push_switch(pushed_switch)
   Sound[:click].play
   pushed_switch.toggle()
 end
@@ -51,7 +51,7 @@ def main_loop(circuit, view)
       circuit.find_switch_by_position(mpos)
 
     if pushed_switch
-      on_push(pushed_switch)
+      on_push_switch(pushed_switch)
       switch_changed = true
     end
   end
@@ -66,7 +66,7 @@ def main_loop(circuit, view)
       circuit.find_switch_by_position(tpos)
 
     if pushed_switch
-      on_push(pushed_switch)
+      on_push_switch(pushed_switch)
       switch_changed = true
     end
   end
