@@ -93,6 +93,10 @@ def main_loop(circuit, view)
     child_circuit.switches.each { |switch|
       view.draw_switch(switch)
     }
+
+    child_circuit.lamps.each { |lamp|
+      view.draw_lamp(lamp)
+    }
   }
 
   view.draw_cursor_highlight(mx, my)
