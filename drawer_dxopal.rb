@@ -11,6 +11,27 @@ class Drawer
     )
   end
 
+  def draw_polyline(pts, color, close_path: false)
+    pts.each_cons(2) { |pt_a, pt_b|
+      draw_line(
+        pt_a.x, pt_a.y,
+        pt_b.x, pt_b.y,
+        color
+      )
+    }
+
+    if close_path
+      pt_l = pts.last
+      pt_f = pts.first
+
+      draw_line(
+        pt_l.x, pt_l.y,
+        pt_f.x, pt_f.y,
+        color
+      )
+    end
+  end
+
   def draw_box(x1, y1, x2, y2, color)
     Window.draw_box(
       x1 * @ppc, y1 * @ppc,
