@@ -67,6 +67,15 @@ class Circuit
     Unit::Lamp.new(pos)
   end
 
+  def self.to_not_relay(rect)
+    pos = Point(
+      rect.x.floor,
+      rect.y.floor
+    )
+
+    Unit::NotRelay.new(pos)
+  end
+
   def self.to_wire_fragments(lines)
     wf_set = Set.new
 
@@ -313,6 +322,11 @@ class Circuit
         .select { |rect| rect.text == "L" }
         .map { |rect| to_lamp(rect) }
 
+    all_not_relays =
+      rects
+        .select { |rect| rect.text == "r!" }
+        .map { |rect| to_not_relay(rect) }
+
     wf_set = to_wire_fragments(lines)
     all_edges = to_edges(wf_set)
 
@@ -324,13 +338,15 @@ class Circuit
         minus_poles = select_child_circuit_units(edges, all_minus_poles)
         switches    = select_child_circuit_units(edges, all_switches)
         lamps       = select_child_circuit_units(edges, all_lamps)
+        not_relays  = select_child_circuit_units(edges, all_not_relays)
 
         ChildCircuit.new(
           edges,
           plus_poles,
           minus_poles,
           switches,
-          lamps
+          lamps,
+          not_relays
         )
       }
 
