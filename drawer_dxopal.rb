@@ -27,6 +27,14 @@ class Drawer
     )
   end
 
+  def draw_circle(x, y, r, color)
+    Window.draw_circle(
+      x * @ppc, y * @ppc,
+      r * @ppc,
+      color
+    )
+  end
+
   def draw_circle_fill(x, y, r, color)
     Window.draw_circle_fill(
       x * @ppc, y * @ppc,
