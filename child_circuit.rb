@@ -187,6 +187,13 @@ class ChildCircuit
     end
   end
 
+  def update_lamps
+    @lamps.each { |lamp|
+      edge = @edges.find { |edge| edge.include_pos?(lamp.pos) }
+      lamp.update(edge.on?)
+    }
+  end
+
   def pretty_inspect
     to_plain.pretty_inspect
   end

@@ -73,6 +73,7 @@ def main_loop(circuit, view)
 
   if switch_changed
     circuit.update_tuden_state()
+    circuit.update_lamps_state()
   end
 
   view.draw_grid(11, 11)
@@ -106,6 +107,7 @@ end
 
 circuit = Circuit.from_plain(parse_json($data_json))
 circuit.update_tuden_state()
+circuit.update_lamps_state()
 
 view = View.new(PPC)
 

@@ -353,4 +353,10 @@ class Circuit
       child_circuit.update_edges()
     }
   end
+
+  def update_lamps_state
+    @child_circuits.each { |child_circuit|
+      child_circuit.update_lamps()
+    }
+  end
 end
