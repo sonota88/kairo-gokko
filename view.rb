@@ -95,6 +95,16 @@ class View
     end
   end
 
+  def draw_lamp(lamp)
+    color = lamp.on? ? [255, 255, 204, 0] : [255, 102, 85, 68]
+
+    @drawer.draw_circle_fill(
+      lamp.x + 0.5, lamp.y + 0.5,
+      0.3,
+      color
+    )
+  end
+
   def draw_edge(edge)
     color = edge.on? ? C_ACTIVE : C_INACTIVE
 
