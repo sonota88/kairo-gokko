@@ -38,6 +38,34 @@ def on_push_switch(pushed_switch)
   pushed_switch.toggle()
 end
 
+def draw(view, circuit, mx, my)
+  view.draw_grid(11, 11)
+
+  circuit.child_circuits.each { |child_circuit|
+    child_circuit.edges.each { |edge|
+      view.draw_edge(edge)
+    }
+
+    child_circuit.plus_poles.each { |pole|
+      view.draw_plus_pole(pole)
+    }
+
+    child_circuit.minus_poles.each { |pole|
+      view.draw_minus_pole(pole)
+    }
+
+    child_circuit.switches.each { |switch|
+      view.draw_switch(switch)
+    }
+
+    child_circuit.lamps.each { |lamp|
+      view.draw_lamp(lamp)
+    }
+  }
+
+  view.draw_cursor_highlight(mx, my)
+end
+
 def main_loop(circuit, view)
   switch_changed = false
 
@@ -76,31 +104,7 @@ def main_loop(circuit, view)
     circuit.update_lamps_state()
   end
 
-  view.draw_grid(11, 11)
-
-  circuit.child_circuits.each { |child_circuit|
-    child_circuit.edges.each { |edge|
-      view.draw_edge(edge)
-    }
-
-    child_circuit.plus_poles.each { |pole|
-      view.draw_plus_pole(pole)
-    }
-
-    child_circuit.minus_poles.each { |pole|
-      view.draw_minus_pole(pole)
-    }
-
-    child_circuit.switches.each { |switch|
-      view.draw_switch(switch)
-    }
-
-    child_circuit.lamps.each { |lamp|
-      view.draw_lamp(lamp)
-    }
-  }
-
-  view.draw_cursor_highlight(mx, my)
+  draw(view, circuit, mx, my)
 end
 
 # --------------------------------
