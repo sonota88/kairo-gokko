@@ -58,6 +58,15 @@ class Circuit
     Unit::Switch.new(pos)
   end
 
+  def self.to_lamp(rect)
+    pos = Point(
+      rect.x.floor,
+      rect.y.floor
+    )
+
+    Unit::Lamp.new(pos)
+  end
+
   def self.to_wire_fragments(lines)
     wf_set = Set.new
 
@@ -299,6 +308,11 @@ class Circuit
         .select { |rect| rect.text == "sw" }
         .map { |rect| to_switch(rect) }
 
+    all_lamps =
+      rects
+        .select { |rect| rect.text == "L" }
+        .map { |rect| to_lamp(rect) }
+
     wf_set = to_wire_fragments(lines)
     all_edges = to_edges(wf_set)
 
@@ -309,12 +323,14 @@ class Circuit
         plus_poles  = select_child_circuit_units(edges, all_plus_poles)
         minus_poles = select_child_circuit_units(edges, all_minus_poles)
         switches    = select_child_circuit_units(edges, all_switches)
+        lamps       = select_child_circuit_units(edges, all_lamps)
 
         ChildCircuit.new(
           edges,
           plus_poles,
           minus_poles,
-          switches
+          switches,
+          lamps
         )
       }
 
@@ -335,6 +351,12 @@ class Circuit
   def update_tuden_state
     @child_circuits.each { |child_circuit|
       child_circuit.update_edges()
+    }
+  end
+
+  def update_lamps_state
+    @child_circuits.each { |child_circuit|
+      child_circuit.update_lamps()
     }
   end
 end
