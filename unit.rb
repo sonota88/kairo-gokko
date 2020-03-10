@@ -243,6 +243,10 @@ module Unit
         Point.from_plain(plain["pos"])
       )
     end
+
+    def on?
+      @state
+    end
   end
 end
 
