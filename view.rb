@@ -96,8 +96,21 @@ class View
   end
 
   def draw_lamp(lamp)
-    color = lamp.on? ? [255, 255, 204, 0] : [255, 102, 85, 68]
+    color = lamp.on? ? [255, 204, 0] : [102, 85, 68]
 
+    if lamp.on?
+      @drawer.draw_circle_fill(
+        lamp.x + 0.5, lamp.y + 0.5,
+        1.0,
+        [80, 255, 0, 100]
+      )
+    end
+
+    @drawer.draw_circle(
+      lamp.x + 0.5, lamp.y + 0.5,
+      0.45,
+      [127, *color]
+    )
     @drawer.draw_circle_fill(
       lamp.x + 0.5, lamp.y + 0.5,
       0.3,
