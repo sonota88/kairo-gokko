@@ -15,7 +15,13 @@ class ChildCircuit
   attr_reader :switches
   attr_reader :lamps
 
-  def initialize(edges, plus_poles, minus_poles, switches, lamps)
+  def initialize(
+        edges,
+        plus_poles,
+        minus_poles,
+        switches,
+        lamps
+      )
     @edges = edges
     @plus_poles = plus_poles
     @minus_poles = minus_poles
