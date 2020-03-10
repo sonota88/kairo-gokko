@@ -206,6 +206,13 @@ class ChildCircuit
     }
   end
 
+  def update_not_relays
+    @not_relays.each { |not_relay|
+      edge = @edges.find { |edge| edge.include_pos?(not_relay.pos) }
+      not_relay.update(edge.on?)
+    }
+  end
+
   def pretty_inspect
     to_plain.pretty_inspect
   end
