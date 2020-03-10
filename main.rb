@@ -61,6 +61,10 @@ def draw(view, circuit, mx, my)
     child_circuit.lamps.each { |lamp|
       view.draw_lamp(lamp)
     }
+
+    child_circuit.not_relays.each { |not_relay|
+      view.draw_not_relay(not_relay)
+    }
   }
 
   view.draw_cursor_highlight(mx, my)
