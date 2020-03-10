@@ -13,12 +13,14 @@ class ChildCircuit
   attr_reader :plus_poles
   attr_reader :minus_poles
   attr_reader :switches
+  attr_reader :lamps
 
-  def initialize(edges, plus_poles, minus_poles, switches)
+  def initialize(edges, plus_poles, minus_poles, switches, lamps)
     @edges = edges
     @plus_poles = plus_poles
     @minus_poles = minus_poles
     @switches = switches
+    @lamps = lamps
   end
 
   def to_plain
@@ -26,7 +28,8 @@ class ChildCircuit
       edges:       @edges      .map { |it| it.to_plain },
       plus_poles:  @plus_poles .map { |it| it.to_plain },
       minus_poles: @minus_poles.map { |it| it.to_plain },
-      switches:    @switches   .map { |it| it.to_plain }
+      switches:    @switches   .map { |it| it.to_plain },
+      lamps:       @lamps      .map { |it| it.to_plain }
     }
   end
 
@@ -35,12 +38,14 @@ class ChildCircuit
     plus_poles  = plain["plus_poles" ].map { |it| Unit::PlusPole .from_plain(it) }
     minus_poles = plain["minus_poles"].map { |it| Unit::MinusPole.from_plain(it) }
     switches    = plain["switches"   ].map { |it| Unit::Switch   .from_plain(it) }
+    lamps       = plain["lamps"      ].map { |it| Unit::Lamp     .from_plain(it) }
 
     ChildCircuit.new(
       edges,
       plus_poles,
       minus_poles,
-      switches
+      switches,
+      lamps
     )
   end
 
