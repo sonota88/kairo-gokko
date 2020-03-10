@@ -244,6 +244,10 @@ module Unit
       )
     end
 
+    def update(state)
+      @state = state
+    end
+
     def on?
       @state
     end
