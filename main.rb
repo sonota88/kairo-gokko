@@ -140,6 +140,10 @@ circuit.update_tuden_state()
 circuit.update_not_relays_state()
 circuit.update_lamps_state()
 
+circuit.update_tuden_state()
+circuit.update_not_relays_state()
+circuit.update_lamps_state()
+
 view = View.new(PPC)
 
 Sound.register(:click, "click.wav")
