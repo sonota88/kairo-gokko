@@ -225,6 +225,7 @@ class ChildCircuit
       not_relay.update(edge.on?)
 
       neighbor_switch = circuit.find_neighbor_switch(not_relay.pos)
+      neighbor_switch.update(! not_relay.on?)
     }
   end
 
