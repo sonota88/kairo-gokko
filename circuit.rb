@@ -367,6 +367,15 @@ class Circuit
     nil
   end
 
+  def find_neighbor_switch(pos)
+    @child_circuits.each { |child_circuit|
+      switch = child_circuit.find_neighbor_switch(pos)
+      return switch if switch
+    }
+
+    nil
+  end
+
   def update_tuden_state
     @child_circuits.each { |child_circuit|
       child_circuit.update_edges()
