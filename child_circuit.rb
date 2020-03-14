@@ -213,6 +213,12 @@ class ChildCircuit
     pos1 == pos2.translate(-1,  0)
   end
 
+  def find_neighbor_switch(pos)
+    @switches.find { |switch|
+      neighbor?(switch.pos, pos)
+    }
+  end
+
   def update_not_relays
     @not_relays.each { |not_relay|
       edge = @edges.find { |edge| edge.include_pos?(not_relay.pos) }
