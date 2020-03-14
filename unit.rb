@@ -226,6 +226,10 @@ module Unit
     def on?
       @state
     end
+
+    def update(state)
+      @state = state
+    end
   end
 
   class Lamp < SingleCell
