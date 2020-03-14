@@ -136,6 +136,7 @@ end
 # --------------------------------
 
 circuit = Circuit.from_plain(parse_json($data_json))
+
 circuit.update_tuden_state()
 circuit.update_not_relays_state()
 circuit.update_lamps_state()
