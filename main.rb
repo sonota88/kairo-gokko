@@ -2,8 +2,20 @@ def browser?
   Kernel.const_defined?(:Native)
 end
 
+def update_progress(msg)
+  puts "update_progress: #{msg}"
+
+  if browser?
+    %x{
+      var el = document.querySelector(".loading_progress");
+      el.textContent += "*";
+    }
+  end
+end
+
 if browser?
   require "dxopal"
+  update_progress "dxopal"
 else
   require "./dxopal_sdl"
 end
@@ -11,8 +23,13 @@ end
 include DXOpal
 
 require_remote "./data.rb"
+update_progress "data"
+
 require_remote "./circuit.rb"
+update_progress "circuit"
+
 require_remote "./view.rb"
+update_progress "view"
 
 # pixels per cell
 PPC = 30
