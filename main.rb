@@ -124,6 +124,10 @@ def main_loop(circuit, view)
     circuit.update_tuden_state()
     circuit.update_not_relays_state()
     circuit.update_lamps_state()
+
+    circuit.update_tuden_state()
+    circuit.update_not_relays_state()
+    circuit.update_lamps_state()
   end
 
   draw(view, circuit, mx, my)
