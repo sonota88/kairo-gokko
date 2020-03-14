@@ -390,7 +390,7 @@ class Circuit
 
   def update_not_relays_state
     @child_circuits.each { |child_circuit|
-      child_circuit.update_not_relays()
+      child_circuit.update_not_relays(self)
     }
   end
 end

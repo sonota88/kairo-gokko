@@ -219,10 +219,12 @@ class ChildCircuit
     }
   end
 
-  def update_not_relays
+  def update_not_relays(circuit)
     @not_relays.each { |not_relay|
       edge = @edges.find { |edge| edge.include_pos?(not_relay.pos) }
       not_relay.update(edge.on?)
+
+      neighbor_switch = circuit.find_neighbor_switch(not_relay.pos)
     }
   end
 
