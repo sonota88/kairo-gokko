@@ -118,6 +118,43 @@ class View
     )
   end
 
+  def draw_not_relay(not_realy)
+    x = not_realy.x
+    y = not_realy.y
+
+    color = not_realy.on? ? [0, 170, 221] : [0, 68, 204]
+
+    pts = [
+      Point(x + 0.5, y - 0.3),
+      Point(x + 1.3, y + 0.5),
+      Point(x + 0.5, y + 1.3),
+      Point(x - 0.3, y + 0.5),
+    ]
+
+    @drawer.draw_polyline(pts, color, close_path: true)
+
+    @drawer.draw_box_fill(
+      x - 0.1, y + 0.4,
+      x + 1.1, y + 0.6,
+      C_BLACK
+    )
+    @drawer.draw_box_fill(
+      x + 0.4, y - 0.1,
+      x + 0.6, y + 1.1,
+      C_BLACK
+    )
+    @drawer.draw_box_fill(
+      x + 0.45, y + 0.2,
+      x + 0.55, y + 0.55,
+      color
+    )
+    @drawer.draw_box_fill(
+      x + 0.45, y + 0.7,
+      x + 0.55, y + 0.8,
+      color
+    )
+  end
+
   def draw_edge(edge)
     color = edge.on? ? C_ACTIVE : C_INACTIVE
 

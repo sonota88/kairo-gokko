@@ -61,6 +61,10 @@ def draw(view, circuit, mx, my)
     child_circuit.lamps.each { |lamp|
       view.draw_lamp(lamp)
     }
+
+    child_circuit.not_relays.each { |not_relay|
+      view.draw_not_relay(not_relay)
+    }
   }
 
   view.draw_cursor_highlight(mx, my)
@@ -101,6 +105,7 @@ def main_loop(circuit, view)
 
   if switch_changed
     circuit.update_tuden_state()
+    circuit.update_not_relays_state()
     circuit.update_lamps_state()
   end
 
@@ -111,6 +116,7 @@ end
 
 circuit = Circuit.from_plain(parse_json($data_json))
 circuit.update_tuden_state()
+circuit.update_not_relays_state()
 circuit.update_lamps_state()
 
 view = View.new(PPC)

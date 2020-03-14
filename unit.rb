@@ -252,6 +252,35 @@ module Unit
       @state
     end
   end
+
+  class NotRelay < SingleCell
+    def initialize(pos)
+      super
+
+      # ON: true / OFF: false
+      @state = false
+    end
+
+    def to_plain
+      {
+        pos: @pos.to_plain
+      }
+    end
+
+    def self.from_plain(plain)
+      NotRelay.new(
+        Point.from_plain(plain["pos"])
+      )
+    end
+
+    def update(state)
+      @state = state
+    end
+
+    def on?
+      @state
+    end
+  end
 end
 
 def Point(x, y)
