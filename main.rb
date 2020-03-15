@@ -66,7 +66,7 @@ def update_tuden_relay_switch_lamp(circuit)
 end
 
 def draw(view, circuit, mx, my)
-  view.draw_grid(11, 11)
+  view.draw_grid(15, 11)
 
   circuit.child_circuits.each { |child_circuit|
     child_circuit.edges.each { |edge|
