@@ -12,6 +12,7 @@
   background: #444;
   color: #ddd;
   font-weight: bold;
+  font-family: monospace;
 }
 
 .footer {
@@ -35,5 +36,5 @@
 }
 
 .loading_progress {
-  font-size: 200%;
+  font-size: 150%;
 }
