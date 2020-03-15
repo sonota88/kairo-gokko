@@ -55,6 +55,16 @@ def on_push_switch(pushed_switch)
   pushed_switch.toggle()
 end
 
+def update_tuden_relay_switch_lamp(circuit)
+  circuit.update_tuden_state()
+  circuit.update_not_relays_state()
+  circuit.update_lamps_state()
+
+  circuit.update_tuden_state()
+  circuit.update_not_relays_state()
+  circuit.update_lamps_state()
+end
+
 def draw(view, circuit, mx, my)
   view.draw_grid(11, 11)
 
@@ -121,13 +131,7 @@ def main_loop(circuit, view)
   end
 
   if switch_changed
-    circuit.update_tuden_state()
-    circuit.update_not_relays_state()
-    circuit.update_lamps_state()
-
-    circuit.update_tuden_state()
-    circuit.update_not_relays_state()
-    circuit.update_lamps_state()
+    update_tuden_relay_switch_lamp(circuit)
   end
 
   draw(view, circuit, mx, my)
@@ -137,13 +141,7 @@ end
 
 circuit = Circuit.from_plain(parse_json($data_json))
 
-circuit.update_tuden_state()
-circuit.update_not_relays_state()
-circuit.update_lamps_state()
-
-circuit.update_tuden_state()
-circuit.update_not_relays_state()
-circuit.update_lamps_state()
+update_tuden_relay_switch_lamp(circuit)
 
 view = View.new(PPC)
 
