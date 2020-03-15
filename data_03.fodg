@@ -126,25 +126,6 @@
   <draw:gradient draw:name="Gradient_20_3" draw:display-name="Gradient 3" draw:style="linear" draw:start-color="#3465a4" draw:end-color="#ffffff" draw:start-intensity="100%" draw:end-intensity="100%" draw:angle="0" draw:border="0%"/>
   <draw:gradient draw:name="Gradient_20_4" draw:display-name="Gradient 4" draw:style="linear" draw:start-color="#3465a4" draw:end-color="#ffffff" draw:start-intensity="100%" draw:end-intensity="100%" draw:angle="0" draw:border="0%"/>
   <draw:hatch draw:name="Hatching_20_91" draw:display-name="Hatching 91" draw:style="single" draw:color="#3465a4" draw:distance="0.02cm" draw:rotation="0"/>
-  <draw:fill-image draw:name="Bitmap_20_1" draw:display-name="Bitmap 1">
-   <office:binary-data>iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAADAFBMVEUAAAAAAIAAgAAAgICA
-    AACAAICAgACAgIDAwMAAAP8A/wAA////AAD/AP///wD///8AAAAzAABmAACZAADMAAD/AAAA
-    MwAzMwBmMwCZMwDMMwD/MwAAZgAzZgBmZgCZZgDMZgD/ZgAAmQAzmQBmmQCZmQDMmQD/mQAA
-    zAAzzABmzACZzADMzAD/zAAA/wAz/wBm/wCZ/wDM/wD//wAAADMzADNmADOZADPMADP/ADMA
-    MzMzMzNmMzOZMzPMMzP/MzMAZjMzZjNmZjOZZjPMZjP/ZjMAmTMzmTNmmTOZmTPMmTP/mTMA
-    zDMzzDNmzDOZzDPMzDP/zDMA/zMz/zNm/zOZ/zPM/zP//zMAAGYzAGZmAGaZAGbMAGb/AGYA
-    M2YzM2ZmM2aZM2bMM2b/M2YAZmYzZmZmZmaZZmbMZmb/ZmYAmWYzmWZmmWaZmWbMmWb/mWYA
-    zGYzzGZmzGaZzGbMzGb/zGYA/2Yz/2Zm/2aZ/2bM/2b//2YAAJkzAJlmAJmZAJnMAJn/AJkA
-    M5kzM5lmM5mZM5nMM5n/M5kAZpkzZplmZpmZZpnMZpn/ZpkAmZkzmZlmmZmZmZnMmZn/mZkA
-    zJkzzJlmzJmZzJnMzJn/zJkA/5kz/5lm/5mZ/5nM/5n//5kAAMwzAMxmAMyZAMzMAMz/AMwA
-    M8wzM8xmM8yZM8zMM8z/M8wAZswzZsxmZsyZZszMZsz/ZswAmcwzmcxmmcyZmczMmcz/mcwA
-    zMwzzMxmzMyZzMzMzMz/zMwA/8wz/8xm/8yZ/8zM/8z//8wAAP8zAP9mAP+ZAP/MAP//AP8A
-    M/8zM/9mM/+ZM//MM///M/8AZv8zZv9mZv+ZZv/MZv//Zv8Amf8zmf9mmf+Zmf/Mmf//mf8A
-    zP8zzP9mzP+ZzP/MzP//zP8A//8z//9m//+Z///M//////8AuP8AAAAAAAAAAAAAAAAAAAAA
-    AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4
-    0k8YAAAAFklEQVR4nGPgJwAYRhWMKhhVMFIVAADLVTwBNA/g8AAAAABJRU5ErkJggg==
-   </office:binary-data>
-  </draw:fill-image>
   <draw:marker draw:name="Arrow" svg:viewBox="0 0 20 30" svg:d="M10 0l-10 30h20z"/>
   <draw:stroke-dash draw:name="Dashed_20__28_var_29__20_1" draw:display-name="Dashed (var) 1" draw:style="rect" draw:dots1="1" draw:dots1-length="0.02cm" draw:dots2="1" draw:dots2-length="0.02cm" draw:distance="0.02cm"/>
   <style:default-style style:family="graphic">
@@ -266,17 +247,17 @@
    <style:graphic-properties draw:stroke="none" draw:fill-color="#ff6600" draw:opacity="50%" draw:shadow-opacity="50%"/>
   </style:style>
   <style:style style:name="pole" style:family="graphic" style:parent-style-name="standard">
-   <style:graphic-properties draw:fill-gradient-name="Gradient_20_3" draw:fill-hatch-name="Hatching_20_91" draw:fill-image-name="Bitmap_20_1"/>
+   <style:graphic-properties draw:fill-gradient-name="Gradient_20_3" draw:fill-hatch-name="Hatching_20_91"/>
    <style:text-properties fo:font-size="14pt" style:font-size-asian="14pt"/>
   </style:style>
   <style:style style:name="switch" style:family="graphic" style:parent-style-name="standard">
-   <style:graphic-properties draw:stroke="solid" svg:stroke-color="#579d1c" draw:fill-color="#ccff99" draw:fill-gradient-name="Gradient_20_3" draw:fill-hatch-name="Hatching_20_91" draw:fill-image-name="Bitmap_20_1"/>
+   <style:graphic-properties draw:stroke="solid" svg:stroke-color="#579d1c" draw:fill-color="#ccff99" draw:fill-gradient-name="Gradient_20_3" draw:fill-hatch-name="Hatching_20_91"/>
   </style:style>
   <style:style style:name="lamp" style:family="graphic" style:parent-style-name="standard">
-   <style:graphic-properties svg:stroke-color="#996600" draw:fill-color="#ffd320" draw:fill-gradient-name="Gradient_20_4" draw:fill-hatch-name="Hatching_20_91" draw:fill-image-name="Bitmap_20_1"/>
+   <style:graphic-properties svg:stroke-color="#996600" draw:fill-color="#ffd320" draw:fill-gradient-name="Gradient_20_4" draw:fill-hatch-name="Hatching_20_91"/>
   </style:style>
   <style:style style:name="_5f_relay" style:display-name="_relay" style:family="graphic" style:parent-style-name="standard">
-   <style:graphic-properties svg:stroke-color="#669999" draw:fill-color="#ccffff" draw:fill-gradient-name="Gradient_20_4" draw:fill-hatch-name="Hatching_20_91" draw:fill-image-name="Bitmap_20_1"/>
+   <style:graphic-properties svg:stroke-color="#669999" draw:fill-color="#ccffff" draw:fill-gradient-name="Gradient_20_4" draw:fill-hatch-name="Hatching_20_91"/>
   </style:style>
  </office:styles>
  <office:automatic-styles>
