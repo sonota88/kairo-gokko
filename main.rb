@@ -56,13 +56,13 @@ def on_push_switch(pushed_switch)
 end
 
 def update_tuden_relay_switch_lamp(circuit)
-  circuit.update_tuden_state()
-  circuit.update_not_relays_state()
-  circuit.update_lamps_state()
+  switch_changed = true
 
-  circuit.update_tuden_state()
-  circuit.update_not_relays_state()
-  circuit.update_lamps_state()
+  while switch_changed
+    circuit.update_tuden_state()
+    switch_changed = circuit.update_not_relays_state()
+    circuit.update_lamps_state()
+  end
 end
 
 def draw(view, circuit, mx, my)
