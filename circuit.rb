@@ -389,8 +389,16 @@ class Circuit
   end
 
   def update_not_relays_state
+    switch_changed = false
+
     @child_circuits.each { |child_circuit|
-      child_circuit.update_not_relays(self)
+      _switch_changed = child_circuit.update_not_relays(self)
+
+      if _switch_changed
+        switch_changed = true
+      end
     }
+
+    switch_changed
   end
 end
