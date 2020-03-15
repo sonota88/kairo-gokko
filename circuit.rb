@@ -2,7 +2,10 @@
 
 if RUBY_ENGINE == "opal"
   require_remote "./unit.rb"
+  update_progress "unit"
+
   require_remote "./child_circuit.rb"
+  update_progress "child_circuit"
 else
   require "./unit"
   require "./child_circuit"
@@ -364,6 +367,15 @@ class Circuit
     nil
   end
 
+  def find_neighbor_switch(pos)
+    @child_circuits.each { |child_circuit|
+      switch = child_circuit.find_neighbor_switch(pos)
+      return switch if switch
+    }
+
+    nil
+  end
+
   def update_tuden_state
     @child_circuits.each { |child_circuit|
       child_circuit.update_edges()
@@ -378,7 +390,7 @@ class Circuit
 
   def update_not_relays_state
     @child_circuits.each { |child_circuit|
-      child_circuit.update_not_relays()
+      child_circuit.update_not_relays(self)
     }
   end
 end

@@ -1,5 +1,6 @@
 # require "./drawer"
 require_remote "./drawer_dxopal.rb"
+update_progress "drawer_dxopal"
 
 class View
   C_GRID     = [255,  40,  40,  40]
@@ -10,6 +11,11 @@ class View
 
   def initialize(ppc)
     @drawer = Drawer.new(ppc)
+  end
+
+  # workarond for DXOpal
+  def Point(x, y)
+    Unit::Point.new(x, y)
   end
 
   def draw_grid(w, h)

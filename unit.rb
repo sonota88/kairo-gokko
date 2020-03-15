@@ -35,6 +35,10 @@ module Unit
       eql?(other)
     end
 
+    def translate(dx, dy)
+      Point.new(@x + dx, @y + dy)
+    end
+
     def inspect
       "(%s)" % [
         "Pt", @x, @y
@@ -221,6 +225,10 @@ module Unit
 
     def on?
       @state
+    end
+
+    def update(state)
+      @state = state
     end
   end
 

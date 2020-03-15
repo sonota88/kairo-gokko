@@ -35,13 +35,18 @@
     0% { transform: rotate(  0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  .loading_progress {
+    font-size: 200%;
+  }
 </style>
   </head>
 
   <body>
     <div class="loading_container">
-      Loading ...
+      LOADING ...
       <div class="loading"></div>
+      <div class="loading_progress"></div>
     </div>
     <canvas id="dxopal-canvas"></canvas>
     <div id="dxopal-errors"></div>
