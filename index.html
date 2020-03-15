@@ -3,15 +3,19 @@
   <head>
     <meta charset= "utf-8" />
     <title>kairo-gokko</title>
-    <script type="text/javascript" src="dxopal.min.js"></script>
-    <script type="text/ruby">
-      DXOpal.dump_error{ require_remote "main.rb?#{Time.now}" }
-    </script>
+    <script type="text/javascript" src="init.js"></script>
 
 <style>
   body {
     margin: 0;
     padding: 1rem;
+  }
+
+  .run_button {
+    margin: 1rem;
+    padding: 0.5rem;
+    font-size: 150%;
+    display: block;
   }
 
   .loading_container {
@@ -21,6 +25,7 @@
     background: #444;
     color: #ddd;
     font-weight: bold;
+    display: none;
   }
 
   .loading {
@@ -43,6 +48,7 @@
   </head>
 
   <body>
+    <button class="run_button">RUN</button>
     <div class="loading_container">
       LOADING ...
       <div class="loading"></div>
