@@ -220,13 +220,22 @@ class ChildCircuit
   end
 
   def update_not_relays(circuit)
+    switch_changed = false
+
     @not_relays.each { |not_relay|
       edge = @edges.find { |edge| edge.include_pos?(not_relay.pos) }
       not_relay.update(edge.on?)
 
       neighbor_switch = circuit.find_neighbor_switch(not_relay.pos)
+      state_before_update = neighbor_switch.on?
       neighbor_switch.update(! not_relay.on?)
+
+      if neighbor_switch.on? != state_before_update
+        switch_changed = true
+      end
     }
+
+    switch_changed
   end
 
   def pretty_inspect
