@@ -13,6 +13,11 @@ class View
     @drawer = Drawer.new(ppc)
   end
 
+  # workarond for DXOpal
+  def Point(x, y)
+    Unit::Point.new(x, y)
+  end
+
   def draw_grid(w, h)
     # tate
     (1..w).each { |x|
