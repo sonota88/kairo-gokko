@@ -57,8 +57,12 @@ end
 
 def update_tuden_relay_switch_lamp(circuit)
   switch_changed = true
+  count = 0
 
   while switch_changed
+    count += 1
+    raise "Too many state updates" if 1000 < count
+
     circuit.update_tuden_state()
     switch_changed = circuit.update_not_relays_state()
     circuit.update_lamps_state()
