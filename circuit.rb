@@ -13,6 +13,7 @@ end
 
 class Circuit
   attr_reader :child_circuits
+  attr_accessor :switch_changed
 
   def initialize(child_circuits)
     @child_circuits = child_circuits
