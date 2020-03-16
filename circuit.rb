@@ -13,9 +13,12 @@ end
 
 class Circuit
   attr_reader :child_circuits
+  attr_accessor :switch_changed
+  attr_accessor :last_update
 
   def initialize(child_circuits)
     @child_circuits = child_circuits
+    @last_update = Time.at(0)
   end
 
   def to_plain

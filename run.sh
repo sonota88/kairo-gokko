@@ -11,6 +11,9 @@ fi
 bundle exec ruby gen_sound.rb \
   out=click.wav amp=0.05 msec=30 hz=1000
 
+bundle exec ruby gen_sound.rb \
+  out=relay.wav amp=0.05 msec=30 hz=500
+
 ruby preprocess.rb "$@" > data.rb
 
 if [ "$BROWSER" = "1" ]; then

@@ -56,13 +56,14 @@ def on_push_switch(pushed_switch)
 end
 
 def update_tuden_relay_switch_lamp(circuit)
-  switch_changed = true
+  return if Time.now < circuit.last_update + 0.2
+  circuit.last_update = Time.now
 
-  while switch_changed
-    circuit.update_tuden_state()
-    switch_changed = circuit.update_not_relays_state()
-    circuit.update_lamps_state()
-  end
+  circuit.update_tuden_state()
+  circuit.switch_changed = circuit.update_not_relays_state()
+  circuit.update_lamps_state()
+
+  Sound[:relay].play if circuit.switch_changed
 end
 
 def draw(view, circuit, mx, my)
@@ -130,7 +131,7 @@ def main_loop(circuit, view)
     end
   end
 
-  if switch_changed
+  if switch_changed || circuit.switch_changed
     update_tuden_relay_switch_lamp(circuit)
   end
 
@@ -141,13 +142,14 @@ end
 
 circuit = Circuit.from_plain(parse_json($data_json))
 
-update_tuden_relay_switch_lamp(circuit)
 
 view = View.new(PPC)
 
 Sound.register(:click, "click.wav")
+Sound.register(:relay, "relay.wav")
 
 Window.load_resources do
+  update_tuden_relay_switch_lamp(circuit)
   hide_loading()
 
   Window.bgcolor = C_BLACK
