@@ -142,7 +142,6 @@ end
 
 circuit = Circuit.from_plain(parse_json($data_json))
 
-
 view = View.new(PPC)
 
 Sound.register(:click, "click.wav")
