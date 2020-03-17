@@ -91,6 +91,16 @@ end
 def draw(view, circuit, mx, my)
   view.draw_grid(15, 11)
 
+  now = Time.now
+  PushHistory.sweep(now)
+
+  push_history_for_draw =
+    PushHistory.get_for_draw(now)
+
+  push_history_for_draw.each { |pos, ratio|
+    view.draw_push_reaction(pos, ratio)
+  }
+
   circuit.child_circuits.each { |child_circuit|
     child_circuit.edges.each { |edge|
       view.draw_edge(edge)
@@ -128,6 +138,7 @@ def main_loop(circuit, view)
 
   if Input.mouse_push?(M_LBUTTON)
     mpos = Point(mx, my)
+    PushHistory.add(mpos)
 
     pushed_switch =
       circuit.find_switch_by_position(mpos)
@@ -143,6 +154,7 @@ def main_loop(circuit, view)
 
   if Input.touch_push?
     tpos = Point(tx, ty)
+    PushHistory.add(tpos)
 
     pushed_switch =
       circuit.find_switch_by_position(tpos)

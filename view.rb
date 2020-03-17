@@ -180,4 +180,17 @@ class View
       C_CURSOR
     )
   end
+
+  def draw_push_reaction(pos, ratio)
+    x = pos.x
+    y = pos.y
+    alpha = 127 * (1 - ratio)
+    r = 0.9 + ratio * 0.3
+
+    @drawer.draw_circle_fill(
+      x + 0.5, y + 0.5,
+      r,
+      [alpha, 150, 150, 150]
+    )
+  end
 end
