@@ -50,6 +50,28 @@ def hide_loading
   }
 end
 
+class PushHistory
+  DURATION_SEC = 0.4
+  @@history = []
+
+  def self.add(pos)
+    @@history << [pos, Time.now]
+  end
+
+  def self.sweep(now)
+    @@history = @@history.select { |pos, time|
+      now - time <= DURATION_SEC
+    }
+  end
+
+  def self.get_for_draw(now)
+    @@history.map { |pos, time|
+      ratio = (now - time) / DURATION_SEC
+      [pos, ratio]
+    }
+  end
+end
+
 def on_push_switch(pushed_switch)
   Sound[:click].play
   pushed_switch.toggle()
