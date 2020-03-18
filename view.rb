@@ -71,8 +71,9 @@ class View
     )
   end
 
-  def draw_switch(switch)
+  def draw_switch(switch, edge)
     color = switch.on? ? C_ACTIVE : C_INACTIVE
+    color_edge = edge.on? ? C_ACTIVE : C_INACTIVE
 
     @drawer.draw_box_fill(
       switch.x + 0.1, switch.y + 0.1,
@@ -83,7 +84,7 @@ class View
     @drawer.draw_box(
       switch.x + 0.1, switch.y + 0.1,
       switch.x + 0.9, switch.y + 0.9,
-      color
+      color_edge
     )
 
     if switch.on?

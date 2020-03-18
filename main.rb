@@ -115,7 +115,8 @@ def draw(view, circuit, mx, my)
     }
 
     child_circuit.switches.each { |switch|
-      view.draw_switch(switch)
+      edge = child_circuit.find_edge_including_pos(switch.pos)
+      view.draw_switch(switch, edge)
     }
 
     child_circuit.lamps.each { |lamp|
