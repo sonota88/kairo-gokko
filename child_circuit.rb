@@ -238,6 +238,12 @@ class ChildCircuit
     switch_changed
   end
 
+  def find_edge_including_pos(pos)
+    @edges.find { |edge|
+      edge.include_pos?(pos)
+    }
+  end
+
   def pretty_inspect
     to_plain.pretty_inspect
   end
