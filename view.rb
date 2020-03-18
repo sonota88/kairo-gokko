@@ -124,11 +124,11 @@ class View
     )
   end
 
-  def draw_not_relay(not_realy)
-    x = not_realy.x
-    y = not_realy.y
+  def draw_not_relay(not_relay)
+    x = not_relay.x
+    y = not_relay.y
 
-    color = not_realy.on? ? [0, 170, 221] : [0, 68, 204]
+    color = not_relay.on? ? [0, 170, 221] : [0, 68, 204]
 
     pts = [
       Point(x + 0.5, y - 0.3),
