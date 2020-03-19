@@ -261,7 +261,7 @@ module Unit
     end
   end
 
-  class NotRelay < SingleCell
+  class Relay < SingleCell
     def initialize(pos)
       super
 
@@ -275,18 +275,28 @@ module Unit
       }
     end
 
-    def self.from_plain(plain)
-      NotRelay.new(
-        Point.from_plain(plain["pos"])
-      )
-    end
-
     def update(state)
       @state = state
     end
 
     def on?
       @state
+    end
+  end
+
+  class EqualRelay < Relay
+    def self.from_plain(plain)
+      EqualRelay.new(
+        Point.from_plain(plain["pos"])
+      )
+    end
+  end
+
+  class NotRelay < Relay
+    def self.from_plain(plain)
+      NotRelay.new(
+        Point.from_plain(plain["pos"])
+      )
     end
   end
 end

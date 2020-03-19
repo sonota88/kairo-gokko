@@ -82,6 +82,15 @@ class Circuit
     Unit::NotRelay.new(pos)
   end
 
+  def self.to_equal_relay(rect)
+    pos = Point(
+      rect.x.floor,
+      rect.y.floor
+    )
+
+    Unit::EqualRelay.new(pos)
+  end
+
   def self.to_wire_fragments(lines)
     wf_set = Set.new
 
@@ -328,6 +337,11 @@ class Circuit
         .select { |rect| rect.text == "L" }
         .map { |rect| to_lamp(rect) }
 
+    all_equal_relays =
+      rects
+        .select { |rect| rect.text == "r=" }
+        .map { |rect| to_equal_relay(rect) }
+
     all_not_relays =
       rects
         .select { |rect| rect.text == "r!" }
@@ -340,11 +354,12 @@ class Circuit
 
     child_circuits =
       edge_groups.map { |edges|
-        plus_poles  = select_child_circuit_units(edges, all_plus_poles)
-        minus_poles = select_child_circuit_units(edges, all_minus_poles)
-        switches    = select_child_circuit_units(edges, all_switches)
-        lamps       = select_child_circuit_units(edges, all_lamps)
-        not_relays  = select_child_circuit_units(edges, all_not_relays)
+        plus_poles   = select_child_circuit_units(edges, all_plus_poles)
+        minus_poles  = select_child_circuit_units(edges, all_minus_poles)
+        switches     = select_child_circuit_units(edges, all_switches)
+        lamps        = select_child_circuit_units(edges, all_lamps)
+        equal_relays = select_child_circuit_units(edges, all_equal_relays)
+        not_relays   = select_child_circuit_units(edges, all_not_relays)
 
         ChildCircuit.new(
           edges,
@@ -352,6 +367,7 @@ class Circuit
           minus_poles,
           switches,
           lamps,
+          equal_relays,
           not_relays
         )
       }
@@ -389,6 +405,20 @@ class Circuit
     @child_circuits.each { |child_circuit|
       child_circuit.update_lamps()
     }
+  end
+
+  def update_equal_relays_state
+    switch_changed = false
+
+    @child_circuits.each { |child_circuit|
+      _switch_changed = child_circuit.update_equal_relays(self)
+
+      if _switch_changed
+        switch_changed = true
+      end
+    }
+
+    switch_changed
   end
 
   def update_not_relays_state
