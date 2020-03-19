@@ -47,6 +47,10 @@ class View
         draw_lamp(lamp)
       }
 
+      child_circuit.equal_relays.each { |equal_relay|
+        draw_equal_relay(equal_relay)
+      }
+
       child_circuit.not_relays.each { |not_relay|
         draw_not_relay(not_relay)
       }
@@ -158,6 +162,43 @@ class View
     @drawer.draw_circle_fill(
       lamp.x + 0.5, lamp.y + 0.5,
       0.3,
+      color
+    )
+  end
+
+  def draw_equal_relay(not_relay)
+    x = not_relay.x
+    y = not_relay.y
+
+    color = not_relay.on? ? [0, 170, 221] : [0, 68, 204]
+
+    pts = [
+      Point(x + 0.5, y - 0.3),
+      Point(x + 1.3, y + 0.5),
+      Point(x + 0.5, y + 1.3),
+      Point(x - 0.3, y + 0.5),
+    ]
+
+    @drawer.draw_polyline(pts, color, close_path: true)
+
+    @drawer.draw_box_fill(
+      x - 0.1, y + 0.4,
+      x + 1.1, y + 0.6,
+      C_BLACK
+    )
+    @drawer.draw_box_fill(
+      x + 0.4, y - 0.1,
+      x + 0.6, y + 1.1,
+      C_BLACK
+    )
+    @drawer.draw_box_fill(
+      x + 0.2, y + 0.3,
+      x + 0.8, y + 0.4,
+      color
+    )
+    @drawer.draw_box_fill(
+      x + 0.2, y + 0.6,
+      x + 0.8, y + 0.7,
       color
     )
   end
