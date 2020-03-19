@@ -82,7 +82,12 @@ def update_tuden_relay_switch_lamp(circuit)
   circuit.last_update = Time.now
 
   circuit.update_tuden_state()
-  circuit.switch_changed = circuit.update_not_relays_state()
+
+  switch_changed_eq = circuit.update_equal_relays_state()
+  switch_changed_not = circuit.update_not_relays_state()
+  circuit.switch_changed =
+    switch_changed_eq || switch_changed_not
+
   circuit.update_lamps_state()
 
   Sound[:relay].play if circuit.switch_changed
