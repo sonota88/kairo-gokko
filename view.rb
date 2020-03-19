@@ -194,25 +194,8 @@ class View
 
     color = not_relay.on? ? [0, 170, 221] : [0, 68, 204]
 
-    pts = [
-      Point(x + 0.5, y - 0.3),
-      Point(x + 1.3, y + 0.5),
-      Point(x + 0.5, y + 1.3),
-      Point(x - 0.3, y + 0.5),
-    ]
+    _draw_relay_common(x, y, color)
 
-    @drawer.draw_polyline(pts, color, close_path: true)
-
-    @drawer.draw_box_fill(
-      x - 0.1, y + 0.4,
-      x + 1.1, y + 0.6,
-      C_BLACK
-    )
-    @drawer.draw_box_fill(
-      x + 0.4, y - 0.1,
-      x + 0.6, y + 1.1,
-      C_BLACK
-    )
     @drawer.draw_box_fill(
       x + 0.2, y + 0.3,
       x + 0.8, y + 0.4,
@@ -231,25 +214,8 @@ class View
 
     color = not_relay.on? ? [0, 170, 221] : [0, 68, 204]
 
-    pts = [
-      Point(x + 0.5, y - 0.3),
-      Point(x + 1.3, y + 0.5),
-      Point(x + 0.5, y + 1.3),
-      Point(x - 0.3, y + 0.5),
-    ]
+    _draw_relay_common(x, y, color)
 
-    @drawer.draw_polyline(pts, color, close_path: true)
-
-    @drawer.draw_box_fill(
-      x - 0.1, y + 0.4,
-      x + 1.1, y + 0.6,
-      C_BLACK
-    )
-    @drawer.draw_box_fill(
-      x + 0.4, y - 0.1,
-      x + 0.6, y + 1.1,
-      C_BLACK
-    )
     @drawer.draw_box_fill(
       x + 0.45, y + 0.2,
       x + 0.55, y + 0.55,
