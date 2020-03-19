@@ -18,6 +18,43 @@ class View
     Unit::Point.new(x, y)
   end
 
+  def draw(circuit, mx, my, push_history_for_draw)
+    draw_grid(15, 11)
+
+    push_history_for_draw.each { |pos, ratio|
+      draw_push_reaction(pos, ratio)
+    }
+
+    circuit.child_circuits.each { |child_circuit|
+      child_circuit.edges.each { |edge|
+        draw_edge(edge)
+      }
+
+      child_circuit.plus_poles.each { |pole|
+        draw_plus_pole(pole)
+      }
+
+      child_circuit.minus_poles.each { |pole|
+        draw_minus_pole(pole)
+      }
+
+      child_circuit.switches.each { |switch|
+        edge = child_circuit.find_edge_including_pos(switch.pos)
+        draw_switch(switch, edge)
+      }
+
+      child_circuit.lamps.each { |lamp|
+        draw_lamp(lamp)
+      }
+
+      child_circuit.not_relays.each { |not_relay|
+        draw_not_relay(not_relay)
+      }
+    }
+
+    draw_cursor_highlight(mx, my)
+  end
+
   def draw_grid(w, h)
     # tate
     (1..w).each { |x|
@@ -71,8 +108,9 @@ class View
     )
   end
 
-  def draw_switch(switch)
+  def draw_switch(switch, edge)
     color = switch.on? ? C_ACTIVE : C_INACTIVE
+    color_edge = edge.on? ? C_ACTIVE : C_INACTIVE
 
     @drawer.draw_box_fill(
       switch.x + 0.1, switch.y + 0.1,
@@ -83,7 +121,7 @@ class View
     @drawer.draw_box(
       switch.x + 0.1, switch.y + 0.1,
       switch.x + 0.9, switch.y + 0.9,
-      color
+      color_edge
     )
 
     if switch.on?
@@ -124,11 +162,11 @@ class View
     )
   end
 
-  def draw_not_relay(not_realy)
-    x = not_realy.x
-    y = not_realy.y
+  def draw_not_relay(not_relay)
+    x = not_relay.x
+    y = not_relay.y
 
-    color = not_realy.on? ? [0, 170, 221] : [0, 68, 204]
+    color = not_relay.on? ? [0, 170, 221] : [0, 68, 204]
 
     pts = [
       Point(x + 0.5, y - 0.3),
@@ -178,6 +216,19 @@ class View
       x + 0, y + 0,
       x + 1, y + 1,
       C_CURSOR
+    )
+  end
+
+  def draw_push_reaction(pos, ratio)
+    x = pos.x
+    y = pos.y
+    alpha = 127 * (1 - ratio)
+    r = 0.9 + ratio * 0.3
+
+    @drawer.draw_circle_fill(
+      x + 0.5, y + 0.5,
+      r,
+      [alpha, 150, 150, 150]
     )
   end
 end

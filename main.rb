@@ -50,6 +50,28 @@ def hide_loading
   }
 end
 
+class PushHistory
+  DURATION_SEC = 0.4
+  @@history = []
+
+  def self.add(pos)
+    @@history << [pos, Time.now]
+  end
+
+  def self.sweep(now)
+    @@history = @@history.select { |pos, time|
+      now - time <= DURATION_SEC
+    }
+  end
+
+  def self.get_for_draw(now)
+    @@history.map { |pos, time|
+      ratio = (now - time) / DURATION_SEC
+      [pos, ratio]
+    }
+  end
+end
+
 def on_push_switch(pushed_switch)
   Sound[:click].play
   pushed_switch.toggle()
@@ -66,38 +88,6 @@ def update_tuden_relay_switch_lamp(circuit)
   Sound[:relay].play if circuit.switch_changed
 end
 
-def draw(view, circuit, mx, my)
-  view.draw_grid(15, 11)
-
-  circuit.child_circuits.each { |child_circuit|
-    child_circuit.edges.each { |edge|
-      view.draw_edge(edge)
-    }
-
-    child_circuit.plus_poles.each { |pole|
-      view.draw_plus_pole(pole)
-    }
-
-    child_circuit.minus_poles.each { |pole|
-      view.draw_minus_pole(pole)
-    }
-
-    child_circuit.switches.each { |switch|
-      view.draw_switch(switch)
-    }
-
-    child_circuit.lamps.each { |lamp|
-      view.draw_lamp(lamp)
-    }
-
-    child_circuit.not_relays.each { |not_relay|
-      view.draw_not_relay(not_relay)
-    }
-  }
-
-  view.draw_cursor_highlight(mx, my)
-end
-
 def main_loop(circuit, view)
   switch_changed = false
 
@@ -106,6 +96,7 @@ def main_loop(circuit, view)
 
   if Input.mouse_push?(M_LBUTTON)
     mpos = Point(mx, my)
+    PushHistory.add(mpos)
 
     pushed_switch =
       circuit.find_switch_by_position(mpos)
@@ -121,6 +112,7 @@ def main_loop(circuit, view)
 
   if Input.touch_push?
     tpos = Point(tx, ty)
+    PushHistory.add(tpos)
 
     pushed_switch =
       circuit.find_switch_by_position(tpos)
@@ -135,13 +127,22 @@ def main_loop(circuit, view)
     update_tuden_relay_switch_lamp(circuit)
   end
 
-  draw(view, circuit, mx, my)
+  now = Time.now
+  PushHistory.sweep(now)
+
+  push_history_for_draw =
+    PushHistory.get_for_draw(now)
+
+  view.draw(
+    circuit,
+    mx, my,
+    push_history_for_draw
+  )
 end
 
 # --------------------------------
 
 circuit = Circuit.from_plain(parse_json($data_json))
-
 
 view = View.new(PPC)
 
