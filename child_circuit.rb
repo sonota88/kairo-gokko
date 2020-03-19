@@ -26,35 +26,35 @@ class ChildCircuit
         equal_relays,
         not_relays
       )
-    @edges = edges
-    @plus_poles = plus_poles
-    @minus_poles = minus_poles
-    @switches = switches
-    @lamps = lamps
+    @edges        = edges
+    @plus_poles   = plus_poles
+    @minus_poles  = minus_poles
+    @switches     = switches
+    @lamps        = lamps
     @equal_relays = equal_relays
-    @not_relays = not_relays
+    @not_relays   = not_relays
   end
 
   def to_plain
     {
-      edges:       @edges      .map { |it| it.to_plain },
-      plus_poles:  @plus_poles .map { |it| it.to_plain },
-      minus_poles: @minus_poles.map { |it| it.to_plain },
-      switches:    @switches   .map { |it| it.to_plain },
-      lamps:       @lamps      .map { |it| it.to_plain },
+      edges:        @edges       .map { |it| it.to_plain },
+      plus_poles:   @plus_poles  .map { |it| it.to_plain },
+      minus_poles:  @minus_poles .map { |it| it.to_plain },
+      switches:     @switches    .map { |it| it.to_plain },
+      lamps:        @lamps       .map { |it| it.to_plain },
       equal_relays: @equal_relays.map { |it| it.to_plain },
-      not_relays:  @not_relays .map { |it| it.to_plain }
+      not_relays:   @not_relays  .map { |it| it.to_plain }
     }
   end
 
   def self.from_plain(plain)
-    edges       = plain["edges"      ].map { |it| Unit::Edge     .from_plain(it) }
-    plus_poles  = plain["plus_poles" ].map { |it| Unit::PlusPole .from_plain(it) }
-    minus_poles = plain["minus_poles"].map { |it| Unit::MinusPole.from_plain(it) }
-    switches    = plain["switches"   ].map { |it| Unit::Switch   .from_plain(it) }
-    lamps       = plain["lamps"      ].map { |it| Unit::Lamp     .from_plain(it) }
+    edges        = plain["edges"       ].map { |it| Unit::Edge      .from_plain(it) }
+    plus_poles   = plain["plus_poles"  ].map { |it| Unit::PlusPole  .from_plain(it) }
+    minus_poles  = plain["minus_poles" ].map { |it| Unit::MinusPole .from_plain(it) }
+    switches     = plain["switches"    ].map { |it| Unit::Switch    .from_plain(it) }
+    lamps        = plain["lamps"       ].map { |it| Unit::Lamp      .from_plain(it) }
     equal_relays = plain["equal_relays"].map { |it| Unit::EqualRelay.from_plain(it) }
-    not_relays  = plain["not_relays" ].map { |it| Unit::NotRelay .from_plain(it) }
+    not_relays   = plain["not_relays"  ].map { |it| Unit::NotRelay  .from_plain(it) }
 
     ChildCircuit.new(
       edges,
