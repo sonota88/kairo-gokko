@@ -88,20 +88,6 @@ def update_tuden_relay_switch_lamp(circuit)
   Sound[:relay].play if circuit.switch_changed
 end
 
-def draw(view, circuit, mx, my)
-  now = Time.now
-  PushHistory.sweep(now)
-
-  push_history_for_draw =
-    PushHistory.get_for_draw(now)
-
-  view.draw(
-    circuit,
-    mx, my,
-    push_history_for_draw
-  )
-end
-
 def main_loop(circuit, view)
   switch_changed = false
 
@@ -141,7 +127,17 @@ def main_loop(circuit, view)
     update_tuden_relay_switch_lamp(circuit)
   end
 
-  draw(view, circuit, mx, my)
+  now = Time.now
+  PushHistory.sweep(now)
+
+  push_history_for_draw =
+    PushHistory.get_for_draw(now)
+
+  view.draw(
+    circuit,
+    mx, my,
+    push_history_for_draw
+  )
 end
 
 # --------------------------------
