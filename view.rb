@@ -166,6 +166,28 @@ class View
     )
   end
 
+  def _draw_relay_common(x, y, color)
+    pts = [
+      Point(x + 0.5, y - 0.3),
+      Point(x + 1.3, y + 0.5),
+      Point(x + 0.5, y + 1.3),
+      Point(x - 0.3, y + 0.5),
+    ]
+
+    @drawer.draw_polyline(pts, color, close_path: true)
+
+    @drawer.draw_box_fill(
+      x - 0.1, y + 0.4,
+      x + 1.1, y + 0.6,
+      C_BLACK
+    )
+    @drawer.draw_box_fill(
+      x + 0.4, y - 0.1,
+      x + 0.6, y + 1.1,
+      C_BLACK
+    )
+  end
+
   def draw_equal_relay(not_relay)
     x = not_relay.x
     y = not_relay.y
