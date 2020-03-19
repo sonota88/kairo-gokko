@@ -82,6 +82,15 @@ class Circuit
     Unit::NotRelay.new(pos)
   end
 
+  def self.to_equal_relay(rect)
+    pos = Point(
+      rect.x.floor,
+      rect.y.floor
+    )
+
+    Unit::EqualRelay.new(pos)
+  end
+
   def self.to_wire_fragments(lines)
     wf_set = Set.new
 
@@ -328,6 +337,11 @@ class Circuit
         .select { |rect| rect.text == "L" }
         .map { |rect| to_lamp(rect) }
 
+    all_equal_relays =
+      rects
+        .select { |rect| rect.text == "r=" }
+        .map { |rect| to_equal_relay(rect) }
+
     all_not_relays =
       rects
         .select { |rect| rect.text == "r!" }
@@ -344,6 +358,7 @@ class Circuit
         minus_poles = select_child_circuit_units(edges, all_minus_poles)
         switches    = select_child_circuit_units(edges, all_switches)
         lamps       = select_child_circuit_units(edges, all_lamps)
+        equal_relays = select_child_circuit_units(edges, all_equal_relays)
         not_relays  = select_child_circuit_units(edges, all_not_relays)
 
         ChildCircuit.new(
@@ -352,7 +367,7 @@ class Circuit
           minus_poles,
           switches,
           lamps,
-          [], # equal-relays
+          equal_relays,
           not_relays
         )
       }
