@@ -89,46 +89,17 @@ def update_tuden_relay_switch_lamp(circuit)
 end
 
 def draw(view, circuit, mx, my)
-  view.draw_grid(15, 11)
-
   now = Time.now
   PushHistory.sweep(now)
 
   push_history_for_draw =
     PushHistory.get_for_draw(now)
 
-  push_history_for_draw.each { |pos, ratio|
-    view.draw_push_reaction(pos, ratio)
-  }
-
-  circuit.child_circuits.each { |child_circuit|
-    child_circuit.edges.each { |edge|
-      view.draw_edge(edge)
-    }
-
-    child_circuit.plus_poles.each { |pole|
-      view.draw_plus_pole(pole)
-    }
-
-    child_circuit.minus_poles.each { |pole|
-      view.draw_minus_pole(pole)
-    }
-
-    child_circuit.switches.each { |switch|
-      edge = child_circuit.find_edge_including_pos(switch.pos)
-      view.draw_switch(switch, edge)
-    }
-
-    child_circuit.lamps.each { |lamp|
-      view.draw_lamp(lamp)
-    }
-
-    child_circuit.not_relays.each { |not_relay|
-      view.draw_not_relay(not_relay)
-    }
-  }
-
-  view.draw_cursor_highlight(mx, my)
+  view.draw(
+    circuit,
+    mx, my,
+    push_history_for_draw
+  )
 end
 
 def main_loop(circuit, view)
