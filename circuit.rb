@@ -354,12 +354,12 @@ class Circuit
 
     child_circuits =
       edge_groups.map { |edges|
-        plus_poles  = select_child_circuit_units(edges, all_plus_poles)
-        minus_poles = select_child_circuit_units(edges, all_minus_poles)
-        switches    = select_child_circuit_units(edges, all_switches)
-        lamps       = select_child_circuit_units(edges, all_lamps)
+        plus_poles   = select_child_circuit_units(edges, all_plus_poles)
+        minus_poles  = select_child_circuit_units(edges, all_minus_poles)
+        switches     = select_child_circuit_units(edges, all_switches)
+        lamps        = select_child_circuit_units(edges, all_lamps)
         equal_relays = select_child_circuit_units(edges, all_equal_relays)
-        not_relays  = select_child_circuit_units(edges, all_not_relays)
+        not_relays   = select_child_circuit_units(edges, all_not_relays)
 
         ChildCircuit.new(
           edges,
