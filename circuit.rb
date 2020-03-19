@@ -352,6 +352,7 @@ class Circuit
           minus_poles,
           switches,
           lamps,
+          [], # equal-relays
           not_relays
         )
       }
