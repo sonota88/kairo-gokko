@@ -18,6 +18,7 @@ doc = LiboDraw::Document.new(path)
 page = doc.pages[page_no - 1]
 
 circuit = Circuit.create(
+  page.name,
   page.lines,
   page.rectangles
 )
