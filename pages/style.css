@@ -38,3 +38,11 @@
 .loading_progress {
   font-size: 150%;
 }
+
+.circuit_list_container {
+  display: none;
+}
+
+.circuit_list {
+  height: 30px;
+}
