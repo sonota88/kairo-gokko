@@ -7,13 +7,6 @@ require "./libo_draw"
 
 path = ARGV[0]
 
-page_no =
-  if ARGV[1]
-    ARGV[1].to_i
-  else
-    1
-  end
-
 doc = LiboDraw::Document.new(path)
 
 circuits =

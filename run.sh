@@ -14,11 +14,14 @@ bundle exec ruby gen_sound.rb \
 bundle exec ruby gen_sound.rb \
   out=relay.wav amp=0.05 msec=30 hz=500
 
-ruby preprocess.rb "$@" > data.rb
+fodg_path="$1"; shift
+page="$1"; shift
+
+ruby preprocess.rb "$fodg_path" > data.rb
 
 if [ "$BROWSER" = "1" ]; then
   bundle exec dxopal server
 else
-  PAGE="$2" \
+  PAGE="$page" \
     bundle exec ruby main.rb
 fi
