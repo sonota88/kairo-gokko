@@ -147,7 +147,15 @@ end
 
 # --------------------------------
 
-circuit = Circuit.from_plain(parse_json($data_json))
+# circuit index
+ci =
+  if ENV.key?("PAGE")
+    ENV["PAGE"].to_i - 1
+  else
+    0
+  end
+
+circuit = Circuit.from_plain(parse_json($data_json)[ci])
 
 view = View.new(PPC)
 

@@ -19,5 +19,6 @@ ruby preprocess.rb "$@" > data.rb
 if [ "$BROWSER" = "1" ]; then
   bundle exec dxopal server
 else
-  bundle exec ruby main.rb
+  PAGE="$2" \
+    bundle exec ruby main.rb
 fi
