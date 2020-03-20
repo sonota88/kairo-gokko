@@ -72,6 +72,11 @@ class PushHistory
   end
 end
 
+def change_circuit(ci)
+  $circuit = $circuits[ci]
+  update_tuden_relay_switch_lamp($circuit)
+end
+
 def on_push_switch(pushed_switch)
   Sound[:click].play
   pushed_switch.toggle()
@@ -147,6 +152,10 @@ end
 
 # --------------------------------
 
+$circuits =
+  parse_json($data_json)
+    .map { |plain| Circuit.from_plain(plain) }
+
 # circuit index
 ci =
   if ENV.key?("PAGE")
@@ -155,15 +164,13 @@ ci =
     0
   end
 
-$circuit = Circuit.from_plain(parse_json($data_json)[ci])
-
 view = View.new(PPC)
 
 Sound.register(:click, "click.wav")
 Sound.register(:relay, "relay.wav")
 
 Window.load_resources do
-  update_tuden_relay_switch_lamp($circuit)
+  change_circuit(ci)
   hide_loading()
 
   Window.bgcolor = C_BLACK
