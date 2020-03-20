@@ -114,7 +114,7 @@ def on_push_switch(pushed_switch)
 end
 
 def update_tuden_relay_switch_lamp(circuit)
-  return if Time.now < circuit.last_update + 0.2
+  return if Time.now < circuit.last_update + 0.1
   circuit.last_update = Time.now
 
   circuit.update_tuden_state()
