@@ -43,6 +43,10 @@ def parse_json(json)
   end
 end
 
+def get_els(selector, el = Native(`document`))
+  el.querySelectorAll(selector)
+end
+
 def hide_loading
   %x{
     var loadingContainer = document.querySelector(".loading_container");
