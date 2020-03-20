@@ -52,33 +52,6 @@ def hide_loading
   loading_container.style.display = "none"
 end
 
-def on_select_circuit
-  option_el = get_els(".circuit_list option:checked")[0]
-  ci = option_el.value.to_i
-
-  change_circuit(ci)
-end
-
-def init_circuit_list(circuits)
-  get_els(".circuit_list_container")[0].style.display = "block"
-
-  select_el = get_els(".circuit_list")[0]
-
-  (0...circuits.size).each { |ci|
-    circuit = $circuits[ci]
-    option_el = Native(`document`).createElement("option")
-    option_el.value = ci.to_s
-    option_el.textContent = "(%d) %s" % [ci + 1, circuit.name]
-    select_el.appendChild(option_el)
-  }
-
-  select_el.addEventListener(
-    "change",
-    lambda { on_select_circuit() },
-    false
-  )
-end
-
 # --------------------------------
 
 class PushHistory
@@ -106,6 +79,33 @@ end
 def change_circuit(ci)
   $circuit = $circuits[ci]
   update_tuden_relay_switch_lamp($circuit)
+end
+
+def on_select_circuit
+  option_el = get_els(".circuit_list option:checked")[0]
+  ci = option_el.value.to_i
+
+  change_circuit(ci)
+end
+
+def init_circuit_list(circuits)
+  get_els(".circuit_list_container")[0].style.display = "block"
+
+  select_el = get_els(".circuit_list")[0]
+
+  (0...circuits.size).each { |ci|
+    circuit = $circuits[ci]
+    option_el = Native(`document`).createElement("option")
+    option_el.value = ci.to_s
+    option_el.textContent = "(%d) %s" % [ci + 1, circuit.name]
+    select_el.appendChild(option_el)
+  }
+
+  select_el.addEventListener(
+    "change",
+    lambda { on_select_circuit() },
+    false
+  )
 end
 
 def on_push_switch(pushed_switch)
