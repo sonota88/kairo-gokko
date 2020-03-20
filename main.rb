@@ -48,10 +48,8 @@ def get_els(selector, el = Native(`document`))
 end
 
 def hide_loading
-  %x{
-    var loadingContainer = document.querySelector(".loading_container");
-    loadingContainer.style.display = "none";
-  }
+  loading_container = get_els(".loading_container")[0]
+  loading_container.style.display = "none"
 end
 
 def on_select_circuit
