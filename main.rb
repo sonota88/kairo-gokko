@@ -54,6 +54,22 @@ def hide_loading
   }
 end
 
+def init_circuit_list(circuits)
+  get_els(".circuit_list_container")[0].style.display = "block"
+
+  select_el = get_els(".circuit_list")[0]
+
+  (0...circuits.size).each { |ci|
+    circuit = $circuits[ci]
+    option_el = Native(`document`).createElement("option")
+    option_el.value = ci.to_s
+    option_el.textContent = "(%d) %s" % [ci + 1, circuit.name]
+    select_el.appendChild(option_el)
+  }
+end
+
+# --------------------------------
+
 class PushHistory
   DURATION_SEC = 0.4
   @@history = []
@@ -159,6 +175,8 @@ end
 $circuits =
   parse_json($data_json)
     .map { |plain| Circuit.from_plain(plain) }
+
+init_circuit_list($circuits) if browser?
 
 # circuit index
 ci =
