@@ -155,7 +155,7 @@ ci =
     0
   end
 
-circuit = Circuit.from_plain(parse_json($data_json)[ci])
+$circuit = Circuit.from_plain(parse_json($data_json)[ci])
 
 view = View.new(PPC)
 
@@ -163,12 +163,12 @@ Sound.register(:click, "click.wav")
 Sound.register(:relay, "relay.wav")
 
 Window.load_resources do
-  update_tuden_relay_switch_lamp(circuit)
+  update_tuden_relay_switch_lamp($circuit)
   hide_loading()
 
   Window.bgcolor = C_BLACK
 
   Window.loop do
-    main_loop(circuit, view)
+    main_loop($circuit, view)
   end
 end
