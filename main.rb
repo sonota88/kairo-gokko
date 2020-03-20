@@ -43,12 +43,16 @@ def parse_json(json)
   end
 end
 
-def hide_loading
-  %x{
-    var loadingContainer = document.querySelector(".loading_container");
-    loadingContainer.style.display = "none";
-  }
+def get_els(selector, el = Native(`document`))
+  el.querySelectorAll(selector)
 end
+
+def hide_loading
+  loading_container = get_els(".loading_container")[0]
+  loading_container.style.display = "none"
+end
+
+# --------------------------------
 
 class PushHistory
   DURATION_SEC = 0.4
@@ -72,13 +76,45 @@ class PushHistory
   end
 end
 
+def change_circuit(ci)
+  $circuit = $circuits[ci]
+  update_tuden_relay_switch_lamp($circuit)
+end
+
+def on_select_circuit
+  option_el = get_els(".circuit_list option:checked")[0]
+  ci = option_el.value.to_i
+
+  change_circuit(ci)
+end
+
+def init_circuit_list(circuits)
+  get_els(".circuit_list_container")[0].style.display = "block"
+
+  select_el = get_els(".circuit_list")[0]
+
+  (0...circuits.size).each { |ci|
+    circuit = $circuits[ci]
+    option_el = Native(`document`).createElement("option")
+    option_el.value = ci.to_s
+    option_el.textContent = "(%d) %s" % [ci + 1, circuit.name]
+    select_el.appendChild(option_el)
+  }
+
+  select_el.addEventListener(
+    "change",
+    lambda { on_select_circuit() },
+    false
+  )
+end
+
 def on_push_switch(pushed_switch)
   Sound[:click].play
   pushed_switch.toggle()
 end
 
 def update_tuden_relay_switch_lamp(circuit)
-  return if Time.now < circuit.last_update + 0.2
+  return if Time.now < circuit.last_update + 0.1
   circuit.last_update = Time.now
 
   circuit.update_tuden_state()
@@ -147,7 +183,19 @@ end
 
 # --------------------------------
 
-circuit = Circuit.from_plain(parse_json($data_json))
+$circuits =
+  parse_json($data_json)
+    .map { |plain| Circuit.from_plain(plain) }
+
+init_circuit_list($circuits) if browser?
+
+# circuit index
+ci =
+  if ENV.key?("PAGE")
+    ENV["PAGE"].to_i - 1
+  else
+    0
+  end
 
 view = View.new(PPC)
 
@@ -155,12 +203,12 @@ Sound.register(:click, "click.wav")
 Sound.register(:relay, "relay.wav")
 
 Window.load_resources do
-  update_tuden_relay_switch_lamp(circuit)
-  hide_loading()
+  change_circuit(ci)
+  hide_loading() if browser?
 
   Window.bgcolor = C_BLACK
 
   Window.loop do
-    main_loop(circuit, view)
+    main_loop($circuit, view)
   end
 end

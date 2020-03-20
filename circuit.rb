@@ -12,17 +12,20 @@ else
 end
 
 class Circuit
+  attr_reader :name
   attr_reader :child_circuits
   attr_accessor :switch_changed
   attr_accessor :last_update
 
-  def initialize(child_circuits)
+  def initialize(name, child_circuits)
+    @name = name
     @child_circuits = child_circuits
     @last_update = Time.at(0)
   end
 
   def to_plain
     {
+      name: @name,
       child_circuits: @child_circuits.map { |child_circuit| child_circuit.to_plain }
     }
   end
@@ -34,7 +37,10 @@ class Circuit
           ChildCircuit.from_plain(child_circuit_data)
         }
 
-    Circuit.new(child_circuits)
+    Circuit.new(
+      data["name"],
+      child_circuits
+    )
   end
 
   def self.to_plus_pole(rect)
@@ -316,7 +322,7 @@ class Circuit
     }
   end
 
-  def self.create(lines, rects)
+  def self.create(name, lines, rects)
     all_plus_poles =
       rects
         .select { |rect| rect.text == "+" }
@@ -372,7 +378,7 @@ class Circuit
         )
       }
 
-    Circuit.new(child_circuits)
+    Circuit.new(name, child_circuits)
   end
 
   def find_switch_by_position(pos)

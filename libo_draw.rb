@@ -34,6 +34,10 @@ module LiboDraw
       REXML::XPath.match(@el, "draw:line")
         .map { |line_el| Line.new(line_el) }
     end
+
+    def name
+      @el["draw:name"]
+    end
   end
 
   class Rectangle

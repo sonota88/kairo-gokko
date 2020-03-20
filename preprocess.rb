@@ -7,22 +7,20 @@ require "./libo_draw"
 
 path = ARGV[0]
 
-page_no =
-  if ARGV[1]
-    ARGV[1].to_i
-  else
-    1
-  end
-
 doc = LiboDraw::Document.new(path)
-page = doc.pages[page_no - 1]
 
-circuit = Circuit.create(
-  page.lines,
-  page.rectangles
-)
+circuits =
+  doc.pages.map { |page|
+    Circuit.create(
+      page.name,
+      page.lines,
+      page.rectangles
+    )
+  }
+
+plain = circuits.map { |circuit| circuit.to_plain }
 
 puts "$data_json = <<EOB"
-print JSON.pretty_generate(circuit.to_plain)
+print JSON.pretty_generate(plain)
 print "\n"
 puts "EOB"

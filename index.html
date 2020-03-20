@@ -45,6 +45,14 @@
   .loading_progress {
     font-size: 150%;
   }
+
+  .circuit_list_container {
+    display: none;
+  }
+
+  .circuit_list {
+    height: 30px;
+  }
 </style>
   </head>
 
@@ -55,7 +63,14 @@
       <div class="loading"></div>
       <div class="loading_progress"></div>
     </div>
+
+    <div class="circuit_list_container">
+      <select class="circuit_list"></select>
+    </div>
+
     <canvas id="dxopal-canvas"></canvas>
     <div id="dxopal-errors"></div>
+
+    <div class="footer"></div>
   </body>
 </html>
