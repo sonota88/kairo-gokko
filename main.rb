@@ -206,7 +206,7 @@ Sound.register(:relay, "relay.wav")
 
 Window.load_resources do
   change_circuit(ci)
-  hide_loading()
+  hide_loading() if browser?
 
   Window.bgcolor = C_BLACK
 
