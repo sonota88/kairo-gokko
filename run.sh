@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -o errexit
+set -o nounset
 
 if [ "$1" = "test" ]; then
   ruby test/test_circuit.rb
