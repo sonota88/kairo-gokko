@@ -54,6 +54,13 @@ def hide_loading
   }
 end
 
+def on_select_circuit
+  option_el = get_els(".circuit_list option:checked")[0]
+  ci = option_el.value.to_i
+
+  change_circuit(ci)
+end
+
 def init_circuit_list(circuits)
   get_els(".circuit_list_container")[0].style.display = "block"
 
@@ -66,6 +73,12 @@ def init_circuit_list(circuits)
     option_el.textContent = "(%d) %s" % [ci + 1, circuit.name]
     select_el.appendChild(option_el)
   }
+
+  select_el.addEventListener(
+    "change",
+    lambda { on_select_circuit() },
+    false
+  )
 end
 
 # --------------------------------
