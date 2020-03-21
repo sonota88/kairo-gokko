@@ -19,7 +19,7 @@ class View
   end
 
   def draw(circuit, mx, my, push_history_for_draw)
-    draw_grid(15, 11)
+    # draw_grid(15, 11)
 
     push_history_for_draw.each { |pos, ratio|
       draw_push_reaction(pos, ratio)
