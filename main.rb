@@ -202,7 +202,7 @@ view = View.new(PPC)
 Sound.register(:click, "click.wav")
 Sound.register(:relay, "relay.wav")
 
-Window.width  = 800
+Window.width  = 1200
 Window.height = 600
 
 Window.load_resources do
