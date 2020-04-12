@@ -32,7 +32,7 @@ require_remote "./view.rb"
 update_progress "view"
 
 # pixels per cell
-PPC = 20
+PPC = 16
 
 def parse_json(json)
   if browser?
