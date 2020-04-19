@@ -2,11 +2,11 @@
 
 require "set"
 
-if RUBY_ENGINE == "opal"
-  require_remote "./tuden.rb"
-else
-  ;
-end
+# if RUBY_ENGINE == "opal"
+#   require_remote "./tuden.rb"
+# else
+#   ;
+# end
 
 class ChildCircuit
   attr_reader :edges
@@ -67,6 +67,10 @@ class ChildCircuit
     )
   end
 
+  def tuden?(switches)
+    switches.all? { |switch| switch.on? }
+  end
+
   def update_4_edges
     edges_connected_to_plus =
       @edges.select { |edge|
@@ -97,7 +101,7 @@ class ChildCircuit
       switches = @switches.select { |switch|
         edge.include_pos?(switch.pos)
       }
-      is_tuden = Tuden.tuden?(switches)
+      is_tuden = tuden?(switches)
       edge.update(is_tuden)
     }
 
@@ -125,83 +129,84 @@ class ChildCircuit
     pos_set
   end
 
-  def prepare_tuden_nodes
-    nid_plus = nil
-    nid_minus = nil
+#   def prepare_tuden_nodes
+#     nid_plus = nil
+#     nid_minus = nil
+# 
+#     pos_nid_map = {}
+# 
+#     tnodes = []
+#     pos_set_all.each_with_index { |pos, index|
+#       nid = index + 1
+# 
+#       tnodes << Tuden::Node.new(nid)
+# 
+#       pos_nid_map[pos] = nid
+# 
+#       if pos == @plus_poles[0].pos
+#         nid_plus = nid
+#       elsif pos == @minus_poles[0].pos
+#         nid_minus = nid
+#       end
+#     }
+# 
+#     [tnodes, pos_nid_map, nid_plus, nid_minus]
+#   end
 
-    pos_nid_map = {}
+#   def prepare_tuden_edges(pos_nid_map)
+#     eid_edge_map = {}
+# 
+#     tedges = []
+#     @edges.each_with_index { |edge, index|
+#       eid = index + 1
+# 
+#       nid1 = pos_nid_map[edge.pos1]
+#       nid2 = pos_nid_map[edge.pos2]
+# 
+#       switches = switches_for_edge(edge)
+# 
+#       tedges <<
+#         Tuden::Edge.new(
+#           eid, nid1, nid2,
+#           switches.all? { |switch| switch.on? }
+#         )
+# 
+#       eid_edge_map[eid] = edge
+#     }
+# 
+#     [tedges, eid_edge_map]
+#   end
 
-    tnodes = []
-    pos_set_all.each_with_index { |pos, index|
-      nid = index + 1
-
-      tnodes << Tuden::Node.new(nid)
-
-      pos_nid_map[pos] = nid
-
-      if pos == @plus_poles[0].pos
-        nid_plus = nid
-      elsif pos == @minus_poles[0].pos
-        nid_minus = nid
-      end
-    }
-
-    [tnodes, pos_nid_map, nid_plus, nid_minus]
-  end
-
-  def prepare_tuden_edges(pos_nid_map)
-    eid_edge_map = {}
-
-    tedges = []
-    @edges.each_with_index { |edge, index|
-      eid = index + 1
-
-      nid1 = pos_nid_map[edge.pos1]
-      nid2 = pos_nid_map[edge.pos2]
-
-      switches = switches_for_edge(edge)
-
-      tedges <<
-        Tuden::Edge.new(
-          eid, nid1, nid2,
-          switches.all? { |switch| switch.on? }
-        )
-
-      eid_edge_map[eid] = edge
-    }
-
-    [tedges, eid_edge_map]
-  end
-
-  def update_many_edges
-    tnodes, pos_nid_map, nid_plus, nid_minus =
-      prepare_tuden_nodes()
-
-    tedges, eid_edge_map =
-      prepare_tuden_edges(pos_nid_map)
-
-    Tuden.update(
-      tedges,
-      tnodes,
-      nid_plus,
-      nid_minus
-    )
-
-    tedges.each { |tedge|
-      edge = eid_edge_map[tedge.id]
-      edge.update(tedge.on?)
-    }
-  end
+#   def update_many_edges
+#     tnodes, pos_nid_map, nid_plus, nid_minus =
+#       prepare_tuden_nodes()
+# 
+#     tedges, eid_edge_map =
+#       prepare_tuden_edges(pos_nid_map)
+# 
+#     Tuden.update(
+#       tedges,
+#       tnodes,
+#       nid_plus,
+#       nid_minus
+#     )
+# 
+#     tedges.each { |tedge|
+#       edge = eid_edge_map[tedge.id]
+#       edge.update(tedge.on?)
+#     }
+#   end
 
   def update_edges
     case @edges.size
     when 1
-      is_tuden = Tuden.tuden?(@switches)
+      is_tuden = tuden?(@switches)
       @edges[0].update(is_tuden)
     when 4
       update_4_edges()
     else
-      update_many_edges()
+      # update_many_edges()
+      raise "Not supported"
     end
   end
 
