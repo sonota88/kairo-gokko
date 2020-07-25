@@ -200,7 +200,8 @@ ci =
 view = View.new(PPC)
 
 Sound.register(:click, "click.wav")
-Sound.register(:relay, "relay.wav")
+# Sound.register(:relay, "relay.wav")
+Sound.register(:relay, "relay_2.wav")
 
 Window.width  = 1200
 Window.height = 600
