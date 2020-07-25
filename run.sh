@@ -12,8 +12,10 @@ fi
 bundle exec ruby gen_sound.rb \
   out=click.wav amp=0.05 msec=30 hz=1000
 
-bundle exec ruby gen_sound.rb \
-  out=relay.wav amp=0.05 msec=30 hz=500
+# bundle exec ruby gen_sound.rb \
+#   out=relay.wav amp=0.05 msec=30 hz=500
+bundle exec ruby gen_noise.rb \
+  out=relay_2.wav amp=0.015 msec=100 hz=1
 
 fodg_path="$1"; shift
 page="$1"; shift
