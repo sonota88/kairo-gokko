@@ -342,6 +342,10 @@ class ChildCircuit
     }
   end
 
+  def find_lamp(name)
+    @lamps.find { |lamp| lamp.name == name }
+  end
+
   def pretty_inspect
     to_plain.pretty_inspect
   end

@@ -174,6 +174,14 @@ def main_loop(circuit, view)
   push_history_for_draw =
     PushHistory.get_for_draw(now)
 
+  circuit.child_circuits.each { |child_circuit|
+    child_circuit.state_histories.each { |state_history|
+      lamp = child_circuit.find_lamp(state_history.name)
+      state_history.shift_cursor!()
+      state_history.update(lamp.on?)
+    }
+  }
+
   view.draw(
     circuit,
     mx, my,
