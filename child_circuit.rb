@@ -92,6 +92,17 @@ class ChildCircuit
     @state_histories = []
   end
 
+  def init_state_histories(size)
+    names =
+      @lamps
+        .select { |lamp| lamp.name }
+        .map { |lamp| lamp.name }
+
+    @state_histories = names.map { |name|
+      StateHistory.new(size, name)
+    }
+  end
+
   def to_plain
     {
       edges:        @edges       .map { |it| it.to_plain },

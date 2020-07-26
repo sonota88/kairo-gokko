@@ -43,6 +43,12 @@ class Circuit
     )
   end
 
+  def init_state_histories(size)
+    @child_circuits.each { |child_circuit|
+      child_circuit.init_state_histories(size)
+    }
+  end
+
   def self.to_plus_pole(rect)
     pos = Point(
       rect.x.floor,
