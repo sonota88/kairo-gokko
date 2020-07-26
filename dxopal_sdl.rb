@@ -37,6 +37,10 @@ module DXOpal
         @@width = w
       end
 
+      def height
+        @@height
+      end
+
       def height=(h)
         @@height = h
       end
@@ -147,6 +151,10 @@ module DXOpal
       def draw_circle_fill(x, y, r, color, z=0)
         sdl_draw_circle(x, y, r, color, true)
       end
+
+      def draw_font(x, y, string, font, option={})
+        # dummy
+      end
     end
   end
 
@@ -232,4 +240,9 @@ module DXOpal
     end
   end
 
+  class Font
+    def initialize(size, fontname=nil, option={})
+      nil # dummy
+    end
+  end
 end

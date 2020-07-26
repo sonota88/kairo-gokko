@@ -9,6 +9,10 @@ class View
   C_ACTIVE   = [255, 130, 255,   0]
   C_CURSOR   = [127, 255, 120,   0]
 
+  C_CHART_LABEL = [255, 160, 160, 160]
+  C_CHART_LINE  = [255, 160, 160, 160]
+  C_CHART_AREA  = [255,  50,  50,  50]
+
   def initialize(ppc)
     @drawer = Drawer.new(ppc)
   end
@@ -55,6 +59,8 @@ class View
         draw_not_relay(not_relay)
       }
     }
+
+    draw_chart(circuit)
 
     draw_cursor_highlight(mx, my)
   end
@@ -259,5 +265,61 @@ class View
       r,
       [alpha, 150, 150, 150]
     )
+  end
+
+  def draw_chart(circuit)
+    hists = []
+    circuit.child_circuits.each { |child_circuit|
+      child_circuit.state_histories.each { |state_history|
+        hists << state_history
+      }
+    }
+
+    offset_x = 40
+    offset_y = @drawer.window_height - 10
+    height = 20
+
+    font = @drawer.create_font(12)
+
+    hists
+      .sort { |a, b| b.name <=> a.name }
+      .each { |hist|
+        offset_y -= height
+
+        l_y = offset_y + (height * 0.8)
+        h_y = offset_y + (height * 0.2)
+
+        x = offset_x
+        hist.each { |state_a|
+          x += 1
+
+          ay = state_a ? h_y : l_y
+
+          @drawer.draw_line_px(
+            x, l_y,
+            x, ay,
+            C_CHART_AREA
+          )
+        }
+
+        x = offset_x
+        hist.each_cons { |state_a, state_b|
+          x += 1
+
+          ay = state_a ? h_y : l_y
+          by = state_b ? h_y : l_y
+
+          @drawer.draw_line_px(
+            x, ay,
+            x + 1, by,
+            C_CHART_LINE
+          )
+        }
+
+        @drawer.draw_font_px(
+          10, offset_y + height * 0.2, hist.name, font,
+          color: C_CHART_LABEL
+        )
+      }
   end
 end
