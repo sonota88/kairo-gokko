@@ -70,6 +70,8 @@ class ChildCircuit
   attr_reader :equal_relays
   attr_reader :not_relays
 
+  attr_reader :state_histories
+
   def initialize(
         edges,
         plus_poles,
@@ -86,6 +88,8 @@ class ChildCircuit
     @lamps        = lamps
     @equal_relays = equal_relays
     @not_relays   = not_relays
+
+    @state_histories = []
   end
 
   def to_plain
