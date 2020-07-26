@@ -9,6 +9,59 @@ require "set"
 # end
 
 class ChildCircuit
+
+  class StateHistory
+    attr_reader :name
+
+    def initialize(size, name)
+      @size = size
+      @cur = 0 # cursor
+      @name = name
+      @data = Array.new(size)
+    end
+
+    def update(val)
+      @data[@cur] = val
+    end
+
+    def next_index(i)
+      if i == @size - 1
+        0
+      else
+        i + 1
+      end
+    end
+
+    def shift_cursor!
+      @cur = next_index(@cur)
+    end
+
+    def make_indexes
+      if @cur == @size - 1
+        (0...@size).to_a
+      else
+        ((@cur + 1)...@size).to_a + (0..@cur).to_a
+      end
+    end
+
+    def each_cons
+      ias = make_indexes()[0 .. -2]
+
+      ias.each { |ia|
+        ib = next_index(ia)
+        yield @data[ia], @data[ib]
+      }
+    end
+
+    def each
+      ias = make_indexes()
+
+      ias.each { |i|
+        yield @data[i]
+      }
+    end
+  end
+
   attr_reader :edges
   attr_reader :plus_poles
   attr_reader :minus_poles
@@ -16,6 +69,8 @@ class ChildCircuit
   attr_reader :lamps
   attr_reader :equal_relays
   attr_reader :not_relays
+
+  attr_reader :state_histories
 
   def initialize(
         edges,
@@ -33,6 +88,19 @@ class ChildCircuit
     @lamps        = lamps
     @equal_relays = equal_relays
     @not_relays   = not_relays
+
+    @state_histories = []
+  end
+
+  def init_state_histories(size)
+    names =
+      @lamps
+        .select { |lamp| lamp.name }
+        .map { |lamp| lamp.name }
+
+    @state_histories = names.map { |name|
+      StateHistory.new(size, name)
+    }
   end
 
   def to_plain
@@ -272,6 +340,10 @@ class ChildCircuit
     @edges.find { |edge|
       edge.include_pos?(pos)
     }
+  end
+
+  def find_lamp(name)
+    @lamps.find { |lamp| lamp.name == name }
   end
 
   def pretty_inspect

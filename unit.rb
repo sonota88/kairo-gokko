@@ -233,22 +233,28 @@ module Unit
   end
 
   class Lamp < SingleCell
-    def initialize(pos)
-      super
+    attr_reader :name
+
+    def initialize(pos, name)
+      super(pos)
 
       # ON: true / OFF: false
       @state = false
+
+      @name = name
     end
 
     def to_plain
       {
-        pos: @pos.to_plain
+        pos: @pos.to_plain,
+        name: @name
       }
     end
 
     def self.from_plain(plain)
       Lamp.new(
-        Point.from_plain(plain["pos"])
+        Point.from_plain(plain["pos"]),
+        plain["name"]
       )
     end
 

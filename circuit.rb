@@ -43,6 +43,12 @@ class Circuit
     )
   end
 
+  def init_state_histories(size)
+    @child_circuits.each { |child_circuit|
+      child_circuit.init_state_histories(size)
+    }
+  end
+
   def self.to_plus_pole(rect)
     pos = Point(
       rect.x.floor,
@@ -76,7 +82,14 @@ class Circuit
       rect.y.floor
     )
 
-    Unit::Lamp.new(pos)
+    name =
+      if md = /:(.+)$/.match(rect.text)
+        md[1]
+      else
+        nil
+      end
+
+    Unit::Lamp.new(pos, name)
   end
 
   def self.to_not_relay(rect)
@@ -340,7 +353,7 @@ class Circuit
 
     all_lamps =
       rects
-        .select { |rect| rect.text == "L" }
+        .select { |rect| rect.text.start_with?("L") }
         .map { |rect| to_lamp(rect) }
 
     all_equal_relays =

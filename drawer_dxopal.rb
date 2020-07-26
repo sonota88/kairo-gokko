@@ -7,10 +7,22 @@ class Drawer
     raw_px.round
   end
 
+  def window_height
+    Window.height
+  end
+
   def draw_line(x1, y1, x2, y2, color)
     Window.draw_line(
       adjust_px(x1 * @ppc), adjust_px(y1 * @ppc),
       adjust_px(x2 * @ppc), adjust_px(y2 * @ppc),
+      color
+    )
+  end
+
+  def draw_line_px(x1, y1, x2, y2, color)
+    Window.draw_line(
+      adjust_px(x1), adjust_px(y1),
+      adjust_px(x2), adjust_px(y2),
       color
     )
   end
@@ -65,6 +77,16 @@ class Drawer
       adjust_px(x * @ppc), adjust_px(y * @ppc),
       r * @ppc,
       color
+    )
+  end
+
+  def create_font(size)
+    Font.new(size, "monospace")
+  end
+
+  def draw_font_px(x, y, string, font, option={})
+    Window.draw_font(
+      x, y, string, font, option
     )
   end
 end

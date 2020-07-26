@@ -174,6 +174,14 @@ def main_loop(circuit, view)
   push_history_for_draw =
     PushHistory.get_for_draw(now)
 
+  circuit.child_circuits.each { |child_circuit|
+    child_circuit.state_histories.each { |state_history|
+      lamp = child_circuit.find_lamp(state_history.name)
+      state_history.shift_cursor!()
+      state_history.update(lamp.on?)
+    }
+  }
+
   view.draw(
     circuit,
     mx, my,
@@ -186,6 +194,8 @@ end
 $circuits =
   parse_json($data_json)
     .map { |plain| Circuit.from_plain(plain) }
+
+$circuits.each { |circuit| circuit.init_state_histories(320) }
 
 init_circuit_list($circuits) if browser?
 
