@@ -76,7 +76,14 @@ class Circuit
       rect.y.floor
     )
 
-    Unit::Lamp.new(pos)
+    name =
+      if md = /:(.+)$/.match(rect.text)
+        md[1]
+      else
+        nil
+      end
+
+    Unit::Lamp.new(pos, name)
   end
 
   def self.to_not_relay(rect)
@@ -340,7 +347,7 @@ class Circuit
 
     all_lamps =
       rects
-        .select { |rect| rect.text == "L" }
+        .select { |rect| rect.text.start_with?("L") }
         .map { |rect| to_lamp(rect) }
 
     all_equal_relays =
