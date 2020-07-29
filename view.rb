@@ -13,6 +13,8 @@ class View
   C_CHART_LINE  = [255, 160, 160, 160]
   C_CHART_AREA  = [255,  50,  50,  50]
 
+  C_DEBUG_TEXT  = [160, 240, 240, 0]
+
   def initialize(ppc)
     @drawer = Drawer.new(ppc)
   end
@@ -63,6 +65,12 @@ class View
     draw_chart(circuit)
 
     draw_cursor_highlight(mx, my)
+
+    @drawer.draw_font_px(
+      @drawer.window_width - 60, 2, "#{@drawer.real_fps} fps",
+      @drawer.create_font(16),
+      color: C_DEBUG_TEXT
+    )
   end
 
   def draw_grid(w, h)

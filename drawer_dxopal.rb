@@ -7,8 +7,16 @@ class Drawer
     raw_px.round
   end
 
+  def window_width
+    Window.width
+  end
+
   def window_height
     Window.height
+  end
+
+  def real_fps
+    Window.real_fps
   end
 
   def draw_line(x1, y1, x2, y2, color)
