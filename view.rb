@@ -62,7 +62,7 @@ class View
       }
     }
 
-    draw_chart_v2(circuit)
+    draw_chart(circuit)
 
     draw_cursor_highlight(mx, my)
 
@@ -275,7 +275,7 @@ class View
     )
   end
 
-  def draw_chart_v2(circuit)
+  def draw_chart(circuit)
     hists = []
     circuit.child_circuits.each { |child_circuit|
       child_circuit.state_histories.each { |state_history|
