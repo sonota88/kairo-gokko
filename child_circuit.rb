@@ -44,23 +44,6 @@ class ChildCircuit
       end
     end
 
-    def each_cons
-      ias = make_indexes()[0 .. -2]
-
-      ias.each { |ia|
-        ib = next_index(ia)
-        yield @data[ia], @data[ib]
-      }
-    end
-
-    def each
-      ias = make_indexes()
-
-      ias.each { |i|
-        yield @data[i]
-      }
-    end
-
     def to_blocks
       blocks = []
       prev_state = @data[next_index(@cur)]
