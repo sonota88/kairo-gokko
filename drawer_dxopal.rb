@@ -100,6 +100,12 @@ class Drawer
     Font.new(size, "monospace")
   end
 
+  def draw_font(x, y, string, font, option={})
+    Window.draw_font(
+      x * @ppc, y * @ppc, string, font, option
+    )
+  end
+
   def draw_font_px(x, y, string, font, option={})
     Window.draw_font(
       x, y, string, font, option
