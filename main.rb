@@ -215,6 +215,7 @@ Sound.register(:relay, "relay_2.wav")
 
 Window.width  = 1200
 Window.height = 600
+Window.fps = 30
 
 Window.load_resources do
   change_circuit(ci)

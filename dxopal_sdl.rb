@@ -53,6 +53,10 @@ module DXOpal
         @@bgcolor = color
       end
 
+      def fps=(fps)
+        # dummy
+      end
+
       def real_fps
         -1 # dummy
       end
