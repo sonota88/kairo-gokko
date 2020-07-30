@@ -195,7 +195,7 @@ $circuits =
   parse_json($data_json)
     .map { |plain| Circuit.from_plain(plain) }
 
-$circuits.each { |circuit| circuit.init_state_histories(320) }
+$circuits.each { |circuit| circuit.init_state_histories(1000) }
 
 init_circuit_list($circuits) if browser?
 
