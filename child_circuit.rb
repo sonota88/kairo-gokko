@@ -17,7 +17,7 @@ class ChildCircuit
       @size = size
       @cur = 0 # cursor
       @name = name
-      @data = Array.new(size)
+      @data = Array.new(size, false)
     end
 
     def update(val)
