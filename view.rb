@@ -62,7 +62,8 @@ class View
       }
     }
 
-    draw_chart(circuit)
+    # draw_chart(circuit)
+    draw_chart_v2(circuit)
 
     draw_cursor_highlight(mx, my)
 
@@ -323,6 +324,68 @@ class View
             C_CHART_LINE
           )
         }
+
+        @drawer.draw_font_px(
+          10, offset_y + height * 0.2, hist.name, font,
+          color: C_CHART_LABEL
+        )
+      }
+  end
+
+  def draw_chart_v2(circuit)
+    hists = []
+    circuit.child_circuits.each { |child_circuit|
+      child_circuit.state_histories.each { |state_history|
+        hists << state_history
+      }
+    }
+
+    offset_x = 40
+    offset_y = @drawer.window_height - 10
+    height = 20
+
+    font = @drawer.create_font(12)
+
+    hists
+      .sort { |a, b| b.name <=> a.name }
+      .each { |hist|
+        offset_y -= height
+
+        l_y = offset_y + (height * 0.8)
+        h_y = offset_y + (height * 0.2)
+
+        blocks = hist.to_blocks()
+
+        blocks
+          .select { |from, to, state| state == true }
+          .each { |from, to, _|
+            @drawer.draw_box_fill_px(
+              offset_x + from + 0.5, l_y,
+              offset_x + to + 0.5, h_y,
+              C_CHART_AREA
+            )
+          }
+
+        blocks.each { |from, to, state|
+          y = state ? h_y : l_y
+          @drawer.draw_line_px(
+            offset_x + from, y,
+            offset_x + to  , y,
+            C_CHART_LINE
+          )
+        }
+
+        if 2 <= blocks.size
+          blocks[0..-2].each { |_, to, state|
+            y0 = state ? h_y : l_y
+            y1 = (!state) ? h_y : l_y
+            @drawer.draw_line_px(
+              offset_x + to    , y0,
+              offset_x + to + 1, y1,
+              C_CHART_LINE
+            )
+          }
+        end
 
         @drawer.draw_font_px(
           10, offset_y + height * 0.2, hist.name, font,
