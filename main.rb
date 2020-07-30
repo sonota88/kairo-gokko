@@ -195,8 +195,6 @@ $circuits =
   parse_json($data_json)
     .map { |plain| Circuit.from_plain(plain) }
 
-$circuits.each { |circuit| circuit.init_state_histories(1000) }
-
 init_circuit_list($circuits) if browser?
 
 # circuit index
@@ -216,6 +214,10 @@ Sound.register(:relay, "relay_2.wav")
 Window.width  = 1200
 Window.height = 600
 Window.fps = 30
+
+$circuits.each { |circuit|
+  circuit.init_state_histories(Window.width - 60)
+}
 
 Window.load_resources do
   change_circuit(ci)
