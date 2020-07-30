@@ -60,6 +60,27 @@ class ChildCircuit
         yield @data[i]
       }
     end
+
+    def to_blocks
+      blocks = []
+      prev_state = @data[next_index(@cur)]
+      start_i = 0
+
+      make_indexes().each_with_index { |real_i, i|
+        state = @data[real_i]
+        if state != prev_state
+          blocks << [start_i, i - 1, prev_state]
+          start_i = i
+          prev_state = state
+        end
+      }
+
+      if start_i <= @size - 1
+        blocks << [start_i, @size - 1, prev_state]
+      end
+
+      blocks
+    end
   end
 
   attr_reader :edges
