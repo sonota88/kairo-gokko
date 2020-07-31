@@ -13,6 +13,8 @@ class View
   C_CHART_LINE  = [255, 160, 160, 160]
   C_CHART_AREA  = [255,  50,  50,  50]
 
+  C_DEBUG_TEXT  = [160, 240, 240, 0]
+
   def initialize(ppc)
     @drawer = Drawer.new(ppc)
   end
@@ -63,6 +65,12 @@ class View
     draw_chart(circuit)
 
     draw_cursor_highlight(mx, my)
+
+    @drawer.draw_font_px(
+      @drawer.window_width - 60, 2, "#{@drawer.real_fps} fps",
+      @drawer.create_font(16),
+      color: C_DEBUG_TEXT
+    )
   end
 
   def draw_grid(w, h)
@@ -169,6 +177,13 @@ class View
       lamp.x + 0.5, lamp.y + 0.5,
       0.3,
       color
+    )
+
+    @drawer.draw_font(
+      lamp.x + 1, lamp.y - 0.5,
+      lamp.name,
+      @drawer.create_font(12),
+      color: C_DEBUG_TEXT
     )
   end
 
@@ -289,32 +304,38 @@ class View
         l_y = offset_y + (height * 0.8)
         h_y = offset_y + (height * 0.2)
 
-        x = offset_x
-        hist.each { |state_a|
-          x += 1
+        blocks = hist.to_blocks()
 
-          ay = state_a ? h_y : l_y
+        blocks
+          .select { |from, to, state| state == true }
+          .each { |from, to, _|
+            @drawer.draw_box_fill_px(
+              offset_x + from + 0.5, l_y,
+              offset_x + to + 0.5, h_y,
+              C_CHART_AREA
+            )
+          }
 
+        blocks.each { |from, to, state|
+          y = state ? h_y : l_y
           @drawer.draw_line_px(
-            x, l_y,
-            x, ay,
-            C_CHART_AREA
-          )
-        }
-
-        x = offset_x
-        hist.each_cons { |state_a, state_b|
-          x += 1
-
-          ay = state_a ? h_y : l_y
-          by = state_b ? h_y : l_y
-
-          @drawer.draw_line_px(
-            x, ay,
-            x + 1, by,
+            offset_x + from, y,
+            offset_x + to  , y,
             C_CHART_LINE
           )
         }
+
+        if 2 <= blocks.size
+          blocks[0..-2].each { |_, to, state|
+            y0 = state ? h_y : l_y
+            y1 = (!state) ? h_y : l_y
+            @drawer.draw_line_px(
+              offset_x + to    , y0,
+              offset_x + to + 1, y1,
+              C_CHART_LINE
+            )
+          }
+        end
 
         @drawer.draw_font_px(
           10, offset_y + height * 0.2, hist.name, font,

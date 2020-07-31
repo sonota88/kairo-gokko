@@ -17,7 +17,7 @@ class ChildCircuit
       @size = size
       @cur = 0 # cursor
       @name = name
-      @data = Array.new(size)
+      @data = Array.new(size, false)
     end
 
     def update(val)
@@ -44,21 +44,25 @@ class ChildCircuit
       end
     end
 
-    def each_cons
-      ias = make_indexes()[0 .. -2]
+    def to_blocks
+      blocks = []
+      prev_state = @data[next_index(@cur)]
+      start_i = 0
 
-      ias.each { |ia|
-        ib = next_index(ia)
-        yield @data[ia], @data[ib]
+      make_indexes().each_with_index { |real_i, i|
+        state = @data[real_i]
+        if state != prev_state
+          blocks << [start_i, i - 1, prev_state]
+          start_i = i
+          prev_state = state
+        end
       }
-    end
 
-    def each
-      ias = make_indexes()
+      if start_i <= @size - 1
+        blocks << [start_i, @size - 1, prev_state]
+      end
 
-      ias.each { |i|
-        yield @data[i]
-      }
+      blocks
     end
   end
 

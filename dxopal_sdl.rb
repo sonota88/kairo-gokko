@@ -33,6 +33,10 @@ module DXOpal
 
     class << self
 
+      def width
+        @@width
+      end
+
       def width=(w)
         @@width = w
       end
@@ -47,6 +51,14 @@ module DXOpal
 
       def bgcolor=(color)
         @@bgcolor = color
+      end
+
+      def fps=(fps)
+        # dummy
+      end
+
+      def real_fps
+        -1 # dummy
       end
 
       def to_rgb_a(color)

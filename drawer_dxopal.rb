@@ -7,8 +7,16 @@ class Drawer
     raw_px.round
   end
 
+  def window_width
+    Window.width
+  end
+
   def window_height
     Window.height
+  end
+
+  def real_fps
+    Window.real_fps
   end
 
   def draw_line(x1, y1, x2, y2, color)
@@ -64,6 +72,14 @@ class Drawer
     )
   end
 
+  def draw_box_fill_px(x1, y1, x2, y2, color)
+    Window.draw_box_fill(
+      adjust_px(x1), adjust_px(y1),
+      adjust_px(x2), adjust_px(y2),
+      color
+    )
+  end
+
   def draw_circle(x, y, r, color)
     Window.draw_circle(
       adjust_px(x * @ppc), adjust_px(y * @ppc),
@@ -82,6 +98,12 @@ class Drawer
 
   def create_font(size)
     Font.new(size, "monospace")
+  end
+
+  def draw_font(x, y, string, font, option={})
+    Window.draw_font(
+      x * @ppc, y * @ppc, string, font, option
+    )
   end
 
   def draw_font_px(x, y, string, font, option={})
