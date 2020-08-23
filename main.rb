@@ -13,6 +13,8 @@ def update_progress(msg)
   end
 end
 
+t_before_require = Time.now
+
 if browser?
   require "dxopal"
   update_progress "dxopal"
@@ -42,6 +44,8 @@ def parse_json(json)
     JSON.parse(json)
   end
 end
+
+puts format("require done: %.02f sec", Time.now - t_before_require)
 
 def get_els(selector, el = Native(`document`))
   el.querySelectorAll(selector)
@@ -216,7 +220,9 @@ Window.height = 600
 Window.fps = 30
 
 $circuits.each { |circuit|
-  circuit.init_state_histories(Window.width - 60)
+  circuit.init_state_histories(
+    [Window.width - 60, 400].min
+  )
 }
 
 Window.load_resources do

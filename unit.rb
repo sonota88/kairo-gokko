@@ -9,17 +9,12 @@ module Unit
     end
 
     def to_plain
-      {
-        x: @x,
-        y: @y
-      }
+      [@x, @y].join(",")
     end
 
     def self.from_plain(plain)
-      Point.new(
-        plain["x"],
-        plain["y"]
-      )
+      x, y = plain.split(",").map { |s| s.to_f }
+      Point.new(x, y)
     end
 
     def hash
