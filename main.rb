@@ -220,7 +220,9 @@ Window.height = 600
 Window.fps = 30
 
 $circuits.each { |circuit|
-  circuit.init_state_histories(Window.width - 60)
+  circuit.init_state_histories(
+    [Window.width - 60, 400].min
+  )
 }
 
 Window.load_resources do
