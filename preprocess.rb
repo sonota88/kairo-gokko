@@ -21,6 +21,6 @@ circuits =
 plain = circuits.map { |circuit| circuit.to_plain }
 
 puts "$data_json = <<EOB"
-print JSON.pretty_generate(plain)
+print JSON.generate(plain)
 print "\n"
 puts "EOB"
