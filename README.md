@@ -18,3 +18,12 @@ Ubuntu 18.04 で `dxopal_sdl.rb` を使う場合
 ```
 sudo apt install libsdl-sge libsdl-mixer1.2
 ```
+
+## Run
+
+```sh
+# example
+BROWSER=1 ./run.sh data/step_39.fodg 1
+```
+
+Open [http://localhost:7521/index.html](http://localhost:7521/index.html).
