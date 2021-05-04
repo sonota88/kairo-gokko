@@ -297,7 +297,7 @@ class View
     font = @drawer.create_font(12)
 
     hists
-      .sort { |a, b| b.name <=> a.name }
+      .sort_by { |hist| hist.name }
       .each { |hist|
         offset_y -= height
 
