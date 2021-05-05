@@ -252,10 +252,19 @@ class View
   def draw_edge(edge)
     color = edge.on? ? C_ACTIVE : C_INACTIVE
 
-    edge.wfs.each { |wf|
+    # # naive version
+    # edge.wfs.each { |wf|
+    #   @drawer.draw_line(
+    #     wf.x1 + 0.5, wf.y1 + 0.5,
+    #     wf.x2 + 0.5, wf.y2 + 0.5,
+    #     color
+    #   )
+    # }
+
+    edge.each_wire_line { |pt1, pt2|
       @drawer.draw_line(
-        wf.x1 + 0.5, wf.y1 + 0.5,
-        wf.x2 + 0.5, wf.y2 + 0.5,
+        pt1.x + 0.5, pt1.y + 0.5,
+        pt2.x + 0.5, pt2.y + 0.5,
         color
       )
     }
@@ -297,7 +306,7 @@ class View
     font = @drawer.create_font(12)
 
     hists
-      .sort { |a, b| b.name <=> a.name }
+      .sort_by { |hist| hist.name }
       .each { |hist|
         offset_y -= height
 

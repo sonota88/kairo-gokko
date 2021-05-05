@@ -21,6 +21,13 @@ class Circuit
     @name = name
     @child_circuits = child_circuits
     @last_update = Time.at(0)
+
+    @pos_switch_map = {}
+    @child_circuits.each { |child_circuit|
+      child_circuit.switches.each { |switch|
+        @pos_switch_map[switch.pos] = switch
+      }
+    }
   end
 
   def to_plain
@@ -395,14 +402,7 @@ class Circuit
   end
 
   def find_switch_by_position(pos)
-    @child_circuits.each { |child_circuit|
-      pushed_switch =
-        child_circuit.switches
-          .find { |switch| switch.pos == pos }
-      return pushed_switch if pushed_switch
-    }
-
-    nil
+    @pos_switch_map[pos]
   end
 
   def find_neighbor_switch(pos)
