@@ -108,6 +108,58 @@ module Unit
     end
   end
 
+  class WireLines
+    def initialize(point_pairs)
+      @point_pairs = point_pairs
+    end
+
+    def self.to_line_wfs(wfs)
+      tate_prev = ! wfs[0].tate?
+      line_wfs = []
+      buf = []
+
+      wfs.each { |wf|
+        if wf.tate? == tate_prev
+          buf << wf
+        else
+          line_wfs << buf unless buf.empty?
+          buf = [wf]
+        end
+        tate_prev = wf.tate?
+      }
+      line_wfs << buf unless buf.empty?
+
+      line_wfs
+    end
+
+    def self.from_wfs(wfs)
+      point_pairs =
+        to_line_wfs(wfs).map { |line_wfs|
+          if line_wfs[0].tate?
+            ys = line_wfs.map { |wf| [wf.y1, wf.y2] }.flatten
+            [
+              Point.new(line_wfs[0].x1, ys.min),
+              Point.new(line_wfs[0].x1, ys.max)
+            ]
+          else
+            xs = line_wfs.map { |wf| [wf.x1, wf.x2] }.flatten
+            [
+              Point.new(xs.min, line_wfs[0].y1),
+              Point.new(xs.max, line_wfs[0].y1)
+            ]
+          end
+        }
+
+      WireLines.new(point_pairs)
+    end
+
+    def each
+      @point_pairs.each { |pt1, pt2|
+        yield pt1, pt2
+      }
+    end
+  end
+
   class Edge
     attr_reader :wfs
     attr_reader :pos1
@@ -117,6 +169,7 @@ module Unit
       @pos1 = pos1
       @pos2 = pos2
       @wfs = wfs
+      @wire_lines = WireLines.from_wfs(@wfs)
       @state = false
     end
 
@@ -152,6 +205,12 @@ module Unit
 
     def include_pos?(pos)
       @wfs.any? { |wf| wf.connected_to?(pos) }
+    end
+
+    def each_wire_line
+      @wire_lines.each { |pt1, pt2|
+        yield pt1, pt2
+      }
     end
   end
 
