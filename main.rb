@@ -133,34 +133,33 @@ def update_tuden_relay_switch_lamp(circuit)
   Sound[:relay].play if circuit.switch_changed
 end
 
+def pushed_pos
+  if Input.mouse_push?(M_LBUTTON)
+    x = (Input.mouse_x / PPC).floor
+    y = (Input.mouse_y / PPC).floor
+    Point(x, y)
+  elsif Input.touch_push?
+    x = (Input.touch_x / PPC).floor
+    y = (Input.touch_y / PPC).floor
+    Point(x, y)
+  else
+    nil
+  end
+end
+
 def main_loop(circuit, view)
   switch_changed = false
 
   mx = (Input.mouse_x / PPC).floor
   my = (Input.mouse_y / PPC).floor
 
-  if Input.mouse_push?(M_LBUTTON)
-    mpos = Point(mx, my)
-    PushHistory.add(mpos)
+  ppos = pushed_pos()
+
+  if ppos
+    PushHistory.add(ppos)
 
     pushed_switch =
-      circuit.find_switch_by_position(mpos)
-
-    if pushed_switch
-      on_push_switch(pushed_switch)
-      switch_changed = true
-    end
-  end
-
-  tx = (Input.touch_x / PPC).floor
-  ty = (Input.touch_y / PPC).floor
-
-  if Input.touch_push?
-    tpos = Point(tx, ty)
-    PushHistory.add(tpos)
-
-    pushed_switch =
-      circuit.find_switch_by_position(tpos)
+      circuit.find_switch_by_position(ppos)
 
     if pushed_switch
       on_push_switch(pushed_switch)
