@@ -209,11 +209,11 @@ class View
     )
   end
 
-  def draw_equal_relay(not_relay)
-    x = not_relay.x
-    y = not_relay.y
+  def draw_equal_relay(relay)
+    x = relay.x
+    y = relay.y
 
-    color = not_relay.on? ? [0, 170, 221] : [0, 68, 204]
+    color = relay.on? ? [0, 170, 221] : [0, 68, 204]
 
     _draw_relay_common(x, y, color)
 
@@ -229,11 +229,11 @@ class View
     )
   end
 
-  def draw_not_relay(not_relay)
-    x = not_relay.x
-    y = not_relay.y
+  def draw_not_relay(relay)
+    x = relay.x
+    y = relay.y
 
-    color = not_relay.on? ? [0, 170, 221] : [0, 68, 204]
+    color = relay.on? ? [0, 170, 221] : [0, 68, 204]
 
     _draw_relay_common(x, y, color)
 
