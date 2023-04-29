@@ -12,6 +12,7 @@
     el.style.display = "block";
   }
 
+  /*
   function onLoadDXOpal(){
     console.debug("DXOpal loaded");
     Opal.eval(`
@@ -20,6 +21,7 @@
       }
     `);
   }
+  */
 
   function onclickRunButton(){
     hide(qs(".run_button"));
@@ -28,8 +30,8 @@
     const scr = document.createElement("script");
     qs("body").appendChild(scr);
 
-    ael(scr, "load", onLoadDXOpal);
-    scr.src = "./dxopal.min.js";
+    ael(scr, "load", () => console.log("main.js loaded"));
+    scr.src = "./main.js";
   }
 
   function isEmbedMode(){

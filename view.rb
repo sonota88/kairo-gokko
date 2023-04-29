@@ -1,6 +1,11 @@
 # require "./drawer"
+
+if aot_compile?
+  require_relative "drawer_dxopal.rb"
+else
 require_remote "./drawer_dxopal.rb"
 update_progress "drawer_dxopal"
+end
 
 class View
   C_GRID     = [255,  40,  40,  40]

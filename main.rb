@@ -1,8 +1,16 @@
+require "dxopal"
+
+def aot_compile?
+  true
+end
+
 def browser?
   Kernel.const_defined?(:Native)
 end
 
 def update_progress(msg)
+  return if aot_compile?
+
   puts "update_progress: #{msg}"
 
   if browser?
@@ -15,15 +23,19 @@ end
 
 t_before_require = Time.now
 
-if browser?
-  require "dxopal"
-  update_progress "dxopal"
-else
-  require "./dxopal_sdl"
-end
-
+# if brower?
+#   require "dxopal"
+#   update_progress "dxopal"
+# else
+#   require "./dxopal_sdl"
+# end
 include DXOpal
 
+if aot_compile?
+  require_relative "data.rb"
+  require_relative "circuit.rb"
+  require_relative "view.rb"
+else
 require_remote "./data.rb"
 update_progress "data"
 
@@ -32,12 +44,13 @@ update_progress "circuit"
 
 require_remote "./view.rb"
 update_progress "view"
+end
 
 # pixels per cell
 PPC = 16
 
 def parse_json(json)
-  if browser?
+  if browser? || aot_compile?
     Native(`JSON.parse(json)`)
   else
     require "json"

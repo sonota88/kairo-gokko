@@ -1,5 +1,9 @@
 # coding: utf-8
 
+if aot_compile?
+  require_relative "unit"
+  require_relative "child_circuit"
+else
 if RUBY_ENGINE == "opal"
   require_remote "./unit.rb"
   update_progress "unit"
@@ -9,6 +13,7 @@ if RUBY_ENGINE == "opal"
 else
   require "./unit"
   require "./child_circuit"
+end
 end
 
 class Circuit
