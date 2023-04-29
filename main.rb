@@ -1,51 +1,17 @@
-def browser?
-  Kernel.const_defined?(:Native)
-end
-
-def update_progress(msg)
-  puts "update_progress: #{msg}"
-
-  if browser?
-    %x{
-      var el = document.querySelector(".loading_progress");
-      el.textContent += "*";
-    }
-  end
-end
-
-t_before_require = Time.now
-
-if browser?
-  require "dxopal"
-  update_progress "dxopal"
-else
-  require "./dxopal_sdl"
-end
+require "dxopal"
 
 include DXOpal
 
-require_remote "./data.rb"
-update_progress "data"
-
-require_remote "./circuit.rb"
-update_progress "circuit"
-
-require_remote "./view.rb"
-update_progress "view"
+  require_relative "data.rb"
+  require_relative "circuit.rb"
+  require_relative "view.rb"
 
 # pixels per cell
 PPC = 16
 
 def parse_json(json)
-  if browser?
     Native(`JSON.parse(json)`)
-  else
-    require "json"
-    JSON.parse(json)
-  end
 end
-
-puts format("require done: %.02f sec", Time.now - t_before_require)
 
 def get_els(selector, el = Native(`document`))
   el.querySelectorAll(selector)
@@ -198,7 +164,7 @@ $circuits =
   parse_json($data_json)
     .map { |plain| Circuit.from_plain(plain) }
 
-init_circuit_list($circuits) if browser?
+init_circuit_list($circuits)
 
 # circuit index
 ci =
@@ -226,7 +192,7 @@ $circuits.each { |circuit|
 
 Window.load_resources do
   change_circuit(ci)
-  hide_loading() if browser?
+  hide_loading()
 
   Window.bgcolor = C_BLACK
 

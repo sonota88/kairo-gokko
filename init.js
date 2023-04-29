@@ -12,15 +12,6 @@
     el.style.display = "block";
   }
 
-  function onLoadDXOpal() {
-    console.debug("DXOpal loaded");
-    Opal.eval(`
-      DXOpal.dump_error{
-        require_remote "main.rb?#{Time.now.to_i}"
-      }
-    `);
-  }
-
   function onclickRunButton() {
     hide(qs(".run_button"));
     show(qs(".loading_container"));
@@ -28,8 +19,8 @@
     const scr = document.createElement("script");
     qs("body").appendChild(scr);
 
-    ael(scr, "load", onLoadDXOpal);
-    scr.src = "./dxopal.min.js";
+    ael(scr, "load", () => console.log("main.js loaded"));
+    scr.src = "./main.js";
   }
 
   function isEmbedMode() {

@@ -1,7 +1,7 @@
 require "json"
 
-require "./circuit"
-require "./libo_draw"
+require_relative "circuit"
+require_relative "libo_draw"
 
 path = ARGV[0]
 

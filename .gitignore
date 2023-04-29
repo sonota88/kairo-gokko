@@ -2,9 +2,11 @@
 /vendor/bundle/
 
 /data.rb
+/main.js
 /dxopal.min.js
 /*.wav
 
 z_*
 *#
 .#*
+.env

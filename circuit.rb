@@ -1,13 +1,5 @@
-if RUBY_ENGINE == "opal"
-  require_remote "./unit.rb"
-  update_progress "unit"
-
-  require_remote "./child_circuit.rb"
-  update_progress "child_circuit"
-else
-  require "./unit"
-  require "./child_circuit"
-end
+require_relative "unit"
+require_relative "child_circuit"
 
 class Circuit
   attr_reader :name

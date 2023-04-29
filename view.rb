@@ -1,6 +1,6 @@
 # require "./drawer"
-require_remote "./drawer_dxopal.rb"
-update_progress "drawer_dxopal"
+
+  require_relative "drawer_dxopal.rb"
 
 class View
   C_GRID     = [255,  40,  40,  40]
