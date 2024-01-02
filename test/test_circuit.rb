@@ -6,10 +6,14 @@ require "circuit"
 class TestCircuit < Minitest::Test
   def create_edges(*args)
     args.map { |xy1, xy2|
+      pt1 = Point(*xy1)
+      pt2 = Point(*xy2)
       Unit::Edge.new(
-        Point(*xy1),
-        Point(*xy2),
-        []
+        pt1,
+        pt2,
+        [
+          Unit::WireFragment.new(pt1, pt2)
+        ]
       )
     }
   end
