@@ -1,18 +1,18 @@
 (()=>{
-  function ael(el, name, fn){
+  function ael(el, name, fn) {
     el.addEventListener(name, fn, false);
   }
-  function qs(selector){
+  function qs(selector) {
     return document.querySelector(selector);
   }
-  function hide(el){
+  function hide(el) {
     el.style.display = "none";
   }
-  function show(el){
+  function show(el) {
     el.style.display = "block";
   }
 
-  function onLoadDXOpal(){
+  function onLoadDXOpal() {
     console.debug("DXOpal loaded");
     Opal.eval(`
       DXOpal.dump_error{
@@ -21,7 +21,7 @@
     `);
   }
 
-  function onclickRunButton(){
+  function onclickRunButton() {
     hide(qs(".run_button"));
     show(qs(".loading_container"));
 
@@ -32,12 +32,12 @@
     scr.src = "./dxopal.min.js";
   }
 
-  function isEmbedMode(){
+  function isEmbedMode() {
     const url = new URL(location.href);
     return url.searchParams.get("embed") === "1";
   }
 
-  function init(){
+  function init() {
     if (isEmbedMode()) {
       qs("body").style.margin = 0;
       qs("body").style.background = "#444";
