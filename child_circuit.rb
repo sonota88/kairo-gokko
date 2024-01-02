@@ -1,5 +1,3 @@
-# coding: utf-8
-
 require "set"
 
 # if RUBY_ENGINE == "opal"

@@ -1,5 +1,3 @@
-# coding: utf-8
-
 if RUBY_ENGINE == "opal"
   require_remote "./unit.rb"
   update_progress "unit"
