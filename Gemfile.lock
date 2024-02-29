@@ -4,7 +4,7 @@ GEM
     dxopal (1.5.2)
       rack (~> 2.0)
       thor (~> 0.20)
-    rack (2.2.6.4)
+    rack (2.2.8.1)
     thor (0.20.3)
     wavefile (1.1.2)
     webrick (1.8.1)
