@@ -179,12 +179,14 @@ class View
       color
     )
 
-    @drawer.draw_font(
-      lamp.x + 1, lamp.y - 0.5,
-      lamp.name,
-      @drawer.create_font(12),
-      color: C_DEBUG_TEXT
-    )
+    if lamp.name
+      @drawer.draw_font(
+        lamp.x + 1, lamp.y - 0.5,
+        lamp.name,
+        @drawer.create_font(12),
+        color: C_DEBUG_TEXT
+      )
+    end
   end
 
   def _draw_relay_common(x, y, color)
