@@ -1,10 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    dxopal (1.5.2)
+    dxopal (1.6.0)
       rack (~> 2.0)
       thor (~> 0.20)
-    rack (2.2.6.4)
+    rack (2.2.16)
     thor (0.20.3)
     wavefile (1.1.2)
     webrick (1.8.1)
@@ -13,7 +13,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  dxopal (= 1.5.2)
+  dxopal (= 1.6.0)
   wavefile
   webrick
 
