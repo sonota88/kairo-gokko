@@ -321,8 +321,8 @@ class View
           .select { |from, to, state| state == true }
           .each { |from, to, _|
             @drawer.draw_box_fill_px(
-              offset_x + from + 0.5, l_y,
-              offset_x + to + 0.5, h_y,
+              offset_x + from + 0.5, h_y,
+              offset_x + to + 0.5, l_y,
               C_CHART_AREA
             )
           }
