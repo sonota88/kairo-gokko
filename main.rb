@@ -1,6 +1,10 @@
-require "dxopal"
-
-include DXOpal
+case RUBY_ENGINE
+when "jruby"
+  require "dxjruby"; include DXJRuby
+  require "json"
+else
+  require "dxopal"; include DXOpal
+end
 
   require_relative "data.rb"
   require_relative "circuit.rb"
@@ -10,7 +14,11 @@ include DXOpal
 PPC = 16
 
 def parse_json(json)
+  if RUBY_ENGINE == "opal"
     Native(`JSON.parse(json)`)
+  else
+    JSON.parse(json)
+  end
 end
 
 def get_els(selector, el = Native(`document`))
@@ -100,16 +108,27 @@ def update_tuden_relay_switch_lamp(circuit)
 end
 
 def pushed_pos
-  if Input.mouse_push?(M_LBUTTON)
-    x = (Input.mouse_x / PPC).floor
-    y = (Input.mouse_y / PPC).floor
-    Point(x, y)
-  elsif Input.touch_push?
-    x = (Input.touch_x / PPC).floor
-    y = (Input.touch_y / PPC).floor
-    Point(x, y)
+  case RUBY_ENGINE
+  when "jruby"
+    if Input.mouse_push?(M_LBUTTON)
+      x = (Input.mouse_x / PPC).floor
+      y = (Input.mouse_y / PPC).floor
+      Point(x, y)
+    else
+      nil
+    end
   else
-    nil
+    if Input.mouse_push?(M_LBUTTON)
+      x = (Input.mouse_x / PPC).floor
+      y = (Input.mouse_y / PPC).floor
+      Point(x, y)
+    elsif Input.touch_push?
+      x = (Input.touch_x / PPC).floor
+      y = (Input.touch_y / PPC).floor
+      Point(x, y)
+    else
+      nil
+    end
   end
 end
 
@@ -164,7 +183,7 @@ $circuits =
   parse_json($data_json)
     .map { |plain| Circuit.from_plain(plain) }
 
-init_circuit_list($circuits)
+init_circuit_list($circuits) if RUBY_ENGINE == "opal"
 
 # circuit index
 ci =
@@ -192,7 +211,7 @@ $circuits.each { |circuit|
 
 Window.load_resources do
   change_circuit(ci)
-  hide_loading()
+  hide_loading() if RUBY_ENGINE == "opal"
 
   Window.bgcolor = C_BLACK
 

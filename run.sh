@@ -25,6 +25,12 @@ ruby preprocess.rb "$fodg_path" > data.rb
 if [ "$BROWSER" = "1" ]; then
   bundle exec dxopal server
 else
+  # USAGE: ./run.sh data/step_39.fodg 1
+
+  export PATH="/path/to/dxjruby:${PATH}"
+
+  DXJRUBY_CMD=dxjruby
+
   PAGE="$page" \
-    bundle exec ruby main.rb
+    $DXJRUBY_CMD run main.rb "$@"
 fi
